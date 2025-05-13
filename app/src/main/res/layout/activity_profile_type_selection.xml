@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".ProfileTypeSelectionActivity">
+
+    <!-- Texto "Define tu perfil" -->
+    <TextView
+        android:id="@+id/textViewProfileDefinition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Define tu perfil"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/buttonOwner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Soy dueño de mascota"
+        android:backgroundTint="@color/button_color"
+        android:layout_marginBottom="16dp" /> <!-- Espacio entre los botones -->
+
+    <Button
+        android:id="@+id/buttonCaretaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color"
+        android:text="Quiero cuidar mascotas" />
+
+</LinearLayout>
