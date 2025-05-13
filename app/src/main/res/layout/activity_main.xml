@@ -52,12 +52,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Iniciar sesión"
+            android:backgroundTint="@color/button_color"
             android:layout_marginBottom="8dp"/> <!-- Espacio entre los botones -->
 
         <Button
             android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_color"
             android:text="Registrarse"/>
 
     </LinearLayout>
