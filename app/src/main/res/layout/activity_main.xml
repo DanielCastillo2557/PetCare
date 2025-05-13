@@ -16,25 +16,49 @@
 
         <EditText
             android:id="@+id/editTextUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="Nombre de usuario"
-            android:inputType="textPersonName"
-            android:layout_marginBottom="8dp"/>
+            android:layout_width="337dp"
+            android:layout_height="48dp"
+            android:autofillHints="emailAddress"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
+            android:layout_marginBottom="16dp"/>
 
         <EditText
             android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="Contraseña"
+            android:layout_width="337dp"
+            android:layout_height="48dp"
+            android:autofillHints="password"
             android:inputType="textPassword"
-            android:layout_marginBottom="16dp"/>
+            android:hint="Contraseña"
+            android:layout_marginBottom="8dp"/> 
+
+        <!-- Texto "Olvidé mi contraseña" que actúa como botón -->
+
+        <TextView
+            android:id="@+id/textViewForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginBottom="24dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="end"
+            android:text="Olvidé mi contraseña"
+            android:textColor="@color/design_default_color_primary" />
 
         <Button
             android:id="@+id/buttonLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Iniciar sesión"/>
+            android:text="Iniciar sesión"
+            android:layout_marginBottom="8dp"/> <!-- Espacio entre los botones -->
+
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrarse"/>
 
     </LinearLayout>
 
