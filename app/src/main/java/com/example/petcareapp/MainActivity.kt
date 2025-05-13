@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         val buttonRegister: Button = findViewById(R.id.buttonRegister)
         val textViewForgotPassword: TextView = findViewById(R.id.textViewForgotPassword)
 
-        
+
 
         // OnClickListener para el botón "Iniciar sesión"
         buttonLogin.setOnClickListener {
@@ -46,18 +46,14 @@ class MainActivity : AppCompatActivity() {
         buttonRegister.setOnClickListener {
             // Aquí pones el código que se ejecutará cuando se haga clic en "Registrarse"
             Toast.makeText(this, "Botón Registrarse presionado", Toast.LENGTH_SHORT).show()
-            // O navegar a una Activity de registro
-            // val registerIntent = Intent(this, RegisterActivity::class.java)
-            // startActivity(registerIntent)
+
         }
 
         // OnClickListener para el texto "Olvidé mi contraseña"
         textViewForgotPassword.setOnClickListener {
             // Aquí pones el código que se ejecutará cuando se haga clic en el texto
             Toast.makeText(this, "Texto Olvidé mi contraseña presionado", Toast.LENGTH_SHORT).show()
-            // O navegar a una Activity para restablecer la contraseña
-            // val forgotPasswordIntent = Intent(this, ForgotPasswordActivity::class.java)
-            // startActivity(forgotPasswordIntent)
+
         }
     }
 }
