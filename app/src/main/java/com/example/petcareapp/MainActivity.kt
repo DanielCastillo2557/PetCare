@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         val buttonRegister: Button = findViewById(R.id.buttonRegister)
         val textViewForgotPassword: TextView = findViewById(R.id.textViewForgotPassword)
 
-        // --- Establecer OnClickListener para cada vista ---
+        
 
         // OnClickListener para el botón "Iniciar sesión"
         buttonLogin.setOnClickListener {
