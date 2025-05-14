@@ -9,59 +9,71 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="16dp"
-        tools:context=".LoginActivity">
+        tools:context=".LoginActivity"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-61dp">
 
-        <EditText
-            android:id="@+id/editTextUsername"
-            android:layout_width="337dp"
-            android:layout_height="48dp"
-            android:autofillHints="emailAddress"
-            android:inputType="textEmailAddress"
-            android:hint="Email"
-            android:layout_marginBottom="16dp"/>
+    <!-- ImageView para la imagen (ahora directamente en el LinearLayout vertical) -->
+    <ImageView
+        android:id="@+id/imageViewEmailIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="Icono de correo electrónico"
+        android:layout_marginBottom="8dp"
+        android:layout_gravity="center_horizontal" />
 
-        <EditText
-            android:id="@+id/editTextPassword"
-            android:layout_width="337dp"
-            android:layout_height="48dp"
-            android:autofillHints="password"
-            android:inputType="textPassword"
-            android:hint="Contraseña"
-            android:layout_marginBottom="8dp"/>
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:autofillHints="emailAddress"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
 
-        <!-- Texto "Olvidé mi contraseña" que actúa como botón -->
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:autofillHints="password"
+        android:hint="Contraseña"
+        android:inputType="textPassword" />
 
-        <TextView
-            android:id="@+id/textViewForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            android:layout_marginBottom="24dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="end"
-            android:text="Olvidé mi contraseña"
-            android:textColor="@color/design_default_color_primary" />
+    <!-- Texto "Olvidé mi contraseña" que actúa como botón -->
 
-        <Button
-            android:id="@+id/buttonLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Iniciar sesión"
-            android:backgroundTint="@color/button_color"
-            android:layout_marginBottom="8dp"/> <!-- Espacio entre los botones -->
+    <TextView
+        android:id="@+id/textViewForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_marginBottom="24dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="end"
+        android:text="Olvidé mi contraseña"
+        android:textColor="@color/design_default_color_primary" />
 
-        <Button
-            android:id="@+id/buttonRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/button_color"
-            android:text="Registrarse"/>
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/button_color"
+        android:text="Iniciar sesión" /> <!-- Espacio entre los botones -->
 
-    </LinearLayout>
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_color"
+        android:text="Registrarse" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
