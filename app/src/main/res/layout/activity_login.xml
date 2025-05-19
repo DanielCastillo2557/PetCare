@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,7 +33,8 @@
         android:layout_marginBottom="16dp"
         android:autofillHints="emailAddress"
         android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:fontFamily="@font/abeezee_regular"/>
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -42,7 +43,8 @@
         android:layout_marginBottom="8dp"
         android:autofillHints="password"
         android:hint="Contraseña"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:fontFamily="@font/abeezee_regular"/>
 
     <!-- Texto "Olvidé mi contraseña" que actúa como botón -->
 
@@ -57,7 +59,8 @@
         android:focusable="true"
         android:gravity="end"
         android:text="Olvidé mi contraseña"
-        android:textColor="@color/design_default_color_primary" />
+        android:textColor="@color/design_default_color_primary"
+        android:fontFamily="@font/abeezee_regular"/>
 
     <Button
         android:id="@+id/buttonLogin"
@@ -65,14 +68,16 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/button_color"
-        android:text="Iniciar sesión" /> <!-- Espacio entre los botones -->
+        android:text="Iniciar sesión"
+        android:fontFamily="@font/abeezee_regular"/> <!-- Espacio entre los botones -->
 
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/button_color"
-        android:text="Registrarse" />
+        android:text="Registrarse"
+        android:fontFamily="@font/abeezee_regular"/>
 
 </LinearLayout>
 

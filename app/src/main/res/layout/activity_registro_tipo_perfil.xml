@@ -7,31 +7,36 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp"
-    tools:context=".ProfileTypeSelectionActivity">
+    tools:context=".RegistroTipoPerfilActivity">
 
     <!-- Texto "Define tu perfil" -->
     <TextView
-        android:id="@+id/textViewProfileDefinition"
+        android:id="@+id/txtvEleccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Define tu perfil"
+        android:text="Háblame de ti..."
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="32dp" />
+        android:layout_marginBottom="32dp"
+        android:fontFamily="@font/abeezee_regular"/>
 
     <Button
-        android:id="@+id/buttonOwner"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnDuenio"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:text="Soy dueño de mascota"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/button_color"
-        android:layout_marginBottom="16dp" /> <!-- Espacio entre los botones -->
+        android:fontFamily="@font/abeezee_regular"
+        android:text="Tengo una mascota"
+        android:textSize="20sp" /> <!-- Espacio entre los botones -->
 
     <Button
-        android:id="@+id/buttonCaretaker"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnCuidador"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/button_color"
-        android:text="Quiero cuidar mascotas" />
+        android:fontFamily="@font/abeezee_regular"
+        android:text="Quiero cuidar mascotas"
+        android:textSize="20sp" />
 
 </LinearLayout>

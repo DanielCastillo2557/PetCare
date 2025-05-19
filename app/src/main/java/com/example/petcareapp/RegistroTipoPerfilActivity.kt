@@ -1,34 +1,32 @@
 package com.example.petcareapp
 
-import android.content.Intent // Importa Intent si planeas navegar desde aquí
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem // Importa MenuItem
 import android.widget.Button
-import android.widget.TextView // Importa TextView
 import android.widget.Toast // Importa Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class ProfileTypeSelectionActivity : AppCompatActivity() {
+class RegistroTipoPerfilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         
         // Carga el layout XML para esta Activity
-        setContentView(R.layout.activity_profile_type_selection)
-        // *** FIN DE LO QUE FALTA ***
+        setContentView(R.layout.activity_registro_tipo_perfil)
 
-        // Configuración para manejar las barras del sistema (esto ya lo tienes)
+        // Configuración para manejar las barras del sistema
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // --- Configurar la ActionBar (para el título y la flecha de retroceso) ---
+        // Configurar la ActionBar (para el título y la flecha de retroceso)
         supportActionBar?.apply {
             // Habilitar el botón de retroceso (flecha hacia atrás)
             setDisplayHomeAsUpEnabled(true)
@@ -36,22 +34,22 @@ class ProfileTypeSelectionActivity : AppCompatActivity() {
             title = "Registro" // O el título que prefieras
         }
 
-        // --- Encontrar las vistas por su ID (ahora sí existirán después de setContentView) ---
-        val textViewTitle: TextView = findViewById(R.id.textViewProfileDefinition) // El texto "Define tu perfil"
-        val buttonOwner: Button = findViewById(R.id.buttonOwner)
-        val buttonCaretaker: Button = findViewById(R.id.buttonCaretaker)
+        // --- Encontrar las vistas por su ID (ahora sí existirán después de setContentView)
+        val buttonDuenio: Button = findViewById(R.id.btnDuenio)
+        val buttonCuidador: Button = findViewById(R.id.btnCuidador)
 
         // --- Establecer OnClickListener para cada botón ---
 
-        buttonOwner.setOnClickListener {
+        buttonDuenio.setOnClickListener {
             // Código a ejecutar cuando se hace clic en "Soy dueño de mascota"
             Toast.makeText(this, "Seleccionado: Dueño de mascota", Toast.LENGTH_SHORT).show()
             // Aquí podrías navegar a una Activity para crear un perfil de dueño
-            // val ownerProfileIntent = Intent(this, CreateOwnerProfileActivity::class.java)
-            // startActivity(ownerProfileIntent)
+            val intent = Intent(this, RegistroDuenioNombreFotoActivity::class.java)
+            startActivity(intent)
+
         }
 
-        buttonCaretaker.setOnClickListener {
+        buttonCuidador.setOnClickListener {
             // Código a ejecutar cuando se hace clic en "Soy cuidador de mascota"
             Toast.makeText(this, "Seleccionado: Cuidador de mascota", Toast.LENGTH_SHORT).show()
             // Aquí podrías navegar a una Activity para crear un perfil de cuidador

@@ -1,7 +1,8 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PetCareApp" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.PetCareApp" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
+        <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <!-- <item name="colorOnPrimary">@color/my_light_on_primary</item> -->
         <!-- <item name="colorSecondary">@color/my_light_secondary</item> -->
