@@ -13,15 +13,6 @@
         android:theme="@style/Theme.PetCareApp"
         tools:targetApi="31">
         <activity
-            android:name=".InicioDuenioActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegistroDuenioDatosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegistroDuenioNombreFotoActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegistroTipoPerfilActivity"
             android:exported="false" />
         <activity
