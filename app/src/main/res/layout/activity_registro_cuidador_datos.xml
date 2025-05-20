@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/registroCuidador2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDFCFB"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/tituloRegistroCuidador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Excelente Cuidador, por último ingresa tus datos de contacto y crea una contraseña"
+            android:textSize="18sp"
+            android:textColor="#333333"
+            android:textAlignment="center"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/abeezee_regular"/>
+
+        <!-- Campos -->
+        <EditText
+            android:id="@+id/editNumeroCuidador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número"
+            android:inputType="phone"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/abeezee_regular"
+            android:backgroundTint="#D97756"/>
+
+        <EditText
+            android:id="@+id/editDireccionCuidador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Dirección"
+            android:layout_marginBottom="10dp"
+            android:inputType="textPostalAddress"
+            android:fontFamily="@font/abeezee_regular"
+            android:backgroundTint="#D97756"/>
+
+        <EditText
+            android:id="@+id/editEmailCuidador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_marginBottom="10dp"
+            android:inputType="textEmailAddress"
+            android:fontFamily="@font/abeezee_regular"
+            android:backgroundTint="#D97756"/>
+
+        <EditText
+            android:id="@+id/editContrasenaCuidador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/abeezee_regular"
+            android:backgroundTint="#D97756"/>
+
+        <EditText
+            android:id="@+id/editRepetirContrasenaCuidador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Repita Contraseña"
+            android:inputType="textPassword"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/abeezee_regular"
+            android:backgroundTint="#D97756"/>
+
+        <!-- Botón guardar -->
+        <ImageButton
+            android:id="@+id/btnGuardarRegistroCuidador"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="100dp"
+            android:background="@null"
+            android:src="@drawable/baseline_save_40" />
+    </LinearLayout>
+</ScrollView>
