@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
             // Código a ejecutar cuando se hace clic en "Registrarse"
             Toast.makeText(this, "Botón Registrarse presionado", Toast.LENGTH_SHORT).show()
 
-            // *** ESTO ES LO QUE NECESITAS AGREGAR O MODIFICAR ***
+
             // Crear un Intent para navegar a ProfileTypeSelectionActivity
             val intent = Intent(this, RegistroTipoPerfilActivity::class.java)
             // Iniciar la nueva Activity
