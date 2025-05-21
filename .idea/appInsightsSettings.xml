@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.petcareapp" />
-                  <option name="mobileSdkAppId" value="1:839523163972:android:c837bc96bdb7c99cae4111" />
-                  <option name="projectId" value="petcare-d546c" />
-                  <option name="projectNumber" value="839523163972" />
+                  <option name="mobileSdkAppId" value="1:496297205463:android:95cb336de810bc32f99a92" />
+                  <option name="projectId" value="my-petcare-app-project" />
+                  <option name="projectNumber" value="496297205463" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

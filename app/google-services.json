@@ -1,33 +1,13 @@
 {
   "project_info": {
-    "project_number": "839523163972",
-    "firebase_url": "https://petcare-d546c-default-rtdb.firebaseio.com",
-    "project_id": "petcare-d546c",
-    "storage_bucket": "petcare-d546c.firebasestorage.app"
+    "project_number": "496297205463",
+    "project_id": "my-petcare-app-project",
+    "storage_bucket": "my-petcare-app-project.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:839523163972:android:e16eeac680e49a38ae4111",
-        "android_client_info": {
-          "package_name": "com.dcastillo.petcare"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCYi-1p_d2WARVBjXMubEzcL1N1rpbU9PY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:839523163972:android:c837bc96bdb7c99cae4111",
+        "mobilesdk_app_id": "1:496297205463:android:95cb336de810bc32f99a92",
         "android_client_info": {
           "package_name": "com.example.petcareapp"
         }
@@ -35,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCYi-1p_d2WARVBjXMubEzcL1N1rpbU9PY"
+          "current_key": "AIzaSyAr7T8iKZmq8mBh5abSrU-hJRJFMsT74H8"
         }
       ],
       "services": {

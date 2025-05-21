@@ -17,7 +17,7 @@
             android:id="@+id/tituloRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Excelente, por último ingresa tus datos de contacto y crea una contraseña"
+            android:text="@string/txt_datos_duenio"
             android:textSize="18sp"
             android:textColor="#333333"
             android:textAlignment="center"
@@ -30,60 +30,71 @@
             android:id="@+id/editNumero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Número"
-            android:inputType="phone"
             android:layout_marginBottom="10dp"
+            android:autofillHints=""
+            android:backgroundTint="#D97756"
             android:fontFamily="@font/abeezee_regular"
-            android:backgroundTint="#D97756"/>
+            android:hint="@string/numero"
+            android:inputType="phone"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/editDireccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Dirección"
             android:layout_marginBottom="10dp"
-            android:inputType="textPostalAddress"
+            android:autofillHints=""
+            android:backgroundTint="#D97756"
             android:fontFamily="@font/abeezee_regular"
-            android:backgroundTint="#D97756"/>
+            android:hint="@string/direccion"
+            android:inputType="textPostalAddress"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/editEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
             android:layout_marginBottom="10dp"
-            android:inputType="textEmailAddress"
+            android:autofillHints=""
+            android:backgroundTint="#D97756"
             android:fontFamily="@font/abeezee_regular"
-            android:backgroundTint="#D97756"/>
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/editContrasena"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
             android:layout_marginBottom="10dp"
+            android:autofillHints=""
+            android:backgroundTint="#D97756"
             android:fontFamily="@font/abeezee_regular"
-            android:backgroundTint="#D97756"/>
+            android:hint="@string/contrasenia"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/editRepetirContrasena"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Repita Contraseña"
-            android:inputType="textPassword"
             android:layout_marginBottom="10dp"
+            android:autofillHints=""
+            android:backgroundTint="#D97756"
             android:fontFamily="@font/abeezee_regular"
-            android:backgroundTint="#D97756"/>
+            android:hint="@string/repita_contrasenia"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <!-- Botón guardar -->
         <ImageButton
             android:id="@+id/btnGuardarRegistro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="67dp"
+            android:layout_height="64dp"
             android:layout_gravity="end"
             android:layout_marginTop="100dp"
             android:background="@null"
+            android:contentDescription="@string/registrar_usuario"
             android:src="@drawable/baseline_save_40" />
     </LinearLayout>
 </ScrollView>
