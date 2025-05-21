@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registroCuidador1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FDFCFB"
+    android:padding="24dp"
+    tools:context=".RegistroCuidadorNombreFotoActivity">
+
+    <!-- Título -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Muy bien, ingresa tu nombre y foto de perfil para continuar"
+        android:textAlignment="center"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="@font/abeezee_regular"/>
+
+    <!-- Imagen circular + icono cámara -->
+    <FrameLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp">
+
+        <ImageView
+            android:id="@+id/imagePerfil"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_account_circle_24"
+            android:scaleType="centerCrop"/>
+        <!--android:background="@drawable/circle_background"-->
+
+
+        <ImageView
+            android:id="@+id/iconoCamara"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_agregar_foto_24px"/>
+    </FrameLayout>
+
+    <!-- Campo nombre -->
+    <EditText
+        android:id="@+id/editNombre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre completo"
+        android:inputType="textPersonName"
+        android:backgroundTint="#D97756"
+        android:fontFamily="@font/abeezee_regular"/>
+
+    <!-- Botón siguiente -->
+    <ImageButton
+        android:id="@+id/btnSiguienteCuidadorNombreFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="200dp"
+        android:background="@null"
+        android:src="@drawable/arrow_forward_40px" />
+</LinearLayout>
