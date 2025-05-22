@@ -5,6 +5,10 @@
     <string name="contrasenia">Contraseña</string>
     <string name="repita_contrasenia">Repita Contraseña</string>
     <string name="numero">Número</string>
-    <string name="txt_datos_duenio">Excelente, por último ingresa tus datos de contacto y crea una contraseña</string>
+    <string name="txt_datos">Excelente, por último ingresa tus datos de contacto y crea una contraseña</string>
     <string name="registrar_usuario">Registrar usuario</string>
+    <string name="contrasenia_olvidada">Olvidé mi contraseña</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="logo_de_la_app">Logo de la app</string>
 </resources>

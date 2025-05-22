@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/registroCuidador2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +18,7 @@
             android:id="@+id/tituloRegistroCuidador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Excelente Cuidador, por último ingresa tus datos de contacto y crea una contraseña"
+            android:text="@string/txt_datos"
             android:textSize="18sp"
             android:textColor="#333333"
             android:textAlignment="center"
@@ -30,60 +31,67 @@
             android:id="@+id/editNumeroCuidador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Número"
-            android:inputType="phone"
             android:layout_marginBottom="10dp"
+            android:backgroundTint="#D97756"
             android:fontFamily="@font/abeezee_regular"
-            android:backgroundTint="#D97756"/>
+            android:hint="@string/numero"
+            android:inputType="phone"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/editDireccionCuidador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Dirección"
             android:layout_marginBottom="10dp"
-            android:inputType="textPostalAddress"
+            android:backgroundTint="#D97756"
             android:fontFamily="@font/abeezee_regular"
-            android:backgroundTint="#D97756"/>
+            android:hint="@string/direccion"
+            android:inputType="textPostalAddress"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/editEmailCuidador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
             android:layout_marginBottom="10dp"
-            android:inputType="textEmailAddress"
+            android:backgroundTint="#D97756"
             android:fontFamily="@font/abeezee_regular"
-            android:backgroundTint="#D97756"/>
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/editContrasenaCuidador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
             android:layout_marginBottom="10dp"
+            android:backgroundTint="#D97756"
             android:fontFamily="@font/abeezee_regular"
-            android:backgroundTint="#D97756"/>
+            android:hint="@string/contrasenia"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/editRepetirContrasenaCuidador"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Repita Contraseña"
-            android:inputType="textPassword"
             android:layout_marginBottom="10dp"
+            android:backgroundTint="#D97756"
             android:fontFamily="@font/abeezee_regular"
-            android:backgroundTint="#D97756"/>
+            android:hint="@string/repita_contrasenia"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
 
         <!-- Botón guardar -->
         <ImageButton
             android:id="@+id/btnGuardarRegistroCuidador"
+            android:contentDescription="@string/registrar_usuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="100dp"
             android:background="@null"
-            android:src="@drawable/baseline_save_40" />
+            android:src="@drawable/baseline_save_40"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 </ScrollView>
