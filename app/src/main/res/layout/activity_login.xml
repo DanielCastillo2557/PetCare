@@ -17,66 +17,67 @@
         tools:layout_editor_absoluteY="-61dp">
 
     <!-- ImageView para la imagen (ahora directamente en el LinearLayout vertical) -->
-    <ImageView
-        android:id="@+id/imageViewEmailIcon"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@mipmap/logo_petcare_imagen"
-        android:contentDescription="Icono de correo electrónico"
-        android:layout_marginBottom="8dp"
-        android:layout_gravity="center_horizontal" />
+        <ImageView
+            android:id="@+id/imgLogoApp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="@string/logo_de_la_app"
+            android:src="@mipmap/logo_petcare_imagen" />
+
+        <EditText
+            android:id="@+id/campoEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:autofillHints="emailAddress"
+            android:fontFamily="@font/abeezee_regular"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp" />
 
     <EditText
-        android:id="@+id/editTextUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:autofillHints="emailAddress"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:fontFamily="@font/abeezee_regular"/>
-
-    <EditText
-        android:id="@+id/editTextPassword"
+        android:id="@+id/campoContrasena"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="8dp"
         android:autofillHints="password"
-        android:hint="Contraseña"
+        android:hint="@string/contrasenia"
         android:inputType="textPassword"
         android:fontFamily="@font/abeezee_regular"/>
 
     <!-- Texto "Olvidé mi contraseña" que actúa como botón -->
 
-    <TextView
-        android:id="@+id/textViewForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_gravity="end"
-        android:layout_marginBottom="24dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="end"
-        android:text="Olvidé mi contraseña"
-        android:textColor="@color/design_default_color_primary"
-        android:fontFamily="@font/abeezee_regular"/>
+        <TextView
+            android:id="@+id/txtRecuperarContrasena"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:layout_marginBottom="24dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/abeezee_regular"
+            android:gravity="end"
+            android:text="@string/contrasenia_olvidada"
+            android:textColor="@color/design_default_color_primary" />
 
     <Button
-        android:id="@+id/buttonLogin"
+        android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/button_color"
-        android:text="Iniciar sesión"
+        android:text="@string/iniciar_sesion"
         android:fontFamily="@font/abeezee_regular"/> <!-- Espacio entre los botones -->
 
     <Button
-        android:id="@+id/buttonRegister"
+        android:id="@+id/btnRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/button_color"
-        android:text="Registrarse"
+        android:text="@string/registrarse"
         android:fontFamily="@font/abeezee_regular"/>
 
 </LinearLayout>

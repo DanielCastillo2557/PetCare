@@ -41,8 +41,6 @@ class RegistroTipoPerfilActivity : AppCompatActivity() {
         // --- Establecer OnClickListener para cada botón ---
 
         buttonDuenio.setOnClickListener {
-            // Código a ejecutar cuando se hace clic en "Soy dueño de mascota"
-            Toast.makeText(this, "Seleccionado: Dueño de mascota", Toast.LENGTH_SHORT).show()
             // Aquí podrías navegar a una Activity para crear un perfil de dueño
             val intent = Intent(this, RegistroDuenioNombreFotoActivity::class.java)
             startActivity(intent)

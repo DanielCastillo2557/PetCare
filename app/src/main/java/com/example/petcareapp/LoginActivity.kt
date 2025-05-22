@@ -3,14 +3,18 @@ package com.example.petcareapp
 import android.content.Intent // Importa Intent para la navegación
 import android.os.Bundle
 import android.widget.Button // Importa Button
+import android.widget.EditText
 import android.widget.TextView // Importa TextView
 import android.widget.Toast // Importa Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -22,17 +26,28 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
-        // --- Encontrar las vistas por su ID ---
-        val buttonLogin: Button = findViewById(R.id.buttonLogin)
-        val buttonRegister: Button = findViewById(R.id.buttonRegister)
-        val textViewForgotPassword: TextView = findViewById(R.id.textViewForgotPassword)
+        auth = FirebaseAuth.getInstance()
+        val btnLogin: Button = findViewById(R.id.btnLogin)
+        val campoEmail: EditText = findViewById(R.id.campoEmail)
+        val campoContrasena: EditText = findViewById(R.id.campoContrasena)
+
+
+        val buttonRegister: Button = findViewById(R.id.btnRegistrar)
+        val textViewForgotPassword: TextView = findViewById(R.id.txtRecuperarContrasena)
 
         // --- Establecer OnClickListener para cada vista ---
 
         // OnClickListener para el botón "Iniciar sesión"
-        buttonLogin.setOnClickListener {
-            // Código para iniciar sesión (aún no implementado aquí)
-            Toast.makeText(this, "Botón Iniciar sesión presionado", Toast.LENGTH_SHORT).show()
+        btnLogin.setOnClickListener {
+            // Código para iniciar sesión
+            val email = campoEmail.text.toString()
+            val contrasena = campoContrasena.text.toString()
+            if (email.isBlank() || contrasena.isBlank()){
+                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                loginUsuario(email, contrasena)
+            }
         }
 
         // OnClickListener para el botón "Registrarse"
@@ -52,6 +67,21 @@ class LoginActivity : AppCompatActivity() {
         textViewForgotPassword.setOnClickListener {
             // Código para manejar "Olvidé mi contraseña" (aún no implementado aquí)
             Toast.makeText(this, "Texto Olvidé mi contraseña presionado", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun loginUsuario(email: String, contrasena: String) {
+        auth.signInWithEmailAndPassword(email, contrasena)
+            .addOnCompleteListener(this) { task -> if (task.isSuccessful) {
+                Toast.makeText(this, "Bienvenida/o", Toast.LENGTH_SHORT).show()
+                // Navegar al activity principal
+                val intent = Intent(this, InicioDuenioActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                val error = task.exception?.localizedMessage ?: "Error desconocido"
+                Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

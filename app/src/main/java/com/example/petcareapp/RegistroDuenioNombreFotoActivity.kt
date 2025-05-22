@@ -21,16 +21,19 @@ class RegistroDuenioNombreFotoActivity : AppCompatActivity() {
             insets
         }
 
-        val nombreIngresado = findViewById<EditText>(R.id.editNombre).text.toString()
+
 
         // --- Encontrar las vistas por su ID (ahora sí existirán después de setContentView)
         val buttonSiguiente: ImageButton = findViewById(R.id.btnSiguiente)
 
         //Boton siguiente
         buttonSiguiente.setOnClickListener {
-            //Intent para navegar a RegistroDuenioDatosActivity
+            //Tomamos el nombre ingresado por el usuario
+            val nombre = findViewById<EditText>(R.id.editNombre).text.toString()
+
+            //Intent para navegar a RegistroDuenioDatosActivity enviando el nombre
             val intent = Intent(this, RegistroDuenioDatosActivity::class.java)
-            intent.putExtra("nombre", nombreIngresado)
+            intent.putExtra("nombre", nombre)
             startActivity(intent)
 
         }

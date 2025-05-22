@@ -48,7 +48,7 @@ class RegistroDuenioDatosActivity : AppCompatActivity() {
     }
 
     private fun registrarUsuario() {
-        val nombre = intent.getStringExtra("nombre") ?: "" // recibido del activity anterior
+        val nombre = intent.getStringExtra("nombre") ?: "" // nombre recibido del activity anterior
         val email = findViewById<EditText>(R.id.editEmail).text.toString()
         val contrasena = findViewById<EditText>(R.id.editContrasena).text.toString()
         val confirmar = findViewById<EditText>(R.id.editRepetirContrasena).text.toString()
