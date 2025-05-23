@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Muy bien, ingresa tu nombre y foto de perfil para continuar"
+        android:text="@string/instrucciones"
         android:textAlignment="center"
         android:textColor="#333333"
         android:textSize="18sp"
@@ -32,6 +32,7 @@
 
         <ImageView
             android:id="@+id/imagePerfil"
+            android:contentDescription="@string/imagen_perfil_registro"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/baseline_account_circle_24"
@@ -41,6 +42,7 @@
 
         <ImageView
             android:id="@+id/iconoCamara"
+            android:contentDescription="@string/icono_camara"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="bottom|end"
@@ -53,18 +55,33 @@
         android:id="@+id/editNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre completo"
-        android:inputType="textPersonName"
+        android:autofillHints="@string/hint_nombre_completo"
         android:backgroundTint="#D97756"
-        android:fontFamily="@font/abeezee_regular"/>
+        android:fontFamily="@font/abeezee_regular"
+        android:inputType="textPersonName"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:autofillHints="@string/hint_sobre_mi"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:minHeight="48dp" />
 
     <!-- Botón siguiente -->
     <ImageButton
         android:id="@+id/btnSiguienteCuidadorNombreFoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="200dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="100dp"
         android:background="@null"
-        android:src="@drawable/arrow_forward_40px" />
+        android:contentDescription="@string/siguiente"
+        android:src="@drawable/arrow_forward_40px"
+        tools:ignore="TouchTargetSizeCheck" />
+
 </LinearLayout>

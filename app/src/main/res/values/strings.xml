@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">PetCareApp</string>
+    <string name="instrucciones">Muy bien, ingresa tu nombre, foto de perfil y una breve descripcion sobre ti para continuar</string>
     <string name="email">Email</string>
     <string name="direccion">Dirección</string>
     <string name="contrasenia">Contraseña</string>
@@ -11,4 +12,10 @@
     <string name="iniciar_sesion">Iniciar sesión</string>
     <string name="registrarse">Registrarse</string>
     <string name="logo_de_la_app">Logo de la app</string>
+    <string name="siguiente">Boton para continuar con el registro</string>
+    <string name="hint_nombre_completo">Nombre completo</string>
+    <string name="imagen_perfil_registro">Aqui se deberá ver la imagen de perfil ingresada por el ususario</string>
+    <string name="icono_camara">Boton para agregar una imagen en la creacion del perfil</string>
+    <string name="txt_sobre_mi">Espacio para que el usuario ingrese una pequeña descripcion de si mismo</string>
+    <string name="hint_sobre_mi">Sobre mi…</string>
 </resources>

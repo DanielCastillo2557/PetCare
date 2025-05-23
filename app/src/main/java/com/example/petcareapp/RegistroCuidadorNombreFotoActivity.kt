@@ -2,6 +2,7 @@ package com.example.petcareapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,13 +20,20 @@ class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
             insets
         }
 
-        // --- Encontrar las vistas por su ID (ahora sí existirán después de setContentView)
+        //Tomamos el nombre y descripcion ingresado por el usuario
+        val editNombre = findViewById<EditText>(R.id.editNombre)
+        val editDescripcion = findViewById<EditText>(R.id.editDescripcion)
         val buttonSiguiente: ImageButton = findViewById(R.id.btnSiguienteCuidadorNombreFoto)
 
         //Boton siguiente
         buttonSiguiente.setOnClickListener {
-            //Intent para navegar a RegistroDuenioDatosActivity
-            val intent = Intent(this, RegistroDuenioDatosActivity::class.java)
+            val nombre = editNombre.text.toString()
+            val descripcion = editDescripcion.text.toString()
+
+            //Intent para navegar a RegistroCuidadorDatosActivity
+            val intent = Intent(this, RegistroCuidadorDatosActivity::class.java)
+            intent.putExtra("nombre", nombre)
+            intent.putExtra("descripcion", descripcion)
             startActivity(intent)
 
         }
