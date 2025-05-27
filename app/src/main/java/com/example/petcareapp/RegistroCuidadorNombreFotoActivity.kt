@@ -22,8 +22,8 @@ class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
         }
 
         //Tomamos el nombre y descripcion ingresado por el usuario
-        val editNombre = findViewById<EditText>(R.id.editNombre)
-        val editDescripcion = findViewById<EditText>(R.id.editDescripcion)
+        val editNombre = findViewById<EditText>(R.id.editNombreCuidador)
+        val editDescripcion = findViewById<EditText>(R.id.editDescripcionCuidador)
         val buttonSiguiente: ImageButton = findViewById(R.id.btnSiguienteCuidadorNombreFoto)
 
         //Boton siguiente

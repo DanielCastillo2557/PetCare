@@ -60,6 +60,17 @@
         android:backgroundTint="#D97756"
         android:fontFamily="@font/abeezee_regular"/>
 
+    <!-- Campo descripcion -->
+    <EditText
+        android:id="@+id/editDescripcionCuidador"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="@string/hint_descripcion_usuario"
+        android:inputType="textPersonName"
+        android:backgroundTint="#D97756"
+        android:fontFamily="@font/abeezee_regular"/>
+
     <!-- Botón siguiente -->
     <ImageButton
         android:id="@+id/btnSiguienteCuidadorNombreFoto"

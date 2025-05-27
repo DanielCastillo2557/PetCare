@@ -24,4 +24,5 @@
     <string name="desc_agregar_foto">Boton para agregar una foto en el registro</string>
     <string name="desc_btn_continuar">Boton para continuar con el registro</string>
     <string name="txt_instrucciones">Muy bien, ingresa tu nombre y foto de perfil para continuar</string>
+    <string name="hint_descripcion_usuario">Sobre mí...</string>
 </resources>
