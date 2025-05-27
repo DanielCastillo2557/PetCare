@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/imgMascota"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+
+        android:background="@drawable/ic_circulo_fondo"
+        android:contentDescription="@string/btn_mi_perfil"
+        android:scaleType="centerCrop"
+        />
+    <!--android:src=""-->
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="16dp">
+
+        <TextView
+            android:id="@+id/txtNombreMascota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nombre_mascota_example"
+            android:textSize="16sp"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/txtRazaMascota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/raza_example"
+            android:textSize="14sp"
+            android:textColor="#666666"/>
+    </LinearLayout>
+
+</LinearLayout>

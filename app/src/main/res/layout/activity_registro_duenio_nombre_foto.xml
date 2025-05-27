@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Muy bien, ingresa tu nombre y foto de perfil para continuar"
+        android:text="@string/txt_instrucciones"
         android:textAlignment="center"
         android:textColor="#333333"
         android:textSize="18sp"
@@ -34,6 +34,7 @@
             android:id="@+id/imagePerfil"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@string/desc_foto_usuario"
             android:src="@drawable/baseline_account_circle_24"
             android:scaleType="centerCrop"/>
             <!--android:background="@drawable/circle_background"-->
@@ -45,15 +46,16 @@
             android:layout_height="32dp"
             android:layout_gravity="bottom|end"
             android:layout_margin="4dp"
+            android:contentDescription="@string/desc_agregar_foto"
             android:src="@drawable/ic_agregar_foto_24px"/>
     </FrameLayout>
 
     <!-- Campo nombre -->
     <EditText
-        android:id="@+id/editNombre"
+        android:id="@+id/editNombreCuidador"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre completo"
+        android:hint="@string/hint_nombre"
         android:inputType="textPersonName"
         android:backgroundTint="#D97756"
         android:fontFamily="@font/abeezee_regular"/>
@@ -63,8 +65,9 @@
         android:id="@+id/btnSiguiente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginTop="200dp"
         android:background="@null"
+        android:contentDescription="@string/desc_btn_continuar"
         android:src="@drawable/arrow_forward_40px" />
 </LinearLayout>

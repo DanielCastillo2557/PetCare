@@ -17,7 +17,7 @@
             android:id="@+id/tituloRegistro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/txt_datos_duenio"
+            android:text="@string/txt_datos"
             android:textSize="18sp"
             android:textColor="#333333"
             android:textAlignment="center"

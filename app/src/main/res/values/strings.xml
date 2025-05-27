@@ -11,4 +11,17 @@
     <string name="iniciar_sesion">Iniciar sesión</string>
     <string name="registrarse">Registrarse</string>
     <string name="logo_de_la_app">Logo de la app</string>
+    <string name="btn_mi_perfil">Boton para ir a mi perfil</string>
+    <string name="bs_mis_mascotas">Mis Mascotas</string>
+    <string name="txt_vista_duenio_vacia">Para comenzar presiona el botón de abajo para agregar a tus mascotas</string>
+    <string name="btn_agregar_mascota">Agregar Mascota</string>
+    <string name="nombre_mascota_example">Nombre de Mascota</string>
+    <string name="raza_example">Raza</string>
+    <string name="btn_mis_mascotas">Boton para navegar a \"Mis Mascotas\"</string>
+    <string name="btn_mis_chats">Boton para navegar a \"Mis Chats\"</string>
+    <string name="hint_nombre">Nombre completo</string>
+    <string name="desc_foto_usuario">Preview de la foto ingresada</string>
+    <string name="desc_agregar_foto">Boton para agregar una foto en el registro</string>
+    <string name="desc_btn_continuar">Boton para continuar con el registro</string>
+    <string name="txt_instrucciones">Muy bien, ingresa tu nombre y foto de perfil para continuar</string>
 </resources>

@@ -35,9 +35,7 @@ class RegistroDuenioDatosActivity : AppCompatActivity() {
         btnGuardarRegistro.setOnClickListener {
             registrarUsuario()
 
-            //Intent para navegar a InicioDuenioActivity
-            val intent = Intent(this, InicioDuenioActivity::class.java)
-            startActivity(intent)
+
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.registroDuenio2)) { v, insets ->
@@ -78,6 +76,9 @@ class RegistroDuenioDatosActivity : AppCompatActivity() {
                             guardarCredenciales(email, contrasena)
                             Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
                             finish()
+                            //Intent para navegar a InicioDuenioActivity
+                            val intent = Intent(this, InicioDuenioActivity::class.java)
+                            startActivity(intent)
                         }
                         .addOnFailureListener {
                             Toast.makeText(

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -29,7 +30,12 @@ class RegistroDuenioNombreFotoActivity : AppCompatActivity() {
         //Boton siguiente
         buttonSiguiente.setOnClickListener {
             //Tomamos el nombre ingresado por el usuario
-            val nombre = findViewById<EditText>(R.id.editNombre).text.toString()
+            val nombre = findViewById<EditText>(R.id.editNombreCuidador).text.toString()
+
+            if (nombre.isBlank()){
+                Toast.makeText(this, "Ingresa un nombre", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             //Intent para navegar a RegistroDuenioDatosActivity enviando el nombre
             val intent = Intent(this, RegistroDuenioDatosActivity::class.java)
