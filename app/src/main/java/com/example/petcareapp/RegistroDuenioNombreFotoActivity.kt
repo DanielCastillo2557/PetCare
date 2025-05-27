@@ -22,13 +22,11 @@ class RegistroDuenioNombreFotoActivity : AppCompatActivity() {
             insets
         }
 
-
-
         // --- Encontrar las vistas por su ID (ahora sí existirán después de setContentView)
-        val buttonSiguiente: ImageButton = findViewById(R.id.btnSiguiente)
+        val btnSiguiente: ImageButton = findViewById(R.id.btnSiguiente)
 
         //Boton siguiente
-        buttonSiguiente.setOnClickListener {
+        btnSiguiente.setOnClickListener {
             //Tomamos el nombre ingresado por el usuario
             val nombre = findViewById<EditText>(R.id.editNombreCuidador).text.toString()
 

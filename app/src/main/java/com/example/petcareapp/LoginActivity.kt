@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -52,15 +53,10 @@ class LoginActivity : AppCompatActivity() {
 
         // OnClickListener para el botón "Registrarse"
         buttonRegister.setOnClickListener {
-            // Código a ejecutar cuando se hace clic en "Registrarse"
-            Toast.makeText(this, "Botón Registrarse presionado", Toast.LENGTH_SHORT).show()
-
-
             // Crear un Intent para navegar a ProfileTypeSelectionActivity
             val intent = Intent(this, RegistroTipoPerfilActivity::class.java)
             // Iniciar la nueva Activity
             startActivity(intent)
-            // *** FIN DE LO QUE NECESITAS AGREGAR O MODIFICAR ***
         }
 
         // OnClickListener para el texto "Olvidé mi contraseña"
@@ -73,11 +69,27 @@ class LoginActivity : AppCompatActivity() {
     private fun loginUsuario(email: String, contrasena: String) {
         auth.signInWithEmailAndPassword(email, contrasena)
             .addOnCompleteListener(this) { task -> if (task.isSuccessful) {
-                Toast.makeText(this, "Bienvenida/o", Toast.LENGTH_SHORT).show()
-                // Navegar al activity principal
-                val intent = Intent(this, InicioDuenioActivity::class.java)
-                startActivity(intent)
-                finish()
+                val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return@addOnCompleteListener
+
+                val db = FirebaseFirestore.getInstance()
+                db.collection("usuarios").document(uid).get()
+                    .addOnSuccessListener { document ->
+                        val tipoPerfil = document.get("tipo") as? List<*>
+
+                        when{
+                            tipoPerfil?.contains("duenio") == true -> {
+                                startActivity(Intent(this, InicioDuenioActivity::class.java))
+                                finish()
+                            }
+                            tipoPerfil?.contains("cuidador") == true -> {
+                                startActivity(Intent(this, InicioCuidadorActivity::class.java))
+                                finish()
+                            }
+                            else -> {
+                                Toast.makeText(this, "Error al obtener los datos del usuario", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
             } else {
                 val error = task.exception?.localizedMessage ?: "Error desconocido"
                 Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()

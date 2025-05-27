@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem // Importa MenuItem
 import android.widget.Button
-import android.widget.Toast // Importa Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -48,11 +47,9 @@ class RegistroTipoPerfilActivity : AppCompatActivity() {
         }
 
         buttonCuidador.setOnClickListener {
-            // Código a ejecutar cuando se hace clic en "Soy cuidador de mascota"
-            Toast.makeText(this, "Seleccionado: Cuidador de mascota", Toast.LENGTH_SHORT).show()
             // Aquí podrías navegar a una Activity para crear un perfil de cuidador
-            // val caretakerProfileIntent = Intent(this, CreateCaretakerProfileActivity::class.java)
-            // startActivity(caretakerProfileIntent)
+            val intent = Intent(this, RegistroCuidadorNombreFotoActivity::class.java)
+            startActivity(intent)
         }
     }
 

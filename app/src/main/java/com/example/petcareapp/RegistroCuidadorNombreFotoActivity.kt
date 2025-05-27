@@ -21,19 +21,26 @@ class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
             insets
         }
 
-        val editTextNombre: EditText = findViewById(R.id.editNombreCuidador)
+        //Tomamos el nombre y descripcion ingresado por el usuario
+        val editNombre = findViewById<EditText>(R.id.editNombre)
+        val editDescripcion = findViewById<EditText>(R.id.editDescripcion)
         val buttonSiguiente: ImageButton = findViewById(R.id.btnSiguienteCuidadorNombreFoto)
 
-
+        //Boton siguiente
         buttonSiguiente.setOnClickListener {
+            val nombre = editNombre.text.toString()
+            val descripcion = editDescripcion.text.toString()
 
-            if (editTextNombre.text.toString().isBlank()){
+            if (nombre.isBlank() || descripcion.isBlank()){
                 Toast.makeText(this, "Ingresa un nombre", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             //Intent para navegar a RegistroDuenioDatosActivity
             val intent = Intent(this, RegistroCuidadorDatosActivity::class.java)
+            intent.putExtra("nombre", nombre)
+            intent.putExtra("descripcion", descripcion)
             startActivity(intent)
+
         }
     }
 }
