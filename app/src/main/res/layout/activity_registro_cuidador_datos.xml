@@ -91,7 +91,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="100dp"
             android:background="@null"
-            android:src="@drawable/baseline_save_40"
+            android:src="@drawable/ic_guardar_registro"
             tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
 </ScrollView>

@@ -95,6 +95,6 @@
             android:layout_marginTop="100dp"
             android:background="@null"
             android:contentDescription="@string/registrar_usuario"
-            android:src="@drawable/baseline_save_40" />
+            android:src="@drawable/ic_guardar_registro" />
     </LinearLayout>
 </ScrollView>

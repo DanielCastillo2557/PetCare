@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -35,6 +36,8 @@ class InicioDuenioActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerMascotas)
         layoutVacio = findViewById(R.id.layoutVacio)
         val btnAgregarMascota: ImageButton = findViewById(R.id.btnAgregarMascota)
+        val fabAgregarMascota: FloatingActionButton = findViewById(R.id.fabAgregarMascota)
+
 
         listaMascotas = mutableListOf()
         adapter = MascotaAdapter(listaMascotas)
@@ -46,6 +49,11 @@ class InicioDuenioActivity : AppCompatActivity() {
             startActivity(Intent(this, RegistroMascotaDatos::class.java))
         }
 
+
+        fabAgregarMascota.setOnClickListener {
+            startActivity(Intent(this, RegistroMascotaDatos::class.java))
+        }
+
         cargarMascotas()
 
     }
@@ -53,6 +61,7 @@ class InicioDuenioActivity : AppCompatActivity() {
     private fun cargarMascotas() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val db = FirebaseFirestore.getInstance()
+        val fabAgregarMascota: FloatingActionButton = findViewById(R.id.fabAgregarMascota)
 
         db.collection("usuarios").document(uid).collection("mascotas")
             .get()
@@ -66,10 +75,12 @@ class InicioDuenioActivity : AppCompatActivity() {
                 if (listaMascotas.isEmpty()) {
                     layoutVacio.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
+                    fabAgregarMascota.visibility = View.GONE
                 } else {
                     layoutVacio.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
                     adapter.notifyDataSetChanged()
+                    fabAgregarMascota.visibility = View.VISIBLE
                 }
             }
             .addOnFailureListener {
