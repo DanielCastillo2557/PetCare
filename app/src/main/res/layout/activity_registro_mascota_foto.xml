@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="#FDFCFB">
+
+    <TextView
+        android:id="@+id/txtTituloFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Por último ingresa una foto de tu mascota"
+        android:textSize="18sp"
+        android:textColor="#333333"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <FrameLayout
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:layout_constraintTop_toBottomOf="@id/txtTituloFoto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp">
+
+        <ImageView
+            android:id="@+id/imgFotoMascota"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@drawable/ic_circulo_fondo"
+            android:scaleType="centerCrop"/>
+        <!--android:src="@drawable/ic_pet_placeholder"-->
+
+        <ImageView
+            android:id="@+id/iconoCamaraMascota"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_agregar_foto_24px"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="4dp"/>
+    </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/btnGuardarMascota"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/ic_guardar_registro"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

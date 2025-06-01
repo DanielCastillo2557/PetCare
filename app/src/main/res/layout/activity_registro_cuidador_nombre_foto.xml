@@ -130,10 +130,10 @@ android:fillViewport="true"> <!-- Importante para que el contenido dentro se exp
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginTop="20dp"
-    android:background="@null"
-    android:contentDescription="@string/desc_btn_continuar"
-    android:src="@drawable/arrow_forward_40px" />
+        android:layout_marginTop="200dp"
+        android:background="@null"
+        android:contentDescription="@string/desc_btn_continuar"
+        android:src="@drawable/ic_siguiente" />
 </LinearLayout>
 </ScrollView>
-    </LinearLayout>
+</LinearLayout>

@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.savedstate)
     implementation(libs.google.firebase.firestore)
     implementation(libs.google.firebase.auth)
+    implementation(libs.androidx.material3.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
