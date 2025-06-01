@@ -26,7 +26,7 @@
             android:id="@+id/btnAtrasCuidadorNombreFoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_backward_40px"
+            android:src="@drawable/ic_atras"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/desc_btn_atras"
         android:padding="8dp"/>
