@@ -29,7 +29,7 @@
             android:src="@drawable/arrow_backward_40px"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/desc_btn_atras"
-        android:padding="8dp"/> <!-- Padding para aumentar el área táctil si el icono es pequeño -->
+        android:padding="8dp"/>
 
         <!-- Texto del Título -->
         <TextView
