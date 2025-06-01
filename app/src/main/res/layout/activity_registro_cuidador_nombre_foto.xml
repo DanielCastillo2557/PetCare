@@ -1,15 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/registroCuidador1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FDFCFB"
-    android:padding="24dp"
     tools:context=".RegistroCuidadorNombreFotoActivity">
+
+    <!-- Tu Barra Superior -->
+    <LinearLayout
+        android:id="@+id/barraSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#D97756"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <!-- Botón de Flecha hacia Atrás -->
+        <ImageButton
+            android:id="@+id/btnAtrasCuidadorNombreFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_backward_40px"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/desc_btn_atras"
+        android:padding="8dp"/> <!-- Padding para aumentar el área táctil si el icono es pequeño -->
+
+        <!-- Texto del Título -->
+        <TextView
+            android:id="@+id/tvTituloBarra"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+        android:text="Registro Cuidador"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
+
+
+    </LinearLayout>
+
+
+<ScrollView
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:layout_weight="1"
+android:fillViewport="true"> <!-- Importante para que el contenido dentro se expanda si es necesario -->
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"> <!-- Padding movido aquí para el contenido debajo de la barra -->
 
     <!-- Título -->
     <TextView
@@ -37,8 +86,6 @@
             android:contentDescription="@string/desc_foto_usuario"
             android:src="@drawable/baseline_account_circle_24"
             android:scaleType="centerCrop"/>
-        <!--android:background="@drawable/circle_background"-->
-
 
         <ImageView
             android:id="@+id/iconoCamara"
@@ -71,14 +118,22 @@
         android:backgroundTint="#D97756"
         android:fontFamily="@font/abeezee_regular"/>
 
+    <!-- Espacio para empujar el botón al final si es necesario -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <!-- Botón siguiente -->
     <ImageButton
         android:id="@+id/btnSiguienteCuidadorNombreFoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginTop="200dp"
-        android:background="@null"
-        android:contentDescription="@string/desc_btn_continuar"
-        android:src="@drawable/arrow_forward_40px" />
+        android:layout_marginTop="20dp"
+    android:background="@null"
+    android:contentDescription="@string/desc_btn_continuar"
+    android:src="@drawable/arrow_forward_40px" />
 </LinearLayout>
+</ScrollView>
+    </LinearLayout>
