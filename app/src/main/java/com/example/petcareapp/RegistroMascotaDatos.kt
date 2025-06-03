@@ -27,20 +27,20 @@ class RegistroMascotaDatos : AppCompatActivity() {
 
         val spinnerEspecie = findViewById<Spinner>(R.id.spinnerEspecie)
         val spinnerRaza = findViewById<Spinner>(R.id.spinnerRaza)
-        val spinnerTamaño = findViewById<Spinner>(R.id.spinnerTamaño)
+        val spinnerTamanio = findViewById<Spinner>(R.id.spinnerTamaño)
         val editNombre = findViewById<EditText>(R.id.editNombreMascota)
         val editFecha = findViewById<EditText>(R.id.editFechaNacimiento)
         val editDescripcion = findViewById<EditText>(R.id.editDescripcion)
         val btnSiguiente = findViewById<ImageButton>(R.id.btnSiguienteMascota)
 
         // Configura los Spinners con datos de prueba o de tu base de datos
-        val especies = listOf("Perro", "Gato", "Otro")
+        val especies = listOf("Perro", "Gato", "Conejo", "Hamster", "Otro")
         val razas = listOf("Labrador", "Bulldog", "Siames", "Otra")
         val tamanios = listOf("Pequeño", "Mediano", "Grande")
 
         spinnerEspecie.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, especies)
         spinnerRaza.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, razas)
-        spinnerTamaño.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, tamanios)
+        spinnerTamanio.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, tamanios)
 
         // Fecha de nacimiento con DatePicker
         editFecha.setOnClickListener {
@@ -60,7 +60,7 @@ class RegistroMascotaDatos : AppCompatActivity() {
             val nombre = editNombre.text.toString()
             val raza = spinnerRaza.selectedItem.toString()
             val fechaNac = editFecha.text.toString()
-            val tamaño = spinnerTamaño.selectedItem.toString()
+            val tamanio = spinnerTamanio.selectedItem.toString()
             val descripcion = editDescripcion.text.toString()
 
             if (nombre.isBlank() || fechaNac.isBlank() || descripcion.isBlank()) {
@@ -74,7 +74,7 @@ class RegistroMascotaDatos : AppCompatActivity() {
             intent.putExtra("nombre", nombre)
             intent.putExtra("raza", raza)
             intent.putExtra("fechaNac", fechaNac)
-            intent.putExtra("tamaño", tamaño)
+            intent.putExtra("tamanio", tamanio)
             intent.putExtra("descripcion", descripcion)
             startActivity(intent)
         }

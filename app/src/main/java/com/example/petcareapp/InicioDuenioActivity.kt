@@ -40,12 +40,21 @@ class InicioDuenioActivity : AppCompatActivity() {
 
 
         listaMascotas = mutableListOf()
-        adapter = MascotaAdapter(listaMascotas)
+        adapter = MascotaAdapter(listaMascotas){ mascota ->
+            val intent = Intent(this, PerfilMiMascotaActivity::class.java).apply {
+                putExtra("nombre", mascota.nombre)
+                putExtra("raza", mascota.raza)
+                putExtra("edad", mascota.edad)
+                putExtra("especie", mascota.especie)
+                putExtra("tamanio", mascota.tamanio)
+                putExtra("descripcion", mascota.descripcion)
+            }
+            startActivity(intent)
+        }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         btnAgregarMascota.setOnClickListener {
-            // Lógica para agregar mascota
             startActivity(Intent(this, RegistroMascotaDatos::class.java))
         }
 

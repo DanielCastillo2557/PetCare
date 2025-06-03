@@ -16,6 +16,8 @@ savedstate = "1.3.0"
 firebaseFirestore = "25.1.4"
 firebaseAuth = "23.2.1"
 material3Android = "1.3.2"
+circleimageview = "3.1.0"
+maps = "18.2.0"
 
 [libraries]
 androidx-appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
@@ -37,6 +39,8 @@ lifecycle-runtime = "androidx.lifecycle:lifecycle-runtime-ktx:2.9.0"
 google-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 google-firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
+circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
+google-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "maps" }
 
 
 [plugins]

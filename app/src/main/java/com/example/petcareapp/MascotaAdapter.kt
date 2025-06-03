@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MascotaAdapter(private val lista: List<Mascota>) :
+class MascotaAdapter(
+    private val lista: List<Mascota>,
+    private val onItemClick: (Mascota) -> Unit) :
     RecyclerView.Adapter<MascotaAdapter.MascotaViewHolder>() {
 
     class MascotaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -26,7 +28,10 @@ class MascotaAdapter(private val lista: List<Mascota>) :
         val mascota = lista[position]
         holder.txtNombre.text = mascota.nombre
         holder.txtRaza.text = mascota.raza
-        // Aquí podrías cargar foto con Glide/Picasso si quieres
+
+        holder.itemView.setOnClickListener {
+            onItemClick(mascota)
+        }
     }
 
     override fun getItemCount(): Int = lista.size
