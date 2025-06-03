@@ -5,15 +5,79 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FDFCFB"
     tools:context=".InicioCuidadorActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Inicio Cuidador"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <!-- Barra superior -->
+    <LinearLayout
+        android:id="@+id/barraSuperiorCuidador"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="#D97756"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/btnPerfilCuidador"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_user"
+            android:contentDescription="@string/btn_mi_perfil" />
+
+        <TextView
+            android:id="@+id/tvTituloBarraCuidador"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inicio Cuidador"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/abeezee_regular"/>
+    </LinearLayout>
+
+
+    <!-- Barra inferior -->
+    <LinearLayout
+        android:id="@+id/barraInferiorCuidador"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:background="#A7F3D0"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/btnNavPerfilCuidador"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="@string/desc_btn_nav_perfil_cuidador"
+            android:src="@drawable/ic_user" />
+        <!-- Cambia el icono según la función principal -->
+
+
+        <ImageView
+            android:id="@+id/btnNavMapaCuidador"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="32dp"
+            android:contentDescription="@string/desc_btn_nav_mapa_cuidador"
+            android:src="@drawable/ic_mapa" />
+
+        <ImageView
+            android:id="@+id/btnNavChatsCuidador"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="32dp"
+            android:contentDescription="@string/desc_btn_nav_chats_cuidador"
+            android:src="@drawable/ic_mis_chats" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

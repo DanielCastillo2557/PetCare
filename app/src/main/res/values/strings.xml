@@ -26,4 +26,7 @@
     <string name="txt_instrucciones">Muy bien, ingresa tu nombre y foto de perfil para continuar</string>
     <string name="hint_descripcion_usuario">Sobre mí...</string>
     <string name="desc_btn_atras">Boton para volver a la pantalla anterior</string>
+    <string name="desc_btn_nav_mapa_cuidador">Boton para acceder al mapa desde la pantalla del cuidador</string>
+    <string name="desc_btn_nav_perfil_cuidador">Boton para acceder al perfil desde la pantalla del cuidador</string>
+    <string name="desc_btn_nav_chats_cuidador">Boton para acceder a los chats desde la pantalla del cuidador</string>
 </resources>
