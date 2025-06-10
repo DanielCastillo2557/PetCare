@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import android.content.Intent
 
 class InicioCuidadorActivity : AppCompatActivity() {
 
@@ -44,7 +45,10 @@ class InicioCuidadorActivity : AppCompatActivity() {
         }
 
         btnNavMapaCuidador.setOnClickListener {
-            tvPantallaSeleccionada.text = "Pantalla de Mapa"
+            
+            // Navegar a MapaCuidadorActivity
+            val intent = Intent(this, MapaCuidadorActivity::class.java)
+            startActivity(intent)
         }
 
         btnNavChatsCuidador.setOnClickListener {
