@@ -45,7 +45,7 @@ class InicioCuidadorActivity : AppCompatActivity() {
         }
 
         btnNavMapaCuidador.setOnClickListener {
-            
+
             // Navegar a MapaCuidadorActivity
             val intent = Intent(this, MapaCuidadorActivity::class.java)
             startActivity(intent)
