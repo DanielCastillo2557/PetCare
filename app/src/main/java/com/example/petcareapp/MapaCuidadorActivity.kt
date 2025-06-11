@@ -81,10 +81,12 @@ class MapaCuidadorActivity : AppCompatActivity(), OnMapReadyCallback {
         val btnNavChatsEnMapa: ImageView = findViewById(R.id.btnNavChatsEnMapa)
 
         btnNavPerfilEnMapa.setOnClickListener {
-            Toast.makeText(this, "Ir a Perfil desde Mapa", Toast.LENGTH_SHORT).show()
-            // val intent = Intent(this, PerfilCuidadorActivity::class.java) // Reemplaza PerfilCuidadorActivity
-            // startActivity(intent)
-            // finish() // Opcional: cierra esta actividad de mapa si no quieres que quede en la pila
+            // Toast.makeText(this, "Ir a Perfil desde Mapa", Toast.LENGTH_SHORT).show() // Puedes eliminar o comentar esto
+            val intent = Intent(this, PerfilCuidadorActivity::class.java)
+            // Considera flags para la gestión de la pila si es parte de una navegación tipo "tab"
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+            // No llames a finish() si quieres que el usuario pueda volver al mapa con "atrás"
         }
 
         btnNavMapaEnMapa.setOnClickListener {

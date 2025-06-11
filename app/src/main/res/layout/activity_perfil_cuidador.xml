@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainPerfilCuidador"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PerfilCuidadorActivity">
+
+    <!-- Contenedor para el contenido del perfil que se puede desplazar si es necesario -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewPerfil"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/barraInferiorPerfilCuidador"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingBottom="16dp"> <!-- Espacio para que el último elemento no quede pegado a la barra -->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"> <!-- Padding que tenías originalmente, ahora dentro del ScrollView -->
+
+            <ImageView
+                android:id="@+id/imgFotoPerfilCuidador"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="16dp"
+            android:src="@drawable/ic_user"
+            android:contentDescription="Foto de perfil"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tvNombreCuidadorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Nombre:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/imgFotoPerfilCuidador"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tvNombreCuidador"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="18sp"
+                tools:text="Nombre Apellido"
+                app:layout_constraintTop_toTopOf="@id/tvNombreCuidadorLabel"
+                app:layout_constraintStart_toEndOf="@id/tvNombreCuidadorLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tvNombreCuidadorLabel"/>
+
+            <TextView
+                android:id="@+id/tvEmailCuidadorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Email:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvNombreCuidadorLabel"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tvEmailCuidador"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="18sp"
+                tools:text="cuidador@example.com"
+                app:layout_constraintTop_toTopOf="@id/tvEmailCuidadorLabel"
+                app:layout_constraintStart_toEndOf="@id/tvEmailCuidadorLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tvEmailCuidadorLabel"/>
+
+            <TextView
+                android:id="@+id/tvTelefonoCuidadorLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Teléfono:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvEmailCuidadorLabel"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tvTelefonoCuidador"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textSize="18sp"
+                tools:text="+56 9 1234 5678"
+                app:layout_constraintTop_toTopOf="@id/tvTelefonoCuidadorLabel"
+                app:layout_constraintStart_toEndOf="@id/tvTelefonoCuidadorLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBaseline_toBaselineOf="@id/tvTelefonoCuidadorLabel"/>
+
+            <!-- Botón Editar Perfil AHORA DENTRO DEL SCROLLVIEW -->
+            <Button
+                android:id="@+id/btnEditarPerfilCuidador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Editar Perfil"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@id/tvTelefonoCuidador"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="16dp"/> <!-- Margen inferior dentro del scroll -->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/barraInferiorPerfilCuidador"
+    android:layout_width="0dp"
+    android:layout_height="56dp"
+    android:background="#A7F3D0"
+    android:gravity="center"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
+
+    <ImageView
+        android:id="@+id/btnNavPerfilEnPerfil"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:contentDescription="@string/desc_btn_nav_perfil_cuidador"
+    android:src="@drawable/ic_user"
+    app:tint="@color/design_default_color_primary" />
+
+    <ImageView
+        android:id="@+id/btnNavMapaEnPerfil"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:layout_marginStart="32dp"
+    android:contentDescription="@string/desc_btn_nav_mapa_cuidador"
+    android:src="@drawable/ic_mapa" />
+
+    <ImageView
+        android:id="@+id/btnNavChatsEnPerfil"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:layout_marginStart="32dp"
+    android:contentDescription="@string/desc_btn_nav_chats_cuidador"
+    android:src="@drawable/ic_mis_chats" />
+</LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

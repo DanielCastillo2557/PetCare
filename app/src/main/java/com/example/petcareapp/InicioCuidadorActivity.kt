@@ -41,7 +41,13 @@ class InicioCuidadorActivity : AppCompatActivity() {
         }
 
         btnNavPerfilCuidadorInferior.setOnClickListener {
-            tvPantallaSeleccionada.text = "Pantalla de Perfil"
+            // tvPantallaSeleccionada.text = "Pantalla de Perfil" // Puedes mantener esto si quieres para debug
+            val intent = Intent(this, PerfilCuidadorActivity::class.java)
+            // Considera flags para una mejor gestión de la pila de actividades si es necesario
+            // intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+            // o
+            // intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
         }
 
         btnNavMapaCuidador.setOnClickListener {
