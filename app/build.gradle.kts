@@ -63,6 +63,8 @@ dependencies {
 
     implementation(libs.circleimageview)
     implementation(libs.google.maps)
+    implementation(libs.google.places)
+
 
 
 }

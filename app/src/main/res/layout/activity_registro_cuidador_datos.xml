@@ -38,16 +38,18 @@
             android:inputType="phone"
             android:minHeight="48dp" />
 
-        <EditText
-            android:id="@+id/editDireccionCuidador"
+        <AutoCompleteTextView
+            android:id="@+id/inputDireccion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#D97756"
-            android:fontFamily="@font/abeezee_regular"
-            android:hint="@string/direccion"
-            android:inputType="textPostalAddress"
-            android:minHeight="48dp" />
+            android:hint="Dirección"
+            android:inputType="text"
+
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            />
+        <!--android:backgroundTint="@color/your_hint_color"
+            android:textColorHint="@color/your_hint_color"-->
 
         <EditText
             android:id="@+id/editEmailCuidador"
