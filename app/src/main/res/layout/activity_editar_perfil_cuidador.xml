@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainEditarPerfil"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".EditarPerfilCuidadorActivity">
+
+    <TextView
+        android:id="@+id/tvTituloEditarPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editar Perfil"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNombreEditar"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloEditarPerfil"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNombreEditar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre Completo"
+        android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilEmailEditar"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tilNombreEditar"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etEmailEditar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress" />
+    <!-- android:enabled="false" Considera si el email debe ser editable -->
+</com.google.android.material.textfield.TextInputLayout>
+
+<com.google.android.material.textfield.TextInputLayout
+android:id="@+id/tilTelefonoEditar"
+style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_marginTop="8dp"
+app:layout_constraintTop_toBottomOf="@id/tilEmailEditar"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent">
+
+<com.google.android.material.textfield.TextInputEditText
+    android:id="@+id/etTelefonoEditar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Teléfono"
+    android:inputType="phone" />
+</com.google.android.material.textfield.TextInputLayout>
+
+<com.google.android.material.textfield.TextInputLayout
+android:id="@+id/tilDireccionEditar"
+style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_marginTop="8dp"
+app:layout_constraintTop_toBottomOf="@id/tilTelefonoEditar"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent">
+
+<com.google.android.material.textfield.TextInputEditText
+    android:id="@+id/etDireccionEditar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Dirección (Calle, Número, Ciudad)"
+    android:inputType="textPostalAddress" />
+</com.google.android.material.textfield.TextInputLayout>
+
+<Button
+android:id="@+id/btnGuardarCambios"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_marginTop="24dp"
+android:text="Guardar Cambios"
+    android:backgroundTint="@color/button_color"
+app:layout_constraintTop_toBottomOf="@id/tilDireccionEditar"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent" />
+
+<ProgressBar
+android:id="@+id/progressBarEditar"
+style="?android:attr/progressBarStyle"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:visibility="gone"
+tools:visibility="visible"
+app:layout_constraintTop_toTopOf="parent"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

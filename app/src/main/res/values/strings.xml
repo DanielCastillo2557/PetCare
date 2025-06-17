@@ -4,7 +4,7 @@
     <string name="direccion">Dirección</string>
     <string name="contrasenia">Contraseña</string>
     <string name="repita_contrasenia">Repita Contraseña</string>
-    <string name="numero">Número</string>
+    <string name="numero">Número de Contacto</string>
     <string name="txt_datos">Excelente, por último ingresa tus datos de contacto y crea una contraseña</string>
     <string name="registrar_usuario">Registrar usuario</string>
     <string name="contrasenia_olvidada">Olvidé mi contraseña</string>
