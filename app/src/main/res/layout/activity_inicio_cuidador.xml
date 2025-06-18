@@ -45,7 +45,7 @@
         android:id="@+id/tvPantallaSeleccionada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ninguna pantalla seleccionada"
+        android:text="Bienvenido a PetCare"
         android:textSize="24sp"
         android:textColor="#333333"
         app:layout_constraintTop_toBottomOf="@id/barraSuperiorCuidador"
@@ -91,5 +91,17 @@
             android:contentDescription="@string/desc_btn_nav_chats_cuidador"
             android:src="@drawable/ic_mis_chats" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="165dp"
+        android:layout_height="218dp"
+        app:srcCompat="@mipmap/logo_petcare_imagen"
+        app:layout_constraintTop_toBottomOf="@id/barraSuperiorCuidador"
+        app:layout_constraintBottom_toTopOf="@id/tvPantallaSeleccionada"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp" /> 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
