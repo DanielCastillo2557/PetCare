@@ -14,8 +14,8 @@ class MascotaAdapter(
 
     class MascotaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         //val imgMascota: ImageView = view.findViewById(R.id.imgMascota)
-        val txtNombre: TextView = view.findViewById(R.id.txtNombreMascota)
-        val txtRaza: TextView = view.findViewById(R.id.txtRazaMascota)
+        val txtNombre: TextView = view.findViewById(R.id.txtNombreCuidador)
+        val txtRaza: TextView = view.findViewById(R.id.txtPuntuacionCuidador)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MascotaViewHolder {

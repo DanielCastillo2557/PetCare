@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PerfilMiMascotaActivity">
+    tools:context=".CuidadorSeleccionadoActivity">
 
-    <!-- Barra superior -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
@@ -31,11 +29,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mascota 1"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="16dp"
+            android:text="Cuidador"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <!-- Imagen circular de la mascota -->
@@ -53,15 +51,6 @@
         app:layout_constraintTop_toBottomOf="@id/topBar" />
 
     <!-- Ícono para editar la foto -->
-    <ImageView
-        android:id="@+id/editPhoto"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_editar"
-        app:layout_constraintBottom_toBottomOf="@id/cuidadorImage"
-        app:layout_constraintEnd_toEndOf="@id/cuidadorImage"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"/>
 
     <TextView
         android:id="@+id/txtNombreCuidador"
@@ -76,44 +65,21 @@
         app:layout_constraintTop_toBottomOf="@+id/topBar" />
 
     <TextView
-        android:id="@+id/txtTamanioMascota"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:text="Tamaño"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toEndOf="@+id/cuidadorImage"
-        app:layout_constraintTop_toBottomOf="@+id/txtEdadMascota" />
-
-    <TextView
         android:id="@+id/txtDescCuidador"
         android:layout_width="323dp"
         android:layout_height="74dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="64dp"
         android:text="Descripcion"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTamanioMascota" />
-
-    <TextView
-        android:id="@+id/txtEdadMascota"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:text="Edad"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toEndOf="@+id/cuidadorImage"
         app:layout_constraintTop_toBottomOf="@+id/txtPuntuacionCuidador" />
 
     <TextView
         android:id="@+id/txtDireccionCuidador"
         android:layout_width="147dp"
         android:layout_height="wrap_content"
-        android:text="Especie"
+        android:text="Direccion"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
@@ -124,7 +90,7 @@
         android:id="@+id/txtPuntuacionCuidador"
         android:layout_width="147dp"
         android:layout_height="wrap_content"
-        android:text="Raza"
+        android:text="Puntuacion"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
@@ -158,13 +124,21 @@
         app:layout_constraintVertical_bias="0.0">
 
         <!-- Primer botón: agregar foto -->
-        <ImageButton
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_agregar_foto_24px" />
 
         <!-- Fotos mock -->
         <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_user" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_user" />
+
+        <ImageView
+            android:id="@+id/imageView2"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_user" />
@@ -176,13 +150,13 @@
         android:id="@+id/btnEncargar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Encargar"
+        android:layout_margin="16dp"
         android:backgroundTint="#D97B5D"
+        android:text="Enviar solicitud"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@id/bottomBar"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Barra inferior -->
     <LinearLayout

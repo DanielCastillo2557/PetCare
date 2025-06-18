@@ -27,7 +27,7 @@
         android:layout_marginStart="16dp">
 
         <TextView
-            android:id="@+id/txtNombreMascota"
+            android:id="@+id/txtNombreCuidador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nombre_mascota_example"
@@ -35,7 +35,7 @@
             android:textColor="#333333"/>
 
         <TextView
-            android:id="@+id/txtRazaMascota"
+            android:id="@+id/txtPuntuacionCuidador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/raza_example"

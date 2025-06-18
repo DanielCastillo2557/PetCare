@@ -27,12 +27,12 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
         val tamanio = intent.getStringExtra("tamanio")
         val descripcion = intent.getStringExtra("descripcion")
 
-        val txtNombreMascota = findViewById<TextView>(R.id.txtNombreMascota)
-        val txtRazaMascota = findViewById<TextView>(R.id.txtRazaMascota)
+        val txtNombreMascota = findViewById<TextView>(R.id.txtNombreCuidador)
+        val txtRazaMascota = findViewById<TextView>(R.id.txtPuntuacionCuidador)
         val txtEdadMascota = findViewById<TextView>(R.id.txtEdadMascota)
-        val txtEspecieMascota = findViewById<TextView>(R.id.txtEspecieMascota)
+        val txtEspecieMascota = findViewById<TextView>(R.id.txtDireccionCuidador)
         val txtTamanioMascota = findViewById<TextView>(R.id.txtTamanioMascota)
-        val txtDescripcionMascota = findViewById<TextView>(R.id.txtDescMascota)
+        val txtDescripcionMascota = findViewById<TextView>(R.id.txtDescCuidador)
 
         txtNombreMascota.text = nombre
         txtRazaMascota.text = raza
