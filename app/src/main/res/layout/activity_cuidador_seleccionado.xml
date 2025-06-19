@@ -117,11 +117,9 @@
         android:layout_marginTop="116dp"
         android:columnCount="3"
         android:rowCount="3"
-        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/photoAlbumLabel"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@id/photoAlbumLabel">
 
         <!-- Primer botón: agregar foto -->
 
@@ -147,38 +145,20 @@
     </GridLayout>
 
     <Button
-        android:id="@+id/btnEncargar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/btnEnviarSolicitud"
+        android:layout_width="265dp"
+        android:layout_height="48dp"
         android:layout_margin="16dp"
+        android:layout_marginTop="148dp"
         android:backgroundTint="#D97B5D"
         android:text="Enviar solicitud"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photoGrid"
+        app:layout_constraintVertical_bias="0.682" />
 
     <!-- Barra inferior -->
-    <LinearLayout
-        android:id="@+id/bottomBar"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:background="#B8F5D4"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_mis_mascotas"/>
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_mis_chats"
-            android:layout_marginStart="32dp"/>
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

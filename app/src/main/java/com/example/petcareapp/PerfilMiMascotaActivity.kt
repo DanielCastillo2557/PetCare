@@ -41,7 +41,7 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
         txtTamanioMascota.text = tamanio
         txtDescripcionMascota.text = descripcion
 
-        val botonEncargar = findViewById<Button>(R.id.btnEncargar)
+        val botonEncargar = findViewById<Button>(R.id.btnEnviarSolicitud)
         botonEncargar.setOnClickListener {
             val intent = Intent(this, MapaActivity::class.java)
             startActivity(intent)
