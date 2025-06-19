@@ -40,21 +40,32 @@
             android:fontFamily="@font/abeezee_regular"/>
     </LinearLayout>
 
-    <!-- TextView para mostrar la pantalla seleccionada -->
-    <TextView
-        android:id="@+id/tvPantallaSeleccionada"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bienvenido a PetCare"
-        android:textSize="24sp"
-        android:textColor="#333333"
+    <!-- Contenido principal -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         app:layout_constraintTop_toBottomOf="@id/barraSuperiorCuidador"
-        app:layout_constraintBottom_toTopOf="@id/barraInferiorCuidador"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintBottom_toTopOf="@id/barraInferiorCuidador">
 
+        <!-- Texto cuando no hay solicitudes -->
+        <TextView
+            android:id="@+id/textSinSolicitudes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_sin_solicitudes"
+            android:textSize="16sp"
+            android:layout_gravity="center"
+            android:textColor="#333333" />
 
+        <!-- Lista de solicitudes -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerSolicitudes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:padding="8dp" />
+    </FrameLayout>
 
     <!-- Barra inferior -->
     <LinearLayout
@@ -69,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:id="@+id/btnNavPerfilCuidador"
+            android:id="@+id/btnNavSolicitudes"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:contentDescription="@string/desc_btn_nav_perfil_cuidador"
@@ -91,17 +102,4 @@
             android:contentDescription="@string/desc_btn_nav_chats_cuidador"
             android:src="@drawable/ic_mis_chats" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="165dp"
-        android:layout_height="218dp"
-        app:srcCompat="@mipmap/logo_petcare_imagen"
-        app:layout_constraintTop_toBottomOf="@id/barraSuperiorCuidador"
-        app:layout_constraintBottom_toTopOf="@id/tvPantallaSeleccionada"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-    android:layout_marginBottom="16dp" /> 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

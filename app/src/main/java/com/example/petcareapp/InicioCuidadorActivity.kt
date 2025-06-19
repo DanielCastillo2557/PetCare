@@ -25,22 +25,15 @@ class InicioCuidadorActivity : AppCompatActivity() {
             insets
         }
 
-        // Obtener referencia al TextView
-        tvPantallaSeleccionada = findViewById(R.id.tvPantallaSeleccionada)
-
         // Obtener referencias a los botones (ImageViews)
         val btnPerfilCuidadorSuperior: ImageView = findViewById(R.id.btnPerfilCuidador)
-        val btnNavPerfilCuidadorInferior: ImageView = findViewById(R.id.btnNavPerfilCuidador)
+        val btnNavSolicitudes: ImageView = findViewById(R.id.btnNavSolicitudes)
         val btnNavMapaCuidador: ImageView = findViewById(R.id.btnNavMapaCuidador)
         val btnNavChatsCuidador: ImageView = findViewById(R.id.btnNavChatsCuidador)
 
         // Configurar OnClickListeners para los botones
 
         btnPerfilCuidadorSuperior.setOnClickListener {
-            tvPantallaSeleccionada.text = "Pantalla de Perfil (Superior)"
-        }
-
-        btnNavPerfilCuidadorInferior.setOnClickListener {
             // tvPantallaSeleccionada.text = "Pantalla de Perfil" // Puedes mantener esto si quieres para debug
             val intent = Intent(this, PerfilCuidadorActivity::class.java)
             // Considera flags para una mejor gestión de la pila de actividades si es necesario
@@ -50,8 +43,11 @@ class InicioCuidadorActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnNavMapaCuidador.setOnClickListener {
+        btnNavSolicitudes.setOnClickListener {
 
+        }
+
+        btnNavMapaCuidador.setOnClickListener {
             // Navegar a MapaCuidadorActivity
             val intent = Intent(this, MapaCuidadorActivity::class.java)
             startActivity(intent)
