@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class CuidadorSeleccionadoActivity : AppCompatActivity() {
@@ -67,32 +68,41 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
     private fun dejarSolicitud() {
         val uidDuenio = auth.currentUser?.uid ?: return
 
-        // Crear un documento en la colección "solicitudes" del cuidador
-        val solicitud = hashMapOf(
-            "id_duenio" to uidDuenio,
-            "timestamp" to System.currentTimeMillis()
-        )
+        db.collection("usuarios").document(uidDuenio).get()
+            .addOnSuccessListener { doc ->
+                val nombreDuenio = doc.getString("nombre") ?: ""
 
-        // Agregar la solicitud a la colección "solicitudes" del cuidador
-        db.collection("usuarios")
-            .document(cuidadorId)
-            .collection("solicitudes")
-            .add(solicitud)
-            .addOnSuccessListener {
-                // Mostrar un mensaje de éxito y volver a la pantalla de inicio del dueño
-                AlertDialog.Builder(this)
-                    .setTitle("Solicitud enviada")
-                    .setMessage("Tu solicitud ha sido enviada correctamente.")
-                    .setPositiveButton("Aceptar") { _, _ ->
-                        val intent = Intent(this, InicioDuenioActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intent)
-                        finish()
+                val solicitud = hashMapOf(
+                    "idDueno" to uidDuenio,
+                    "nombreDueno" to nombreDuenio,
+                    "fecha" to FieldValue.serverTimestamp(),
+                    "estado" to "pendiente",
+
+                    )
+
+                // Agregar la solicitud a la colección "solicitudes" del cuidador
+                db.collection("usuarios")
+                    .document(cuidadorId)
+                    .collection("solicitudes")
+                    .add(solicitud)
+                    .addOnSuccessListener {
+                        // Mostrar un mensaje de éxito y volver a la pantalla de inicio del dueño
+                        AlertDialog.Builder(this)
+                            .setTitle("Solicitud enviada")
+                            .setMessage("Tu solicitud ha sido enviada correctamente.")
+                            .setPositiveButton("Aceptar") { _, _ ->
+                                val intent = Intent(this, InicioDuenioActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
+                                finish()
+                            }
+                            .show()
                     }
-                    .show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Error al enviar la solicitud", Toast.LENGTH_SHORT).show()
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Error al enviar la solicitud", Toast.LENGTH_SHORT)
+                            .show()
+                    }
             }
     }
 }

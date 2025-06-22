@@ -9,44 +9,49 @@
     tools:context=".InicioCuidadorActivity">
 
     <!-- Barra superior -->
+
+    <!-- Contenido principal -->
     <LinearLayout
         android:id="@+id/barraSuperiorCuidador"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:background="#D97756"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/btnPerfilCuidador"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_user"
-            android:contentDescription="@string/btn_mi_perfil" />
+            android:contentDescription="@string/btn_mi_perfil"
+            android:src="@drawable/ic_user" />
 
         <TextView
             android:id="@+id/tvTituloBarraCuidador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/abeezee_regular"
             android:text="Inicio Cuidador"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/abeezee_regular"/>
+            android:textSize="20sp" />
     </LinearLayout>
 
-    <!-- Contenido principal -->
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/layoutSolicitudesVacio"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/barraSuperiorCuidador"
-        app:layout_constraintBottom_toTopOf="@id/barraInferiorCuidador">
+        app:layout_constraintBottom_toTopOf="@id/barraInferiorCuidador"
+        tools:layout_editor_absoluteY="32dp">
 
         <!-- Texto cuando no hay solicitudes -->
         <TextView
@@ -57,17 +62,24 @@
             android:textSize="16sp"
             android:layout_gravity="center"
             android:textColor="#333333" />
+    </LinearLayout>
 
-        <!-- Lista de solicitudes -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerSolicitudes"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:padding="8dp" />
-    </FrameLayout>
+    <!-- Lista de solicitudes -->
 
     <!-- Barra inferior -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerSolicitudes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/barraInferiorCuidador"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barraSuperiorCuidador"
+        app:layout_constraintVertical_bias="0.0" />
+
     <LinearLayout
         android:id="@+id/barraInferiorCuidador"
         android:layout_width="0dp"

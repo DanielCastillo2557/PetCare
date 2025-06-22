@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="12dp">
+
+        <!-- Círculo con la inicial -->
+        <TextView
+            android:id="@+id/textoInicial"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_circulo_fondo"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Nombre del dueño -->
+
+        <!-- Icono advertencia o mensaje -->
+
+        <LinearLayout
+            android:layout_width="278dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="9dp"
+            android:layout_toStartOf="@+id/iconoAdvertencia"
+            android:layout_toEndOf="@+id/textoInicial"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtNombreDuenio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="Daniel Castillo"
+                android:textColor="#333333"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtFechaSolicitud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="20-07-2000"
+                android:textColor="#333333"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iconoAdvertencia"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_nueva_solicitud" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
