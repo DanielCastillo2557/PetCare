@@ -36,8 +36,10 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/desc_foto_usuario"
             android:src="@drawable/baseline_account_circle_24"
-            android:scaleType="centerCrop"/>
-            <!--android:background="@drawable/circle_background"-->
+            android:scaleType="centerCrop"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
 
 
         <ImageView

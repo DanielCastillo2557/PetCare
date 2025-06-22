@@ -39,7 +39,7 @@ class RegistroMascotaFoto : AppCompatActivity() {
         val especie = intent.getStringExtra("especie") ?: ""
         val nombre = intent.getStringExtra("nombre") ?: ""
         val raza = intent.getStringExtra("raza") ?: ""
-        val fechaNac = intent.getStringExtra("fechaNac") ?: ""
+        val edad = intent.getStringExtra("edad") ?: ""
         val tamanio = intent.getStringExtra("tamanio") ?: ""
         val descripcion = intent.getStringExtra("descripcion") ?: ""
 
@@ -57,7 +57,7 @@ class RegistroMascotaFoto : AppCompatActivity() {
                 "especie" to especie,
                 "nombre" to nombre,
                 "raza" to raza,
-                "fechaNacimiento" to fechaNac,
+                "edad" to edad,
                 "tamanio" to tamanio,
                 "descripcion" to descripcion,
                 "fotoUrl" to (uriFoto?.toString() ?: "")  // Aquí puedes subir a Storage si quieres

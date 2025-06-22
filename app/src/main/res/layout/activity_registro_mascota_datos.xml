@@ -1,33 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
     android:background="#FDFCFB">
 
+    <!-- Barra superior -->
+
     <!-- Título -->
+
+    <!-- Campos -->
+
+    <LinearLayout
+        android:id="@+id/barraSuperior"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="#D97756"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="@string/btn_mi_perfil"
+            android:src="@drawable/ic_atras" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/abeezee_regular"
+            android:text="@string/bs_mis_mascotas"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/txtTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ingresa los datos requeridos para registrar a tu mascota"
-        android:textSize="18sp"
-        android:textColor="#333333"
+        android:layout_marginTop="28dp"
+        android:text="@string/instrucciones_datos_mascota"
         android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/barraSuperior" />
 
-    <!-- Campos -->
     <Spinner
         android:id="@+id/spinnerEspecie"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtTitulo" />
 
@@ -36,7 +72,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Nombre"
+        android:hint="@string/nombre_mascota"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,12 +89,11 @@
         app:layout_constraintTop_toBottomOf="@id/editNombreMascota" />
 
     <EditText
-        android:id="@+id/editFechaNacimiento"
+        android:id="@+id/editEdadMascota"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:focusable="false"
-        android:hint="Fecha de nacimiento"
+        android:hint="@string/edad_mascota"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,13 +107,13 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editFechaNacimiento" />
+        app:layout_constraintTop_toBottomOf="@id/editEdadMascota" />
 
     <EditText
         android:id="@+id/editDescripcion"
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:hint="Describe a tu mascota y detalla cuidados especiales"
+        android:hint="@string/descripcion_mascota"
         android:gravity="top|start"
         app:layout_constraintTop_toBottomOf="@id/spinnerTamaño"
         app:layout_constraintStart_toStartOf="parent"

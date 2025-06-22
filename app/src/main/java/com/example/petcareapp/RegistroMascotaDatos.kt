@@ -29,41 +29,28 @@ class RegistroMascotaDatos : AppCompatActivity() {
         val spinnerRaza = findViewById<Spinner>(R.id.spinnerRaza)
         val spinnerTamanio = findViewById<Spinner>(R.id.spinnerTamaño)
         val editNombre = findViewById<EditText>(R.id.editNombreMascota)
-        val editFecha = findViewById<EditText>(R.id.editFechaNacimiento)
+        val editEdad = findViewById<EditText>(R.id.editEdadMascota)
         val editDescripcion = findViewById<EditText>(R.id.editDescripcion)
         val btnSiguiente = findViewById<ImageButton>(R.id.btnSiguienteMascota)
 
         // Configura los Spinners con datos de prueba o de tu base de datos
-        val especies = listOf("Perro", "Gato", "Conejo", "Hamster", "Otro")
-        val razas = listOf("Labrador", "Bulldog", "Siames", "Otra")
-        val tamanios = listOf("Pequeño", "Mediano", "Grande")
+        val especies = listOf("Selecciona una especie", "Perro", "Gato", "Conejo", "Hamster", "Otro")
+        val razas = listOf("Seleecciona una raza", "Labrador", "Bulldog", "Siames", "Otra")
+        val tamanios = listOf("Seleeciona un tamaño", "Pequeño", "Mediano", "Grande")
 
         spinnerEspecie.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, especies)
         spinnerRaza.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, razas)
         spinnerTamanio.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, tamanios)
 
-        // Fecha de nacimiento con DatePicker
-        editFecha.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-            val datePicker = android.app.DatePickerDialog(this, { _, y, m, d ->
-                editFecha.setText("$d/${m + 1}/$y")
-            }, year, month, day)
-            datePicker.show()
-        }
-
         btnSiguiente.setOnClickListener {
             val especie = spinnerEspecie.selectedItem.toString()
             val nombre = editNombre.text.toString()
             val raza = spinnerRaza.selectedItem.toString()
-            val fechaNac = editFecha.text.toString()
+            val edad = editEdad.text.toString()
             val tamanio = spinnerTamanio.selectedItem.toString()
             val descripcion = editDescripcion.text.toString()
 
-            if (nombre.isBlank() || fechaNac.isBlank() || descripcion.isBlank()) {
+            if (nombre.isBlank() || edad.isBlank() || descripcion.isBlank()) {
                 Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -73,7 +60,7 @@ class RegistroMascotaDatos : AppCompatActivity() {
             intent.putExtra("especie", especie)
             intent.putExtra("nombre", nombre)
             intent.putExtra("raza", raza)
-            intent.putExtra("fechaNac", fechaNac)
+            intent.putExtra("edad", edad)
             intent.putExtra("tamanio", tamanio)
             intent.putExtra("descripcion", descripcion)
             startActivity(intent)

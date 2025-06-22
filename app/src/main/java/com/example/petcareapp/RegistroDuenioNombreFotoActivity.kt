@@ -1,9 +1,11 @@
 package com.example.petcareapp
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class RegistroDuenioNombreFotoActivity : AppCompatActivity() {
+    private lateinit var imagePerfil: ImageView
+    private val PICK_IMAGE_REQUEST = 1
+    private var imagenUri: Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,6 +27,15 @@ class RegistroDuenioNombreFotoActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        imagePerfil = findViewById(R.id.imagePerfil)
+
+        imagePerfil.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        }
+
 
         // --- Encontrar las vistas por su ID (ahora sí existirán después de setContentView)
         val btnSiguiente: ImageButton = findViewById(R.id.btnSiguiente)
@@ -42,4 +57,15 @@ class RegistroDuenioNombreFotoActivity : AppCompatActivity() {
 
         }
     }
+
+    //Manejo de la seleccion de la imagen
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            imagenUri = data.data
+            imagePerfil.setImageURI(imagenUri)  // Cambia el ícono por la imagen seleccionada
+        }
+    }
+
 }

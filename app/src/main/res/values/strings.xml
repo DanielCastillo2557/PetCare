@@ -31,4 +31,8 @@
     <string name="desc_btn_nav_chats_cuidador">Boton para acceder a los chats desde la pantalla del cuidador</string>
     <string name="txt_registro_cuidador">Registro Cuidador</string>
     <string name="txt_sin_solicitudes">De momento no tienes solicitudes</string>
+    <string name="edad_mascota">Edad (en meses)</string>
+    <string name="descripcion_mascota">Describe a tu mascota y detalla cuidados especiales</string>
+    <string name="nombre_mascota">Nombre mascota</string>
+    <string name="instrucciones_datos_mascota">Ingresa los datos requeridos para registrar a tu mascota</string>
 </resources>

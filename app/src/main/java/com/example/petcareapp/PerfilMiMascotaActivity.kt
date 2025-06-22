@@ -22,7 +22,7 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
 
         val nombre = intent.getStringExtra("nombre")
         val raza = intent.getStringExtra("raza")
-        val edad = intent.getIntExtra("edad", 0)
+        val edad = intent.getStringExtra("edad")
         val especie = intent.getStringExtra("especie")
         val tamanio = intent.getStringExtra("tamanio")
         val descripcion = intent.getStringExtra("descripcion")
@@ -36,7 +36,7 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
 
         txtNombreMascota.text = nombre
         txtRazaMascota.text = raza
-        txtEdadMascota.text = edad.toString()
+        txtEdadMascota.text = "$edad meses"
         txtEspecieMascota.text = especie
         txtTamanioMascota.text = tamanio
         txtDescripcionMascota.text = descripcion
