@@ -47,7 +47,10 @@
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:layout_editor_absoluteY="32dp">
+        app:layout_constraintTop_toBottomOf="@id/barraSuperior"
+        app:layout_constraintBottom_toTopOf="@id/barraInferior"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,7 +75,6 @@
         android:id="@+id/recyclerMascotas"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/barraInferior"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +88,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_agregar_mascota_vacio"
         android:contentDescription="Agregar nueva mascota"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/barraInferior"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
         android:visibility="gone" />
@@ -104,19 +106,19 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:contentDescription="@string/btn_mis_mascotas"
-            android:src="@drawable/ic_mis_mascotas" />
+            android:id="@+id/btnNavMisMascotas"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:contentDescription="@string/btn_mis_mascotas"
+        android:src="@drawable/ic_mis_mascotas" />
 
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="32dp"
-            android:contentDescription="@string/btn_mis_chats"
-            android:src="@drawable/ic_mis_chats" />
+            android:id="@+id/btnNavMisChats"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:contentDescription="@string/btn_mis_chats"
+        android:src="@drawable/ic_mis_chats" />
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
