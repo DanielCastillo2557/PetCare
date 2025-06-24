@@ -10,69 +10,19 @@
     tools:context=".RegistroCuidadorNombreFotoActivity">
 
     <!-- Tu Barra Superior -->
-    <LinearLayout
-        android:id="@+id/barraSuperior"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#D97756"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
 
-        <!-- Botón de Flecha hacia Atrás  -->
-        <ImageButton
-            android:id="@+id/btnAtrasCuidadorNombreFoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_atras"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="@string/desc_btn_atras"
-        android:padding="8dp"/>
-
-        <!-- Texto del Título -->
-        <TextView
-            android:id="@+id/tvTituloBarra"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-        android:text="@string/txt_registro_cuidador"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:textAlignment="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"/>
-
-
-    </LinearLayout>
-
-
-<ScrollView
-android:layout_width="match_parent"
-android:layout_height="0dp"
-android:layout_weight="1"
-android:fillViewport="true"> <!-- Importante para que el contenido dentro se expanda si es necesario -->
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="24dp"> <!-- Padding movido aquí para el contenido debajo de la barra -->
-
-    <!-- Título -->
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="@font/abeezee_regular"
         android:text="@string/txt_instrucciones"
         android:textAlignment="center"
         android:textColor="#333333"
-        android:textSize="18sp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="50dp"
-        android:fontFamily="@font/abeezee_regular"/>
+        android:textSize="18sp" />
 
-    <!-- Imagen circular + icono cámara -->
     <FrameLayout
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -84,8 +34,8 @@ android:fillViewport="true"> <!-- Importante para que el contenido dentro se exp
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/desc_foto_usuario"
-            android:src="@drawable/baseline_account_circle_24"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_account_circle_24" />
 
         <ImageView
             android:id="@+id/iconoCamara"
@@ -94,43 +44,43 @@ android:fillViewport="true"> <!-- Importante para que el contenido dentro se exp
             android:layout_gravity="bottom|end"
             android:layout_margin="4dp"
             android:contentDescription="@string/desc_agregar_foto"
-            android:src="@drawable/ic_agregar_foto_24px"/>
+            android:src="@drawable/ic_agregar_foto_24px" />
     </FrameLayout>
 
-    <!-- Campo nombre -->
     <EditText
         android:id="@+id/editNombreCuidador"
-        android:layout_width="match_parent"
+        android:layout_width="337dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="#D97756"
+        android:fontFamily="@font/abeezee_regular"
         android:hint="@string/hint_nombre"
         android:inputType="textPersonName"
-        android:backgroundTint="#D97756"
-        android:fontFamily="@font/abeezee_regular"/>
+        android:minHeight="48dp" />
 
-    <!-- Campo descripcion -->
     <EditText
         android:id="@+id/editDescripcionCuidador"
-        android:layout_width="match_parent"
+        android:layout_width="338dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:backgroundTint="#D97756"
         android:fontFamily="@font/abeezee_regular"
         android:hint="@string/hint_descripcion_usuario"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:minHeight="48dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="88dp" />
 
     <ImageButton
         android:id="@+id/btnSiguienteCuidadorNombreFoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="61dp"
+        android:layout_height="59dp"
         android:layout_gravity="end"
-        android:layout_marginTop="200dp"
         android:background="@null"
         android:contentDescription="@string/desc_btn_continuar"
         android:src="@drawable/ic_siguiente" />
 
-    <!-- Espacio para empujar el botón al final si es necesario -->
-
-    <!-- Botón siguiente -->
-</LinearLayout>
-</ScrollView>
 </LinearLayout>

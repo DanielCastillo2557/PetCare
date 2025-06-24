@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.google.firebase.firestore)
     implementation(libs.google.firebase.auth)
     implementation(libs.androidx.material3.android)
+    implementation(libs.firebase.storage)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -66,6 +67,9 @@ dependencies {
     implementation(libs.google.places)
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
 
 
 

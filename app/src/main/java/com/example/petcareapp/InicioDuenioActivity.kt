@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,6 +24,7 @@ class InicioDuenioActivity : AppCompatActivity() {
     private lateinit var adapter: MascotaAdapter
     private lateinit var listaMascotas: MutableList<Mascota>
     private lateinit var layoutVacio: LinearLayout
+    private lateinit var imagenPerfil: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +36,29 @@ class InicioDuenioActivity : AppCompatActivity() {
             insets
         }
 
+        imagenPerfil = findViewById(R.id.btnPerfil)
         recyclerView = findViewById(R.id.recyclerMascotas)
         layoutVacio = findViewById(R.id.layoutVacio)
         val btnAgregarMascota: ImageButton = findViewById(R.id.btnAgregarMascota)
         val fabAgregarMascota: FloatingActionButton = findViewById(R.id.fabAgregarMascota)
+
+        // Cargar la imagen de perfil del usuario
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("usuarios").document(uid).get()
+            .addOnSuccessListener { documento ->
+                val fotoUrl = documento.getString("foto_url")
+                if (!fotoUrl.isNullOrEmpty()) {
+                    Glide.with(this)
+                        .load(fotoUrl)
+                        .circleCrop()
+                        .into(imagenPerfil)
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "No se pudo cargar la imagen de perfil", Toast.LENGTH_SHORT).show()
+            }
 
 
         listaMascotas = mutableListOf()
@@ -62,9 +84,7 @@ class InicioDuenioActivity : AppCompatActivity() {
         fabAgregarMascota.setOnClickListener {
             startActivity(Intent(this, RegistroMascotaDatos::class.java))
         }
-
         cargarMascotas()
-
     }
 
     private fun cargarMascotas() {

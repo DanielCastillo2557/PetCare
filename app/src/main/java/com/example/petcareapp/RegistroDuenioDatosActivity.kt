@@ -47,6 +47,7 @@ class RegistroDuenioDatosActivity : AppCompatActivity() {
 
     private fun registrarUsuario() {
         val nombre = intent.getStringExtra("nombre") ?: "" // nombre recibido del activity anterior
+        val fotoUrl = intent.getStringExtra("fotoUrl") ?: "" // fotoUrl recibida del activity anterior
         val email = findViewById<EditText>(R.id.editEmail).text.toString()
         val contrasena = findViewById<EditText>(R.id.editContrasena).text.toString()
         val confirmar = findViewById<EditText>(R.id.editRepetirContrasena).text.toString()
@@ -64,6 +65,7 @@ class RegistroDuenioDatosActivity : AppCompatActivity() {
                     val uid = auth.currentUser?.uid ?: return@addOnCompleteListener
                     val usuario = hashMapOf(
                         "nombre" to nombre,
+                        "foto_url" to fotoUrl,
                         "email" to email,
                         "telefono" to telefono,
                         "direccion" to direccion,

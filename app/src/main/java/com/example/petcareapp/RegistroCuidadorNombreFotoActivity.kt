@@ -23,20 +23,6 @@ class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
             insets
         }
 
-        // --- Configuración del Botón de Atrás ---
-        // Obtener referencia al botón de atrás usando el ID que definiste en el XML
-        // (asumiendo que es btnAtrasCuidadorNombreFoto según nuestra última conversación)
-        val botonAtras: ImageButton = findViewById(R.id.btnAtrasCuidadorNombreFoto)
-
-        // Configurar el OnClickListener para el botón de atrás
-        botonAtras.setOnClickListener {
-            // Esta es la forma moderna y recomendada para manejar la navegación hacia atrás.
-            // Simula el comportamiento del botón "Atrás" del sistema.
-            onBackPressedDispatcher.onBackPressed()
-        }
-        // --- Fin de la Configuración del Botón de Atrás ---
-
-
         // --- Lógica para el botón Siguiente ---
         //Tomamos el nombre y descripcion ingresado por el usuario
         val editNombre = findViewById<EditText>(R.id.editNombreCuidador)
@@ -51,6 +37,7 @@ class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
             if (nombre.isBlank() || descripcion.isBlank()){
                 // Mensaje un poco más específico y considerando ambos campos
                 Toast.makeText(this, "Por favor, ingresa tu nombre y una descripción.", Toast.LENGTH_LONG).show()
+
                 return@setOnClickListener
             }
 

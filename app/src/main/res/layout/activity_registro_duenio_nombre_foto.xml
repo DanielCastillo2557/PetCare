@@ -57,16 +57,17 @@
         android:id="@+id/editNombreCuidador"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#D97756"
+        android:fontFamily="@font/abeezee_regular"
         android:hint="@string/hint_nombre"
         android:inputType="textPersonName"
-        android:backgroundTint="#D97756"
-        android:fontFamily="@font/abeezee_regular"/>
+        android:minHeight="48dp" />
 
     <!-- Botón siguiente -->
     <ImageButton
         android:id="@+id/btnSiguiente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="53dp"
+        android:layout_height="54dp"
         android:layout_gravity="end"
         android:layout_marginTop="200dp"
         android:background="@null"
