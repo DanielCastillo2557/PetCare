@@ -35,12 +35,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre Completo"
-        android:inputType="textPersonName" />
+            android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilEmailEditar"
+        android:id="@+id/tilTelefonoEditar"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -50,30 +50,11 @@
     app:layout_constraintEnd_toEndOf="parent">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etEmailEditar"
+        android:id="@+id/etTelefonoEditar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress" />
-    <!-- android:enabled="false" Considera si el email debe ser editable -->
-</com.google.android.material.textfield.TextInputLayout>
-
-<com.google.android.material.textfield.TextInputLayout
-android:id="@+id/tilTelefonoEditar"
-style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_marginTop="8dp"
-app:layout_constraintTop_toBottomOf="@id/tilEmailEditar"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent">
-
-<com.google.android.material.textfield.TextInputEditText
-    android:id="@+id/etTelefonoEditar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Teléfono"
-    android:inputType="phone" />
+        android:hint="Teléfono"
+        android:inputType="phone" />
 </com.google.android.material.textfield.TextInputLayout>
 
 <com.google.android.material.textfield.TextInputLayout
@@ -100,7 +81,7 @@ android:layout_width="0dp"
 android:layout_height="wrap_content"
 android:layout_marginTop="24dp"
 android:text="Guardar Cambios"
-    android:backgroundTint="@color/button_color"
+android:backgroundTint="@color/button_color"
 app:layout_constraintTop_toBottomOf="@id/tilDireccionEditar"
 app:layout_constraintStart_toStartOf="parent"
 app:layout_constraintEnd_toEndOf="parent" />

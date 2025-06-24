@@ -1,11 +1,17 @@
 package com.example.petcareapp
 
+import com.google.firebase.firestore.Exclude // Importante para el ID
+
 data class Mascota(
-    val nombre: String = "",
-    val raza: String = "",
-    val edad: String = "",
-    val especie: String = "",
-    val tamanio: String = "",
-    val fotoUrl: String = "",
-    val descripcion: String = ""
-)
+    @get:Exclude var id: String? = null, // ID del documento de Firestore
+    var nombre: String = "",
+    var raza: String = "",
+    var edad: String = "",
+    var especie: String = "",
+    var tamanio: String = "",
+    var fotoUrl: String = "",
+    var descripcion: String = ""
+) {
+    // Constructor sin argumentos requerido por Firestore para la deserialización
+    constructor() : this(null, "", "", "", "", "", "", "")
+}
