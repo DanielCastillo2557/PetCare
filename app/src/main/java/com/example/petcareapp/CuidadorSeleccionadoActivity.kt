@@ -3,11 +3,13 @@ package com.example.petcareapp
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton // Importar ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.semantics.text
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
@@ -29,10 +31,30 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
             insets
         }
 
+        // --- Inicializar el botón de retroceso ---
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            // Opción 1: Usar onBackPressedDispatcher (recomendado para consistencia con el gesto de back)
+            onBackPressedDispatcher.onBackPressed()
+
+            // Opción 2: Simplemente finalizar la actividad (más directo si no necesitas un manejo complejo del back stack)
+            // finish()
+        }
+        // --- Fin de la inicialización del botón de retroceso ---
+
+
         // Inicializar Firebase y obtener el ID del cuidador seleccionado
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
-        cuidadorId = intent.getStringExtra("cuidadorId") ?: return
+        cuidadorId = intent.getStringExtra("cuidadorId") ?: "" // Es mejor asignar un valor por defecto o manejar el error
+
+        // Verificar si cuidadorId está vacío y manejarlo, por ejemplo, finalizando la actividad
+        if (cuidadorId.isEmpty()) {
+            Toast.makeText(this, "Error: No se pudo obtener el ID del cuidador.", Toast.LENGTH_LONG).show()
+            finish() // Cierra la actividad si no hay ID
+            return   // Importante salir del onCreate para evitar más ejecuciones
+        }
+
 
         cargarDatosCuidador(cuidadorId)
 
@@ -49,14 +71,16 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
             .addOnSuccessListener { doc ->
                 if (doc.exists()) {
                     // Actualizar la interfaz de usuario con los datos del cuidador
-                    findViewById<TextView>(R.id.txtNombreCuidador).text = doc.getString("nombre") ?: ""
-                    findViewById<TextView>(R.id.txtDireccionCuidador).text = doc.getString("direccion") ?: ""
+                    findViewById<TextView>(R.id.txtNombreCuidador).text = doc.getString("nombre") ?: "Nombre no disponible" // Valores por defecto
+                    findViewById<TextView>(R.id.txtDireccionCuidador).text = doc.getString("direccion") ?: "Dirección no disponible"
+                    // Suponiendo que tienes estos TextViews en tu layout
+                    findViewById<TextView>(R.id.txtPuntuacionCuidador).text = doc.getString("puntuacion") ?: "Puntuación no disponible"
+                    findViewById<TextView>(R.id.txtDescCuidador).text = doc.getString("descripcion") ?: "Descripción no disponible"
 
-                    //val fotoUrl = doc.getString("foto_url")
-                    //if (!fotoUrl.isNullOrEmpty()) {
-                    //    val imgView = findViewById<ImageView>(R.id.imgPerfilCuidador)
-                    //    Glide.with(this).load(fotoUrl).into(imgView)
-                    //}
+
+
+                } else {
+                    Toast.makeText(this, "No se encontraron datos para este cuidador.", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener {
@@ -66,19 +90,25 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
 
     // Dejar la solicitud al cuidador
     private fun dejarSolicitud() {
-        val uidDuenio = auth.currentUser?.uid ?: return
+        val uidDuenio = auth.currentUser?.uid
+        if (uidDuenio == null) {
+            Toast.makeText(this, "Debes iniciar sesión para enviar una solicitud.", Toast.LENGTH_SHORT).show()
+            // Podrías redirigir al login aquí
+            return
+        }
+
 
         db.collection("usuarios").document(uidDuenio).get()
             .addOnSuccessListener { doc ->
-                val nombreDuenio = doc.getString("nombre") ?: ""
+                val nombreDuenio = doc.getString("nombre") ?: "Dueño Anónimo"
+
 
                 val solicitud = hashMapOf(
                     "idDueno" to uidDuenio,
                     "nombreDueno" to nombreDuenio,
                     "fecha" to FieldValue.serverTimestamp(),
-                    "estado" to "pendiente",
-
-                    )
+                    "estado" to "pendiente"
+                )
 
                 // Agregar la solicitud a la colección "solicitudes" del cuidador
                 db.collection("usuarios")
@@ -91,18 +121,21 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
                             .setTitle("Solicitud enviada")
                             .setMessage("Tu solicitud ha sido enviada correctamente.")
                             .setPositiveButton("Aceptar") { _, _ ->
+
                                 val intent = Intent(this, InicioDuenioActivity::class.java)
-                                intent.flags =
-                                    Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                                 startActivity(intent)
                                 finish()
                             }
+                            .setCancelable(false) // Evitar que se cierre al tocar fuera
                             .show()
                     }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "Error al enviar la solicitud", Toast.LENGTH_SHORT)
-                            .show()
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Error al enviar la solicitud: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al obtener datos del dueño: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
