@@ -17,6 +17,9 @@
         android:theme="@style/Theme.PetCareApp"
         tools:targetApi="31">
         <activity
+            android:name=".DetalleSolicitudActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditarPerfilMiMascotaActivity"
             android:exported="false" />
         <activity
