@@ -11,8 +11,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.text
+// Eliminadas las importaciones de compose no utilizadas
+// import androidx.compose.ui.semantics.error
+// import androidx.compose.ui.semantics.text
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+
 
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -24,17 +28,15 @@ class EditarPerfilCuidadorActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
-    private lateinit var etNombreCompleto: TextInputEditText // Renombrado para claridad, usa el ID etNombreEditar
+    private lateinit var etNombreCompleto: TextInputEditText
 
-    private lateinit var etEmail: TextInputEditText
     private lateinit var etTelefono: TextInputEditText
     private lateinit var etDireccion: TextInputEditText
     private lateinit var btnGuardarCambios: Button
     private lateinit var progressBar: ProgressBar
 
-    private var currentNombreCompleto: String? = null // Renombrado
-    // private var currentApellido: String? = null // ELIMINADO
-    private var currentEmail: String? = null
+    private var currentNombreCompleto: String? = null
+
     private var currentTelefono: String? = null
     private var currentDireccion: String? = null
 
@@ -45,7 +47,7 @@ class EditarPerfilCuidadorActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_editar_perfil_cuidador) // Este es el XML modificado
+        setContentView(R.layout.activity_editar_perfil_cuidador)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainEditarPerfil)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -56,9 +58,8 @@ class EditarPerfilCuidadorActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        etNombreCompleto = findViewById(R.id.etNombreEditar) // El ID sigue siendo etNombreEditar en el XML
+        etNombreCompleto = findViewById(R.id.etNombreEditar)
 
-        etEmail = findViewById(R.id.etEmailEditar)
         etTelefono = findViewById(R.id.etTelefonoEditar)
         etDireccion = findViewById(R.id.etDireccionEditar)
         btnGuardarCambios = findViewById(R.id.btnGuardarCambios)
@@ -86,16 +87,13 @@ class EditarPerfilCuidadorActivity : AppCompatActivity() {
         db.collection("usuarios").document(currentUser.uid).get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
-                    // Asumimos que Firestore tiene un campo "nombre" que contiene el nombre completo
                     currentNombreCompleto = document.getString("nombre")
 
-                    currentEmail = document.getString("email")
                     currentTelefono = document.getString("telefono")
                     currentDireccion = document.getString("direccion")
 
                     etNombreCompleto.setText(currentNombreCompleto)
 
-                    etEmail.setText(currentEmail ?: currentUser.email)
                     etTelefono.setText(currentTelefono)
                     etDireccion.setText(currentDireccion)
 
@@ -112,19 +110,19 @@ class EditarPerfilCuidadorActivity : AppCompatActivity() {
     }
 
     private fun validarCampos(): Boolean {
-        if (etNombreCompleto.text.toString().trim().isEmpty()) { // Validar etNombreCompleto
+        if (etNombreCompleto.text.toString().trim().isEmpty()) {
             etNombreCompleto.error = "El nombre completo no puede estar vacío"
             etNombreCompleto.requestFocus()
             return false
         }
+        // Puedes agregar más validaciones para teléfono y dirección si es necesario
         return true
     }
 
     private fun guardarCambios() {
         showLoading(true)
-        val nuevoNombreCompleto = etNombreCompleto.text.toString().trim() // Obtener de etNombreCompleto
-
-        val nuevoEmail = etEmail.text.toString().trim()
+        val nuevoNombreCompleto = etNombreCompleto.text.toString().trim()
+        // val nuevoEmail = etEmail.text.toString().trim() // ELIMINAR ESTA LÍNEA
         val nuevoTelefono = etTelefono.text.toString().trim()
         val nuevaDireccion = etDireccion.text.toString().trim()
 
@@ -136,17 +134,26 @@ class EditarPerfilCuidadorActivity : AppCompatActivity() {
         }
 
         val updates = hashMapOf<String, Any>()
-        // El campo en Firestore se llama "nombre" pero contiene el nombre completo
-        if (nuevoNombreCompleto != currentNombreCompleto) updates["nombre"] = nuevoNombreCompleto
+        if (nuevoNombreCompleto != currentNombreCompleto) {
+            updates["nombre"] = nuevoNombreCompleto
+        }
 
-        if (nuevoEmail != currentEmail) updates["email"] = nuevoEmail
-        if (nuevoTelefono != currentTelefono) updates["telefono"] = nuevoTelefono
-        if (nuevaDireccion != currentDireccion) updates["direccion"] = nuevaDireccion
+
+        // Se mantiene la lógica de comparación para teléfono y dirección
+        val currentTel = currentTelefono // Usar la variable de clase
+        if (nuevoTelefono != currentTel) {
+            updates["telefono"] = nuevoTelefono
+        }
+        val currentDir = currentDireccion // Usar la variable de clase
+        if (nuevaDireccion != currentDir) {
+            updates["direccion"] = nuevaDireccion
+        }
+
 
         if (updates.isEmpty()) {
             Toast.makeText(this, "No hay cambios para guardar.", Toast.LENGTH_SHORT).show()
             showLoading(false)
-            finish()
+            finish() // Considera si quieres finalizar aquí o permitir más ediciones
             return
         }
 
@@ -156,19 +163,19 @@ class EditarPerfilCuidadorActivity : AppCompatActivity() {
                 Log.d(TAG, "Perfil actualizado correctamente en Firestore.")
                 Toast.makeText(this, "Perfil actualizado.", Toast.LENGTH_SHORT).show()
 
-                // Actualizar el nombre para mostrar en Firebase Auth si cambió
-                if (updates.containsKey("nombre")) { // la clave "nombre"
+                if (updates.containsKey("nombre")) {
                     val profileUpdates = UserProfileChangeRequest.Builder()
-                        .setDisplayName(nuevoNombreCompleto) // Usar nuevoNombreCompleto
+                        .setDisplayName(nuevoNombreCompleto)
                         .build()
                     currentUser.updateProfile(profileUpdates)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Log.d(TAG, "Nombre para mostrar en Firebase Auth actualizado.")
                             }
+                            // No es crítico si esto falla, el dato principal está en Firestore
                         }
                 }
-                setResult(Activity.RESULT_OK)
+                setResult(Activity.RESULT_OK) // Informa a la actividad anterior que hubo cambios
                 showLoading(false)
                 finish()
             }
@@ -184,7 +191,6 @@ class EditarPerfilCuidadorActivity : AppCompatActivity() {
         btnGuardarCambios.isEnabled = !isLoading
         etNombreCompleto.isEnabled = !isLoading
 
-        etEmail.isEnabled = !isLoading
         etTelefono.isEnabled = !isLoading
         etDireccion.isEnabled = !isLoading
     }
