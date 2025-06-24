@@ -73,37 +73,41 @@
                     android:inputType="textCapWords"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Especie de la Mascota -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilEspecieMascotaEditar"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <!-- Especie de la Mascota (Spinner) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Especie"
+                android:textSize="12sp"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="4dp"
+                android:textColor="?android:attr/textColorSecondary"/>
+            <Spinner
+                android:id="@+id/spinnerEspecieEditar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:hint="Especie (Ej: Perro, Gato)">
+                android:minHeight="48dp"
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEspecieMascotaEditar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapWords"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_marginBottom="12dp"/>
 
-            <!-- Raza de la Mascota -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilRazaMascotaEditar"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <!-- Raza de la Mascota (Spinner) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Raza"
+                android:textSize="12sp"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="4dp"
+                android:textColor="?android:attr/textColorSecondary"/>
+            <Spinner
+                android:id="@+id/spinnerRazaEditar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:hint="Raza">
+                android:minHeight="48dp"
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etRazaMascotaEditar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapWords"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_marginBottom="12dp"/>
 
             <!-- Edad de la Mascota -->
             <com.google.android.material.textfield.TextInputLayout
@@ -112,34 +116,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:hint="Edad (Ej: 5)">
+                android:hint="Edad (Ej: 5 meses)">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEdadMascotaEditar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
-                <!-- Opcional: si quieres que el usuario pueda escribir "meses" usa inputType="text"
-                     y maneja la conversión en el código.
-                     Por simplicidad, lo dejamos como number aquí asumiendo que solo se ingresa el número.
-                -->
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Tamaño de la Mascota -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilTamanioMascotaEditar"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:hint="Tamaño (Ej: Pequeño, Mediano)">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etTamanioMascotaEditar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:inputType="textCapWords"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Tamaño de la Mascota (Spinner) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tamaño"
+                android:textSize="12sp"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="4dp"
+                android:textColor="?android:attr/textColorSecondary"/>
+            <Spinner
+                android:id="@+id/spinnerTamanioEditar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_marginBottom="12dp"/>
 
             <!-- Descripción de la Mascota -->
             <com.google.android.material.textfield.TextInputLayout
