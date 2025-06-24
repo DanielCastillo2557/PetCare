@@ -4,12 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isEmpty
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,6 +25,7 @@ class InicioDuenioActivity : AppCompatActivity() {
     private lateinit var adapter: MascotaAdapter
     private lateinit var listaMascotas: MutableList<Mascota>
     private lateinit var layoutVacio: LinearLayout
+    private lateinit var btnPerfil: ImageView // Variable para el botón de perfil (ImageView)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +41,10 @@ class InicioDuenioActivity : AppCompatActivity() {
         layoutVacio = findViewById(R.id.layoutVacio)
         val btnAgregarMascota: ImageButton = findViewById(R.id.btnAgregarMascota)
         val fabAgregarMascota: FloatingActionButton = findViewById(R.id.fabAgregarMascota)
-
+        btnPerfil = findViewById(R.id.btnPerfil) // Inicializar el ImageView del perfil
 
         listaMascotas = mutableListOf()
-        adapter = MascotaAdapter(listaMascotas){ mascota ->
+        adapter = MascotaAdapter(listaMascotas) { mascota ->
             val intent = Intent(this, PerfilMiMascotaActivity::class.java).apply {
                 putExtra("nombre", mascota.nombre)
                 putExtra("raza", mascota.raza)
@@ -58,19 +62,32 @@ class InicioDuenioActivity : AppCompatActivity() {
             startActivity(Intent(this, RegistroMascotaDatos::class.java))
         }
 
-
         fabAgregarMascota.setOnClickListener {
             startActivity(Intent(this, RegistroMascotaDatos::class.java))
         }
 
-        cargarMascotas()
+        // --- Configurar OnClickListener para btnPerfil ---
+        btnPerfil.setOnClickListener {
+            val intent = Intent(this, PerfilDuenioActivity::class.java) // Navegar a PerfilDuenioActivity
+            startActivity(intent)
+        }
+        // --- Fin de la configuración de btnPerfil ---
 
+        cargarMascotas()
     }
 
     private fun cargarMascotas() {
-        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        if (uid == null) {
+            // Considera manejar el caso donde el UID es nulo,
+            // por ejemplo, redirigiendo al login o mostrando un mensaje.
+            Toast.makeText(this, "Usuario no autenticado.", Toast.LENGTH_SHORT).show()
+            // Podrías llamar a finish() o iniciar LoginActivity aquí si es apropiado.
+            return
+        }
         val db = FirebaseFirestore.getInstance()
-        val fabAgregarMascota: FloatingActionButton = findViewById(R.id.fabAgregarMascota)
+        // No es necesario volver a obtener fabAgregarMascota aquí, ya es una variable de clase o local en onCreate
+        // val fabAgregarMascota: FloatingActionButton = findViewById(R.id.fabAgregarMascota)
 
         db.collection("usuarios").document(uid).collection("mascotas")
             .get()
@@ -78,18 +95,23 @@ class InicioDuenioActivity : AppCompatActivity() {
                 listaMascotas.clear()
                 for (doc in result) {
                     val mascota = doc.toObject(Mascota::class.java)
-                    listaMascotas.add(mascota)
+                    // Es buena práctica verificar si la mascota no es null antes de añadirla,
+                    // aunque toObject debería manejarlo si la clase Mascota tiene un constructor sin argumentos.
+                    if (mascota != null) {
+                        listaMascotas.add(mascota)
+                    }
                 }
 
+                val fab: FloatingActionButton = findViewById(R.id.fabAgregarMascota) // Obtener referencia aquí o hacerla variable de clase
                 if (listaMascotas.isEmpty()) {
                     layoutVacio.visibility = View.VISIBLE
                     recyclerView.visibility = View.GONE
-                    fabAgregarMascota.visibility = View.GONE
+                    fab.visibility = View.GONE // Usar la referencia correcta
                 } else {
                     layoutVacio.visibility = View.GONE
                     recyclerView.visibility = View.VISIBLE
                     adapter.notifyDataSetChanged()
-                    fabAgregarMascota.visibility = View.VISIBLE
+                    fab.visibility = View.VISIBLE // Usar la referencia correcta
                 }
             }
             .addOnFailureListener {
