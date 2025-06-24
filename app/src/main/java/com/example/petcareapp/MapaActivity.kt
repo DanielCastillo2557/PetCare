@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView // Importar ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresPermission
@@ -37,6 +38,17 @@ class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // --- Configurar el botón de retroceso de la barra superior ---
+        val btnBack = findViewById<ImageView>(R.id.btnBack)
+        btnBack.setOnClickListener {
+
+            onBackPressedDispatcher.onBackPressed()
+
+
+        }
+
+
         // Configurar el mapa
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.mapFragment) as SupportMapFragment
@@ -123,8 +135,12 @@ class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED
         ) {
-            googleMap.isMyLocationEnabled = true
+            // Ya tienes el permiso, habilita la capa de mi ubicación
+            if (::googleMap.isInitialized) { // Asegúrate que el mapa esté listo
+                googleMap.isMyLocationEnabled = true
+            }
         } else {
+            // Solicitar el permiso
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
@@ -136,23 +152,31 @@ class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
     // Manejar la respuesta de la solicitud de permisos
     @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults) // Es buena práctica llamar a super primero
 
-        // Manejar la respuesta de la solicitud de permisos
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (::googleMap.isInitialized) {
-                googleMap.isMyLocationEnabled = true
-            }
-        }
-
-        // Obtener la ubicación actual
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            if (location != null) {
-                val miUbicacion = LatLng(location.latitude, location.longitude)
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(miUbicacion, 14f))
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permiso concedido
+                if (::googleMap.isInitialized) {
+                    try {
+                        googleMap.isMyLocationEnabled = true
+                        // Intenta obtener la ubicación actual de nuevo y mover la cámara
+                        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+                        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                            if (location != null) {
+                                val miUbicacion = LatLng(location.latitude, location.longitude)
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(miUbicacion, 14f))
+                            } else {
+                                Toast.makeText(this, "No se pudo obtener la ubicación actual tras conceder permiso.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } catch (e: SecurityException) {
+                        Log.e("MAPA", "Error de seguridad al habilitar mi ubicación", e)
+                    }
+                }
             } else {
-                Toast.makeText(this, "No se pudo obtener la ubicación actual", Toast.LENGTH_SHORT).show()
+                // Permiso denegado
+                Toast.makeText(this, "Permiso de ubicación denegado. Algunas funciones del mapa pueden no estar disponibles.", Toast.LENGTH_LONG).show()
             }
         }
     }
