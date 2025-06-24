@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="button_color">#D97756</color> <!-- color que usamos en el prototipo -->
-</resources>
+    <resources>
+        <color name="black">#FF000000</color>
+        <color name="white">#FFFFFFFF</color>
+        <color name="button_color">#D97756</color> <!-- color que usamos en el prototipo -->
+
+        <!-- Colores para la navegación (AÑADIDOS) -->
+        <color name="color_nav_icon_resaltado">#D97756</color> <!-- Usando tu "button_color" existente para el resaltado -->
+        <color name="color_nav_icon_default">#757575</color>  <!-- Ejemplo: un gris estándar para el ícono no seleccionado. Puedes cambiarlo. -->
+    </resources>
