@@ -1,17 +1,23 @@
 package com.example.petcareapp
 
+import android.app.Activity // Para Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher // Importante
+import androidx.activity.result.contract.ActivityResultContracts // Importante
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isEmpty
+
+// import androidx.core.view.isEmpty // No parece usarse, puedes quitarlo si no hay error
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +31,11 @@ class InicioDuenioActivity : AppCompatActivity() {
     private lateinit var adapter: MascotaAdapter
     private lateinit var listaMascotas: MutableList<Mascota>
     private lateinit var layoutVacio: LinearLayout
-    private lateinit var btnPerfil: ImageView // Variable para el botón de perfil (ImageView)
+    private lateinit var btnPerfil: ImageView
+    private lateinit var fabAgregarMascota: FloatingActionButton // Hacerla variable miembro para fácil acceso
+
+    // --- Launcher para el resultado de PerfilMiMascotaActivity ---
+    private lateinit var perfilMascotaLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,82 +50,120 @@ class InicioDuenioActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerMascotas)
         layoutVacio = findViewById(R.id.layoutVacio)
         val btnAgregarMascota: ImageButton = findViewById(R.id.btnAgregarMascota)
-        val fabAgregarMascota: FloatingActionButton = findViewById(R.id.fabAgregarMascota)
-        btnPerfil = findViewById(R.id.btnPerfil) // Inicializar el ImageView del perfil
+        fabAgregarMascota = findViewById(R.id.fabAgregarMascota) // Inicializar la variable miembro
+        btnPerfil = findViewById(R.id.btnPerfil)
+
+        // --- Inicializar el Launcher para PerfilMiMascotaActivity ---
+        perfilMascotaLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Si PerfilMiMascotaActivity indica que hubo cambios (porque se editó una mascota),
+                // recargamos la lista para reflejar esos cambios.
+                Log.d("InicioDuenio", "Resultado OK de PerfilMiMascotaActivity, recargando mascotas.")
+                cargarMascotas()
+                // Opcional: mostrar un Toast
+                // Toast.makeText(this, "Lista de mascotas actualizada.", Toast.LENGTH_SHORT).show()
+            } else {
+                Log.d("InicioDuenio", "Resultado de PerfilMiMascotaActivity: ${result.resultCode}")
+            }
+        }
 
         listaMascotas = mutableListOf()
         adapter = MascotaAdapter(listaMascotas) { mascota ->
             val intent = Intent(this, PerfilMiMascotaActivity::class.java).apply {
+                // --- AÑADIR EL ID DE LA MASCOTA ---
+                putExtra("id_mascota", mascota.id)
                 putExtra("nombre", mascota.nombre)
                 putExtra("raza", mascota.raza)
                 putExtra("edad", mascota.edad)
                 putExtra("especie", mascota.especie)
                 putExtra("tamanio", mascota.tamanio)
                 putExtra("descripcion", mascota.descripcion)
+                putExtra("fotoUrl", mascota.fotoUrl) // Asegúrate que tu clase Mascota tiene fotoUrl
             }
-            startActivity(intent)
+            // --- USAR EL LAUNCHER EN LUGAR DE startActivity ---
+            perfilMascotaLauncher.launch(intent)
         }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        // Listener para el botón de agregar mascota (en la UI, no el FAB)
         btnAgregarMascota.setOnClickListener {
+            // Considera usar un launcher también si RegistroMascotaDatos podría necesitar
+            // devolver un resultado para refrescar la lista inmediatamente.
             startActivity(Intent(this, RegistroMascotaDatos::class.java))
+            // Si RegistroMascotaDatos añade una mascota y quieres verla inmediatamente,
+            // deberías usar un launcher y recargar en el resultado.
         }
 
+        // Listener para el FloatingActionButton de agregar mascota
         fabAgregarMascota.setOnClickListener {
             startActivity(Intent(this, RegistroMascotaDatos::class.java))
+            // Misma consideración que arriba sobre el launcher.
         }
 
-        // --- Configurar OnClickListener para btnPerfil ---
         btnPerfil.setOnClickListener {
-            val intent = Intent(this, PerfilDuenioActivity::class.java) // Navegar a PerfilDuenioActivity
-            startActivity(intent)
+            startActivity(Intent(this, PerfilDuenioActivity::class.java))
         }
-        // --- Fin de la configuración de btnPerfil ---
 
-        cargarMascotas()
+        cargarMascotas() // Carga inicial de mascotas
     }
 
     private fun cargarMascotas() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         if (uid == null) {
-            // Considera manejar el caso donde el UID es nulo,
-            // por ejemplo, redirigiendo al login o mostrando un mensaje.
             Toast.makeText(this, "Usuario no autenticado.", Toast.LENGTH_SHORT).show()
-            // Podrías llamar a finish() o iniciar LoginActivity aquí si es apropiado.
+            Log.w("InicioDuenio", "cargarMascotas: UID es nulo.")
+            // Aquí podrías redirigir al login o limpiar la lista y mostrar estado vacío
+            listaMascotas.clear()
+            adapter.notifyDataSetChanged()
+            actualizarVisibilidadVacio() // Llama a una función para manejar la UI vacía
             return
         }
         val db = FirebaseFirestore.getInstance()
-        // No es necesario volver a obtener fabAgregarMascota aquí, ya es una variable de clase o local en onCreate
-        // val fabAgregarMascota: FloatingActionButton = findViewById(R.id.fabAgregarMascota)
+        Log.d("InicioDuenio", "Cargando mascotas para UID: $uid")
 
         db.collection("usuarios").document(uid).collection("mascotas")
             .get()
             .addOnSuccessListener { result ->
                 listaMascotas.clear()
+                if (result.isEmpty) {
+                    Log.d("InicioDuenio", "No se encontraron mascotas para el usuario.")
+                }
                 for (doc in result) {
                     val mascota = doc.toObject(Mascota::class.java)
-                    // Es buena práctica verificar si la mascota no es null antes de añadirla,
-                    // aunque toObject debería manejarlo si la clase Mascota tiene un constructor sin argumentos.
-                    if (mascota != null) {
-                        listaMascotas.add(mascota)
-                    }
+                    // --- ASIGNAR EL ID DEL DOCUMENTO AL OBJETO MASCOTA ---
+                    mascota.id = doc.id // <--- ¡MUY IMPORTANTE!
+                    listaMascotas.add(mascota)
+                    Log.d("InicioDuenio", "Mascota cargada: ${mascota.nombre} con ID: ${mascota.id}")
                 }
+                adapter.notifyDataSetChanged() // Notificar al adaptador después de modificar la lista
+                actualizarVisibilidadVacio() // Actualizar la visibilidad del layout vacío y el RecyclerView/FAB
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al cargar las mascotas: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e("InicioDuenio", "Error al cargar mascotas: ", e)
+                actualizarVisibilidadVacio() // Asegurar que la UI refleje el estado de error/vacío
+            }
+    }
 
-                val fab: FloatingActionButton = findViewById(R.id.fabAgregarMascota) // Obtener referencia aquí o hacerla variable de clase
-                if (listaMascotas.isEmpty()) {
-                    layoutVacio.visibility = View.VISIBLE
-                    recyclerView.visibility = View.GONE
-                    fab.visibility = View.GONE // Usar la referencia correcta
-                } else {
-                    layoutVacio.visibility = View.GONE
-                    recyclerView.visibility = View.VISIBLE
-                    adapter.notifyDataSetChanged()
-                    fab.visibility = View.VISIBLE // Usar la referencia correcta
-                }
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Error al cargar las mascotas", Toast.LENGTH_SHORT).show()
-            }
+    // Función auxiliar para manejar la visibilidad del layout vacío, RecyclerView y FAB
+    private fun actualizarVisibilidadVacio() {
+        if (listaMascotas.isEmpty()) {
+            layoutVacio.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+            fabAgregarMascota.visibility = View.GONE
+
+        } else {
+            layoutVacio.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+            fabAgregarMascota.visibility = View.VISIBLE // Mostrar FAB si hay mascotas
+        }
+    }
+
+    // Es buena práctica recargar las mascotas en onResume si vienes de RegistroMascotaDatos
+    // y no usaste un launcher para ello, para asegurar que la lista esté actualizada.
+    override fun onResume() {
+        super.onResume()
+
     }
 }
