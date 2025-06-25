@@ -101,13 +101,15 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
         db.collection("usuarios").document(uidDuenio).get()
             .addOnSuccessListener { doc ->
                 val nombreDuenio = doc.getString("nombre") ?: "Dueño Anónimo"
+                val idMascota = intent.getStringExtra("idMascota")
 
 
                 val solicitud = hashMapOf(
                     "idDueno" to uidDuenio,
                     "nombreDueno" to nombreDuenio,
                     "fecha" to FieldValue.serverTimestamp(),
-                    "estado" to "pendiente"
+                    "estado" to "pendiente",
+                    "idMascota" to idMascota
                 )
 
                 // Agregar la solicitud a la colección "solicitudes" del cuidador

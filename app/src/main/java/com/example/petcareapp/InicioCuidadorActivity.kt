@@ -49,11 +49,17 @@ class InicioCuidadorActivity : AppCompatActivity() {
         layoutVacio = findViewById(R.id.layoutSolicitudesVacio)
 
         listaSolicitudes = mutableListOf()
-        adapter = SolicitudAdapter(listaSolicitudes)
+        adapter = SolicitudAdapter(listaSolicitudes){ solicitud ->
+            val intent = Intent(this, DetalleSolicitudActivity::class.java)
+            intent.putExtra("idMascota", solicitud.idMascota)
+            intent.putExtra("idDuenio", solicitud.idDueno)
+            startActivity(intent)
+        }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
         cargarSolicitudes()
+
 
 
         // Configurar OnClickListeners para los botones

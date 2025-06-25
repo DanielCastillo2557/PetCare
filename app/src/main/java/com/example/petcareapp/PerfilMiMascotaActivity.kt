@@ -138,7 +138,8 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
 
         botonEncargar.setOnClickListener {
             val intentMapa = Intent(this, MapaActivity::class.java)
-            // intentMapa.putExtra("ID_MASCOTA", mascotaIdActual) // Puedes pasar el ID si MapaActivity lo necesita
+            intentMapa.putExtra("idMascota", mascotaIdActual)
+            Toast.makeText(this, "ID de la mascota: ${mascotaIdActual}", Toast.LENGTH_SHORT).show()
             startActivity(intentMapa)
         }
     }

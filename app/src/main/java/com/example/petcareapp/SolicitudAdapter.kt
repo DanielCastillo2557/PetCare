@@ -10,7 +10,8 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class SolicitudAdapter (
-    private val solicitudes: List<Solicitud>)
+    private val solicitudes: List<Solicitud>,
+    private val onItemClick: (Solicitud) -> Unit)
     : RecyclerView.Adapter<SolicitudAdapter.SolicitudViewHolder>() {
 
         inner class SolicitudViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -38,7 +39,8 @@ class SolicitudAdapter (
             } ?: run {
                 holder.textoFecha.text = "Fecha desconocida"
             }
-            // podrías agregar más información si lo necesitas
+
+            holder.itemView.setOnClickListener { onItemClick(solicitud) }
         }
 
         override fun getItemCount(): Int = solicitudes.size

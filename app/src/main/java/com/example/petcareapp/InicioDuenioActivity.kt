@@ -81,6 +81,7 @@ class InicioDuenioActivity : AppCompatActivity() {
         adapter = MascotaAdapter(listaMascotas) { mascota ->
             val intent = Intent(this, PerfilMiMascotaActivity::class.java).apply {
                 // --- AÑADIR EL ID DE LA MASCOTA ---
+
                 putExtra("id_mascota", mascota.id)
                 putExtra("nombre", mascota.nombre)
                 putExtra("raza", mascota.raza)
@@ -92,6 +93,7 @@ class InicioDuenioActivity : AppCompatActivity() {
             }
             // --- USAR EL LAUNCHER EN LUGAR DE startActivity ---
             perfilMascotaLauncher.launch(intent)
+            Toast.makeText(this, "ID de la mascota: ${mascota.id}", Toast.LENGTH_SHORT).show()
         }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter

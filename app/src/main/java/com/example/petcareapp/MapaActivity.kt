@@ -121,7 +121,10 @@ class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
             val cuidadorId = marker.tag as? String
             if (cuidadorId != null) {
                 val intent = Intent(this, CuidadorSeleccionadoActivity::class.java)
+                val idMascota = intent.getStringExtra("idMascota")
                 intent.putExtra("cuidadorId", cuidadorId)
+                intent.putExtra("idMascota", idMascota)
+                Toast.makeText(this, "idMascota: $idMascota", Toast.LENGTH_SHORT).show()
                 startActivity(intent)
             }
         }
