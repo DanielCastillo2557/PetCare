@@ -52,7 +52,7 @@ class InicioCuidadorActivity : AppCompatActivity() {
         adapter = SolicitudAdapter(listaSolicitudes){ solicitud ->
             val intent = Intent(this, DetalleSolicitudActivity::class.java)
             intent.putExtra("idMascota", solicitud.idMascota)
-            intent.putExtra("idDuenio", solicitud.idDueno)
+            intent.putExtra("idDueno", solicitud.idDueno)
             startActivity(intent)
         }
         recyclerView.layoutManager = LinearLayoutManager(this)

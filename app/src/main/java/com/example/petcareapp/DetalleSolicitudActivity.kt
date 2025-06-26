@@ -77,7 +77,7 @@ class DetalleSolicitudActivity : AppCompatActivity() {
                     textoEspecie.text = doc.getString("especie")
                     textoRaza.text = doc.getString("raza")
                     textoEdad.text = doc.getLong("edad")?.toString() ?: ""
-                    textoTamano.text = doc.getString("tamano")
+                    textoTamano.text = doc.getString("tamanio")
                     textoDescripcion.text = doc.getString("descripcion")
 
                     val fotoUrl = doc.getString("fotoUrl")
@@ -88,8 +88,8 @@ class DetalleSolicitudActivity : AppCompatActivity() {
                     Toast.makeText(this, "No se encontró la mascota", Toast.LENGTH_SHORT).show()
                 }
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Error al obtener datos", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 

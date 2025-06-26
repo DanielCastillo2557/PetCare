@@ -93,7 +93,6 @@ class InicioDuenioActivity : AppCompatActivity() {
             }
             // --- USAR EL LAUNCHER EN LUGAR DE startActivity ---
             perfilMascotaLauncher.launch(intent)
-            Toast.makeText(this, "ID de la mascota: ${mascota.id}", Toast.LENGTH_SHORT).show()
         }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter

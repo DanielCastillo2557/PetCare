@@ -28,6 +28,7 @@ import com.google.android.gms.location.LocationServices
 
 class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var googleMap: GoogleMap
+    private lateinit var idMascota: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,8 @@ class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
 
         }
 
+        // Obtener el ID de la mascota de los extras del intent
+        idMascota = intent.getStringExtra("idMascota") ?: ""
 
         // Configurar el mapa
         val mapFragment = supportFragmentManager
@@ -121,10 +124,8 @@ class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
             val cuidadorId = marker.tag as? String
             if (cuidadorId != null) {
                 val intent = Intent(this, CuidadorSeleccionadoActivity::class.java)
-                val idMascota = intent.getStringExtra("idMascota")
                 intent.putExtra("cuidadorId", cuidadorId)
                 intent.putExtra("idMascota", idMascota)
-                Toast.makeText(this, "idMascota: $idMascota", Toast.LENGTH_SHORT).show()
                 startActivity(intent)
             }
         }
