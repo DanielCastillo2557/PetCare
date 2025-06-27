@@ -53,6 +53,12 @@ class InicioCuidadorActivity : AppCompatActivity() {
             val intent = Intent(this, DetalleSolicitudActivity::class.java)
             intent.putExtra("idMascota", solicitud.idMascota)
             intent.putExtra("idDueno", solicitud.idDueno)
+            intent.putExtra("nombreMascota", solicitud.nombreMascota)
+            intent.putExtra("especie", solicitud.especie)
+            intent.putExtra("raza", solicitud.raza)
+            intent.putExtra("edad", solicitud.edad)
+            intent.putExtra("tamanio", solicitud.tamanio)
+            intent.putExtra("descripcion", solicitud.descripcion)
             startActivity(intent)
         }
         recyclerView.layoutManager = LinearLayoutManager(this)

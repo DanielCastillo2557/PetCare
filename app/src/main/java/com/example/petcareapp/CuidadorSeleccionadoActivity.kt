@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.semantics.text
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,6 +21,7 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var cuidadorId: String
+    private lateinit var idMascota: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,19 +36,15 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
         // --- Inicializar el botón de retroceso ---
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
         btnBack.setOnClickListener {
-            // Opción 1: Usar onBackPressedDispatcher (recomendado para consistencia con el gesto de back)
+            // Volver a la actividad anterior
             onBackPressedDispatcher.onBackPressed()
-
-            // Opción 2: Simplemente finalizar la actividad (más directo si no necesitas un manejo complejo del back stack)
-            // finish()
         }
-        // --- Fin de la inicialización del botón de retroceso ---
-
 
         // Inicializar Firebase y obtener el ID del cuidador seleccionado
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         cuidadorId = intent.getStringExtra("cuidadorId") ?: "" // Es mejor asignar un valor por defecto o manejar el error
+        idMascota = intent.getStringExtra("idMascota") ?: ""
 
         // Verificar si cuidadorId está vacío y manejarlo, por ejemplo, finalizando la actividad
         if (cuidadorId.isEmpty()) {
@@ -54,7 +52,6 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
             finish() // Cierra la actividad si no hay ID
             return   // Importante salir del onCreate para evitar más ejecuciones
         }
-
 
         cargarDatosCuidador(cuidadorId)
 
@@ -76,9 +73,6 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
                     // Suponiendo que tienes estos TextViews en tu layout
                     findViewById<TextView>(R.id.txtPuntuacionCuidador).text = doc.getString("puntuacion") ?: "Puntuación no disponible"
                     findViewById<TextView>(R.id.txtDescCuidador).text = doc.getString("descripcion") ?: "Descripción no disponible"
-
-
-
                 } else {
                     Toast.makeText(this, "No se encontraron datos para este cuidador.", Toast.LENGTH_SHORT).show()
                 }
@@ -97,26 +91,40 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
             return
         }
 
-
-        db.collection("usuarios").document(uidDuenio).get()
+        db.collection("usuarios").document(uidDuenio)
+            .collection("mascotas").document(idMascota)
+            .get()
             .addOnSuccessListener { doc ->
-                val nombreDuenio = doc.getString("nombre") ?: "Dueño Anónimo"
-                val idMascota = intent.getStringExtra("idMascota")
+                val nombreMascota = doc.getString("nombre") ?: ""
+                val especie = doc.getString("especie") ?: ""
+                val raza = doc.getString("raza") ?: ""
+                val edadStr = doc.getString("edad") ?: "0"
+                val edad = edadStr.toIntOrNull() ?: 0
+                val tamanio = doc.getString("tamanio") ?: ""
+                val descripcion = doc.getString("descripcion") ?: ""
+                val fotoUrl = doc.getString("fotoUrl") ?: ""
 
+                val nombreDuenio = doc.getString("nombreDuenio") ?: "Dueño Anónimo"
 
-                val solicitud = hashMapOf(
-                    "idDueno" to uidDuenio,
-                    "nombreDueno" to nombreDuenio,
-                    "fecha" to FieldValue.serverTimestamp(),
-                    "estado" to "pendiente",
-                    "idMascota" to idMascota
+                val solicitud = Solicitud(
+                    idMascota = idMascota,
+                    idDueno = uidDuenio,
+                    nombreDueno = nombreDuenio,
+                    fecha = Timestamp.now(),
+                    estado = "pendiente",
+
+                    // Datos duplicados
+                    nombreMascota = nombreMascota,
+                    especie = especie,
+                    raza = raza,
+                    edad = edad,
+                    tamanio = tamanio,
+                    descripcion = descripcion,
+                    fotoUrl = fotoUrl
                 )
 
-                // Agregar la solicitud a la colección "solicitudes" del cuidador
-                db.collection("usuarios")
-                    .document(cuidadorId)
-                    .collection("solicitudes")
-                    .add(solicitud)
+                db.collection("usuarios").document(cuidadorId)
+                    .collection("solicitudes").add(solicitud)
                     .addOnSuccessListener {
                         // Mostrar un mensaje de éxito y volver a la pantalla de inicio del dueño
                         AlertDialog.Builder(this)
@@ -132,10 +140,12 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
                             .setCancelable(false) // Evitar que se cierre al tocar fuera
                             .show()
                     }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(this, "Error al enviar la solicitud: ${e.message}", Toast.LENGTH_SHORT).show()
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Error al enviar solicitud", Toast.LENGTH_SHORT).show()
                     }
             }
+
+
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error al obtener datos del dueño: ${e.message}", Toast.LENGTH_SHORT).show()
             }

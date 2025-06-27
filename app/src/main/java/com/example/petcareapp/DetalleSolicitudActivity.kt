@@ -22,7 +22,6 @@ class DetalleSolicitudActivity : AppCompatActivity() {
     private lateinit var textoTamano: TextView
     private lateinit var textoDescripcion: TextView
     private lateinit var btnAceptar: Button
-
     private lateinit var idMascota: String
     private lateinit var idDueno: String
 
@@ -56,41 +55,26 @@ class DetalleSolicitudActivity : AppCompatActivity() {
         textoDescripcion = findViewById(R.id.txtDescripcionMascota)
         btnAceptar = findViewById(R.id.btnAceptarSolicitud)
 
-
-
-        cargarDatosMascota(idMascota, idDueno)
+        cargarDatosMascotaIntent()
+        //cargarDatosMascota(idMascota, idDueno)
 
         btnAceptar.setOnClickListener {
             aceptarSolicitud()
         }
     }
 
-    private fun cargarDatosMascota(idMascota: String, idDueno: String) {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("usuarios").document(idDueno)
-            .collection("mascotas").document(idMascota)
-            .get()
-            .addOnSuccessListener { doc ->
-                if (doc.exists()) {
-                    val mascota = doc.toObject(Mascota::class.java)
-                    textoNombre.text = doc.getString("nombre")
-                    textoEspecie.text = doc.getString("especie")
-                    textoRaza.text = doc.getString("raza")
-                    textoEdad.text = doc.getLong("edad")?.toString() ?: ""
-                    textoTamano.text = doc.getString("tamanio")
-                    textoDescripcion.text = doc.getString("descripcion")
+    private fun cargarDatosMascotaIntent() {
+        textoNombre.text = intent.getStringExtra("nombreMascota") ?: ""
+        textoEspecie.text = intent.getStringExtra("especie") ?: ""
+        textoRaza.text = intent.getStringExtra("raza") ?: ""
+        textoEdad.text = intent.getStringExtra("edad") ?: ""
+        textoTamano.text = intent.getStringExtra("tamanio") ?: ""
+        textoDescripcion.text = intent.getStringExtra("descripcion") ?: ""
 
-                    val fotoUrl = doc.getString("fotoUrl")
-                    if (!fotoUrl.isNullOrEmpty()) {
-                        Glide.with(this).load(fotoUrl).into(imageMascota)
-                    }
-                } else {
-                    Toast.makeText(this, "No se encontró la mascota", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+        val fotoUrl = intent.getStringExtra("fotoUrl")
+        if (!fotoUrl.isNullOrEmpty()) {
+            Glide.with(this).load(fotoUrl).into(imageMascota)
+        }
     }
 
     private fun aceptarSolicitud() {
