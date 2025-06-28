@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.services)
+    id("kotlin-kapt") // <--- AÑADE ESTA LÍNEA para el procesador de anotaciones de Kotlin
 }
 
 android {
@@ -34,6 +35,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
 }
 
 dependencies {
@@ -53,8 +55,9 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx.v262)
     implementation(libs.androidx.savedstate)
-    implementation(libs.google.firebase.firestore)
-    implementation(libs.google.firebase.auth)
+    // Ya tienes estas, solo para confirmar:
+    // implementation(libs.google.firebase.firestore)
+    // implementation(libs.google.firebase.auth)
     implementation(libs.androidx.material3.android)
     implementation(libs.firebase.storage)
 
@@ -68,9 +71,7 @@ dependencies {
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.google.android.gms:play-services-location:21.3.0")
 
+    // Dependencias de Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
-
-
-
-
+    kapt("com.github.bumptech.glide:compiler:4.16.0") // <--- AÑADE ESTA LÍNEA (procesador de anotaciones de Glide)
 }

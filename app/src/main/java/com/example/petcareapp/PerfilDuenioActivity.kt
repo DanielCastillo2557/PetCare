@@ -1,16 +1,23 @@
 package com.example.petcareapp
 
 import android.content.Intent
+import android.graphics.drawable.Drawable // Asegúrate de que esta importación esté presente
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.semantics.text
+
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource // Importa DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -27,12 +34,15 @@ class PerfilDuenioActivity : AppCompatActivity() {
     private lateinit var btnEditarPerfil: Button
     private lateinit var btnVolverDesdePerfil: ImageView
 
-    // Variables para almacenar los datos actuales y pasarlos
     private var nombreActual: String? = null
     private var emailActual: String? = null
     private var telefonoActual: String? = null
     private var direccionActual: String? = null
-    // private var fotoUrlActual: String? = null // Si también manejas la foto
+    private var fotoUrlActual: String? = null
+
+    private companion object {
+        private const val TAG = "PerfilDuenioActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,16 +69,12 @@ class PerfilDuenioActivity : AppCompatActivity() {
         cargarDatosPerfil()
 
         btnEditarPerfil.setOnClickListener {
-            // Crear Intent para EditarPerfilDuenioActivity
             val intent = Intent(this, EditarPerfilDuenioActivity::class.java)
-
-            // (Opcional pero recomendado) Pasar datos actuales a la actividad de edición
             intent.putExtra("NOMBRE_ACTUAL", nombreActual)
-            intent.putExtra("EMAIL_ACTUAL", emailActual) // El email usualmente no se edita si es el de login
+            intent.putExtra("EMAIL_ACTUAL", emailActual)
             intent.putExtra("TELEFONO_ACTUAL", telefonoActual)
             intent.putExtra("DIRECCION_ACTUAL", direccionActual)
-            // intent.putExtra("FOTO_URL_ACTUAL", fotoUrlActual)
-
+            intent.putExtra("FOTO_URL_ACTUAL", fotoUrlActual)
             startActivity(intent)
         }
 
@@ -80,45 +86,85 @@ class PerfilDuenioActivity : AppCompatActivity() {
     private fun cargarDatosPerfil() {
         val uid = auth.currentUser?.uid
         if (uid == null) {
+            Log.e(TAG, "Error: Usuario no autenticado (UID nulo)")
             Toast.makeText(this, "Error: Usuario no autenticado", Toast.LENGTH_LONG).show()
             finish()
             return
         }
+        Log.d(TAG, "Cargando datos para UID: $uid")
 
         db.collection("usuarios").document(uid).get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
-                    nombreActual = document.getString("nombre") // Guardar para pasar
-                    emailActual = document.getString("email")   // Guardar para pasar
-                    telefonoActual = document.getString("telefono") // Guardar para pasar
-                    direccionActual = document.getString("direccion") // Guardar para pasar
-                    // fotoUrlActual = document.getString("fotoUrl") // Guardar para pasar
+                    Log.d(TAG, "Documento de usuario encontrado.")
+                    nombreActual = document.getString("nombre")
+                    emailActual = document.getString("email")
+                    telefonoActual = document.getString("telefono")
+                    direccionActual = document.getString("direccion")
+                    fotoUrlActual = document.getString("foto_url")
+                    Log.d(TAG, "Valor de 'foto_url' obtenido de Firestore: '$fotoUrlActual'")
 
                     tvNombreUsuario.text = nombreActual ?: "No disponible"
                     tvEmailUsuario.text = emailActual ?: "No disponible"
                     tvTelefonoUsuario.text = telefonoActual ?: "No disponible"
                     tvDireccionUsuario.text = direccionActual ?: "No disponible"
 
-                    // if (fotoUrlActual != null) {
-                    //     Glide.with(this).load(fotoUrlActual).placeholder(R.drawable.ic_user).into(imgFotoPerfil)
-                    // }
+                    if (fotoUrlActual != null && fotoUrlActual!!.isNotEmpty()) {
+                        Log.d(TAG, "Intentando cargar imagen con Glide desde: $fotoUrlActual")
+                        Glide.with(this)
+                            .load(fotoUrlActual)
+                            .placeholder(R.drawable.ic_user)
+                            .error(R.drawable.ic_user)
+                            .listener(object : RequestListener<Drawable> {
+                                // onLoadFailed (manteniendo la versión anterior que parecía más cercana)
+                                override fun onLoadFailed(
+                                    e: GlideException?,
+                                    model: Any?,
+                                    target: Target<Drawable>, // Target no nulo
+                                    isFirstResource: Boolean
+                                ): Boolean {
+                                    Log.e(TAG, "Glide onLoadFailed: ${e?.message}", e)
+                                    return false
+                                }
+
+                                // onResourceReady (con parámetros no nulos según el nuevo error)
+                                override fun onResourceReady(
+                                    resource: Drawable,    // CAMBIO: No nulo
+                                    model: Any,          // CAMBIO: No nulo
+                                    target: Target<Drawable>, // Target no nulo
+                                    dataSource: DataSource,  // CAMBIO: No nulo
+                                    isFirstResource: Boolean
+                                ): Boolean {
+                                    Log.d(TAG, "Glide onResourceReady: Imagen cargada exitosamente.")
+                                    // Aquí puedes usar 'resource', 'model', 'target', 'dataSource'
+                                    // sabiendo que no son nulos si la carga fue exitosa.
+                                    return false
+                                }
+                            })
+                            .circleCrop()
+                            .into(imgFotoPerfil)
+                    } else {
+                        Log.d(TAG, "'fotoUrlActual' es nula o vacía. Mostrando placeholder.")
+                        imgFotoPerfil.setImageResource(R.drawable.ic_user)
+                    }
                 } else {
+                    Log.w(TAG, "No se encontraron datos del perfil para el usuario con UID: $uid")
                     Toast.makeText(this, "No se encontraron datos del perfil", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { exception ->
+                Log.e(TAG, "Error al cargar datos del perfil desde Firestore para UID: $uid", exception)
                 Toast.makeText(this, "Error al cargar datos del perfil: ${exception.localizedMessage}", Toast.LENGTH_LONG).show()
             }
     }
 
-    // Es buena práctica refrescar los datos si el usuario vuelve de la pantalla de edición
     override fun onResume() {
         super.onResume()
-        // Si vienes de editar, es posible que los datos hayan cambiado, así que recarga.
-        // Podrías hacerlo más eficiente si EditarPerfilDuenioActivity devuelve un resultado
-        // indicando si se guardaron cambios, pero para empezar esto funciona.
-        if (auth.currentUser != null) { // Solo recarga si el usuario sigue logueado
+        if (auth.currentUser != null) {
+            Log.d(TAG, "onResume: Recargando datos del perfil.")
             cargarDatosPerfil()
+        } else {
+            Log.w(TAG, "onResume: Usuario no autenticado, no se recargan datos.")
         }
     }
 }
