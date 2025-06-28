@@ -27,7 +27,7 @@ class EditarPerfilDuenioActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-    private lateinit var storage: FirebaseStorage // Para Firebase Storage
+    private lateinit var storage: FirebaseStorage
     private var currentUserUid: String? = null
 
     private lateinit var etNombreEditar: TextInputEditText
@@ -35,21 +35,18 @@ class EditarPerfilDuenioActivity : AppCompatActivity() {
     private lateinit var etDireccionEditar: TextInputEditText
     private lateinit var btnGuardarCambiosPerfil: Button
     private lateinit var btnVolverDesdeEditarPerfil: ImageView
-    private lateinit var imgEditarFotoPerfil: CircleImageView // O ImageView
+    private lateinit var imgEditarFotoPerfil: CircleImageView
     private lateinit var tvCambiarFoto: TextView
 
+    private var imagenUri: Uri? = null
+    private var fotoUrlActual: String? = null // Esta se actualiza si la foto cambia
 
-    private var imagenUri: Uri? = null // Para almacenar la URI de la imagen seleccionada
-    private var fotoUrlActual: String? = null // Para almacenar la URL de la foto actual
-
-    // ActivityResultLauncher para seleccionar imagen de la galería
     private val seleccionarImagenLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 data?.data?.let { uri ->
-                    imagenUri = uri // Guardar la URI de la nueva imagen
-                    // Mostrar la imagen seleccionada en el ImageView
+                    imagenUri = uri
                     Glide.with(this)
                         .load(imagenUri)
                         .placeholder(R.drawable.ic_user)
@@ -61,7 +58,6 @@ class EditarPerfilDuenioActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // enableEdgeToEdge() // Comentado temporalmente si causa problemas con el selector de imágenes
         setContentView(R.layout.activity_editar_perfil_duenio)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -72,7 +68,7 @@ class EditarPerfilDuenioActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
-        storage = FirebaseStorage.getInstance() // Inicializar Firebase Storage
+        storage = FirebaseStorage.getInstance()
         currentUserUid = auth.currentUser?.uid
 
         if (currentUserUid == null) {
@@ -89,17 +85,15 @@ class EditarPerfilDuenioActivity : AppCompatActivity() {
         imgEditarFotoPerfil = findViewById(R.id.imgEditarFotoPerfil)
         tvCambiarFoto = findViewById(R.id.tvCambiarFoto)
 
-        // Recuperar y mostrar datos actuales
-        val nombreActual = intent.getStringExtra("NOMBRE_ACTUAL")
-        fotoUrlActual = intent.getStringExtra("FOTO_URL_ACTUAL") // Recuperar URL de la foto
-        val telefonoActual = intent.getStringExtra("TELEFONO_ACTUAL")
-        val direccionActual = intent.getStringExtra("DIRECCION_ACTUAL")
+        val nombreActualIntent = intent.getStringExtra("NOMBRE_ACTUAL")
+        fotoUrlActual = intent.getStringExtra("FOTO_URL_ACTUAL") // Inicializar con la URL del intent
+        val telefonoActualIntent = intent.getStringExtra("TELEFONO_ACTUAL")
+        val direccionActualIntent = intent.getStringExtra("DIRECCION_ACTUAL")
 
-        etNombreEditar.setText(nombreActual)
-        etTelefonoEditar.setText(telefonoActual)
-        etDireccionEditar.setText(direccionActual)
+        etNombreEditar.setText(nombreActualIntent)
+        etTelefonoEditar.setText(telefonoActualIntent)
+        etDireccionEditar.setText(direccionActualIntent)
 
-        // Cargar la foto de perfil actual si existe
         if (!fotoUrlActual.isNullOrEmpty()) {
             Glide.with(this)
                 .load(fotoUrlActual)
@@ -112,14 +106,12 @@ class EditarPerfilDuenioActivity : AppCompatActivity() {
             finish()
         }
 
-        // Listener para cambiar la foto de perfil
         imgEditarFotoPerfil.setOnClickListener {
             abrirGaleria()
         }
-        tvCambiarFoto.setOnClickListener { // También permitir clic en el texto
+        tvCambiarFoto.setOnClickListener {
             abrirGaleria()
         }
-
 
         btnGuardarCambiosPerfil.setOnClickListener {
             guardarCambios()
@@ -142,33 +134,55 @@ class EditarPerfilDuenioActivity : AppCompatActivity() {
             return
         }
 
-        // Deshabilitar botón para evitar múltiples clics
         btnGuardarCambiosPerfil.isEnabled = false
         Toast.makeText(this, "Guardando cambios...", Toast.LENGTH_SHORT).show()
 
-
-        // Si se seleccionó una nueva imagen, subirla primero
-        if (imagenUri != null) {
+        if (imagenUri != null) { // Si el usuario seleccionó una nueva imagen
             subirNuevaFotoYActualizarPerfil(nuevoNombre, nuevoTelefono, nuevaDireccion)
-        } else {
-            // Si no hay nueva imagen, solo actualizar los otros datos
+        } else { // Si no hay nueva imagen, solo actualizar los otros datos
             actualizarDatosPerfil(nuevoNombre, nuevoTelefono, nuevaDireccion, fotoUrlActual)
         }
     }
 
     private fun subirNuevaFotoYActualizarPerfil(nombre: String, telefono: String, direccion: String) {
-        val userId = currentUserUid ?: return // No debería ser nulo aquí
-        // Crear una referencia única para la imagen en Storage
-        val nombreArchivo = "perfil_${userId}_${UUID.randomUUID()}.jpg"
-        val storageRef = storage.reference.child("fotos_perfil/$nombreArchivo")
+        val userId = currentUserUid ?: run {
+            Toast.makeText(this, "Error: UID de usuario no disponible.", Toast.LENGTH_LONG).show()
+            btnGuardarCambiosPerfil.isEnabled = true
+            return
+        }
+        val nombreArchivo = "fotos_perfil/perfil_${userId}_${UUID.randomUUID()}.jpg" // Ruta completa
+        val nuevaStorageRef = storage.reference.child(nombreArchivo)
+
+        // Guardar la URL de la foto anterior para poder eliminarla después
+        val urlFotoAnteriorParaEliminar = fotoUrlActual
 
         imagenUri?.let { uri ->
-            storageRef.putFile(uri)
+            nuevaStorageRef.putFile(uri)
                 .addOnSuccessListener { taskSnapshot ->
-                    // Obtener la URL de descarga de la imagen subida
-                    storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                    nuevaStorageRef.downloadUrl.addOnSuccessListener { downloadUri ->
                         val nuevaFotoUrl = downloadUri.toString()
+
+                        // Antes de actualizar Firestore, intenta eliminar la foto anterior de Storage
+                        if (!urlFotoAnteriorParaEliminar.isNullOrEmpty() &&
+                            urlFotoAnteriorParaEliminar.startsWith("https://firebasestorage.googleapis.com")) {
+                            try {
+                                val fotoAnteriorStorageRef = storage.getReferenceFromUrl(urlFotoAnteriorParaEliminar)
+                                fotoAnteriorStorageRef.delete().addOnSuccessListener {
+                                    Log.d("EditarPerfil", "Foto anterior eliminada de Storage exitosamente.")
+                                }.addOnFailureListener { e ->
+                                    Log.e("EditarPerfil", "Error al eliminar foto anterior de Storage: ${e.message}", e)
+                                    // No es crítico si falla, la nueva foto ya está subida.
+                                }
+                            } catch (e: Exception) {
+                                Log.e("EditarPerfil", "Excepción al intentar obtener referencia de foto anterior: ${e.message}", e)
+                                // Podría ser una URL inválida o malformada.
+                            }
+                        }
+
+                        // Actualizar la variable de instancia fotoUrlActual con la nueva URL
+                        this.fotoUrlActual = nuevaFotoUrl
                         actualizarDatosPerfil(nombre, telefono, direccion, nuevaFotoUrl)
+
                     }.addOnFailureListener { e ->
                         Log.e("EditarPerfil", "Error al obtener URL de descarga: ${e.message}", e)
                         Toast.makeText(this, "Error al obtener URL de foto: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
@@ -182,43 +196,45 @@ class EditarPerfilDuenioActivity : AppCompatActivity() {
                 }
                 .addOnProgressListener { taskSnapshot ->
                     val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
-                    // Podrías mostrar un ProgressBar aquí con el progreso
                     Log.d("EditarPerfil", "Subida en progreso: $progress%")
                 }
+        } ?: run {
+            // Esto no debería ocurrir si imagenUri != null, pero es una salvaguarda
+            Toast.makeText(this, "Error: No se seleccionó ninguna imagen nueva.", Toast.LENGTH_SHORT).show()
+            btnGuardarCambiosPerfil.isEnabled = true
         }
     }
-
 
     private fun actualizarDatosPerfil(
         nombre: String,
         telefono: String,
         direccion: String,
-        urlFoto: String? // Puede ser la URL nueva o la anterior si no se cambió la foto
+        urlFoto: String?
     ) {
         val updates = hashMapOf<String, Any>(
             "nombre" to nombre,
             "telefono" to telefono,
             "direccion" to direccion
         )
-        // Solo añadir foto_url si es válida (nueva o la anterior si no se cambió y era válida)
         if (!urlFoto.isNullOrEmpty()) {
             updates["foto_url"] = urlFoto
-        } else {
-            // Si la URL es nula o vacía y se quiere "eliminar" la foto, se puede enviar un valor especial
-            // o simplemente no incluir el campo, o Firestore.FieldValue.delete() si quieres eliminar el campo.
-            // Por ahora, si es nula, no la actualizamos explícitamente a nulo a menos que sea la intención.
-            // Si la URL anterior era válida y no se cambió, se usa esa.
-            // Si no había URL antes y no se subió una nueva, no se añade nada.
         }
-
+        // Si urlFoto es nulo o vacío y quieres explícitamente eliminar el campo de Firestore:
+        // else {
+        // updates["foto_url"] = FieldValue.delete() // Esto eliminaría el campo foto_url si no hay foto
+        // }
 
         currentUserUid?.let { uid ->
             db.collection("usuarios").document(uid)
                 .update(updates)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
-                    // Podrías devolver la nueva URL de la foto a la actividad anterior si es necesario
-                    // setResult(Activity.RESULT_OK, Intent().putExtra("NUEVA_FOTO_URL", urlFoto))
+                    // Prepara el intent de resultado si quieres devolver la nueva URL a la actividad anterior
+                    val resultIntent = Intent()
+                    if (!urlFoto.isNullOrEmpty()) {
+                        resultIntent.putExtra("NUEVA_FOTO_URL", urlFoto)
+                    }
+                    setResult(Activity.RESULT_OK, resultIntent)
                     finish()
                 }
                 .addOnFailureListener { e ->
@@ -227,7 +243,9 @@ class EditarPerfilDuenioActivity : AppCompatActivity() {
                     btnGuardarCambiosPerfil.isEnabled = true
                 }
         } ?: run {
-            btnGuardarCambiosPerfil.isEnabled = true // Reactivar botón si currentUserUid es nulo (poco probable aquí)
+            Log.e("EditarPerfil", "Error: UID de usuario no disponible para actualizar Firestore.")
+            Toast.makeText(this, "Error al actualizar el perfil: Usuario no identificado.", Toast.LENGTH_LONG).show()
+            btnGuardarCambiosPerfil.isEnabled = true
         }
     }
 }
