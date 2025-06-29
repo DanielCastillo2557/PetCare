@@ -24,7 +24,6 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegistroCuidadorDatosActivity : AppCompatActivity() {
-
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var autoCompletarDireccion: AutoCompleteTextView
@@ -73,6 +72,7 @@ class RegistroCuidadorDatosActivity : AppCompatActivity() {
         // Obtener datos del intent
         val nombre = intent.getStringExtra("nombre") ?: ""
         val descripcion = intent.getStringExtra("descripcion") ?: ""
+        val fotoUrl = intent.getStringExtra("fotoUrl") ?: ""
         val btnGuardar: ImageButton = findViewById(R.id.btnGuardarRegistroCuidador)
 
         //Boton siguiente
@@ -103,6 +103,7 @@ class RegistroCuidadorDatosActivity : AppCompatActivity() {
                             "lng" to longitud
                         ),
                         "tipo" to listOf("cuidador"),
+                        "foto_url" to fotoUrl,
                         "fecha_creacion" to FieldValue.serverTimestamp()
                     )
 

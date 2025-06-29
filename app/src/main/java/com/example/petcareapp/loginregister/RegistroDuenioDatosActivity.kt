@@ -21,7 +21,6 @@ import com.example.petcareapp.duenio.InicioDuenioActivity
 import kotlinx.coroutines.launch
 
 class RegistroDuenioDatosActivity : AppCompatActivity() {
-
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
 
@@ -29,6 +28,11 @@ class RegistroDuenioDatosActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_registro_duenio_datos)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.registroDuenio2)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -36,14 +40,6 @@ class RegistroDuenioDatosActivity : AppCompatActivity() {
         val btnGuardarRegistro: ImageButton = findViewById(R.id.btnGuardarRegistro)
         btnGuardarRegistro.setOnClickListener {
             registrarUsuario()
-
-
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.registroDuenio2)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
         }
     }
 

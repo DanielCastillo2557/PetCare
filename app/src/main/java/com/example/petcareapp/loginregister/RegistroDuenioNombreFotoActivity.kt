@@ -17,12 +17,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-
 class RegistroDuenioNombreFotoActivity : AppCompatActivity() {
     private lateinit var imagePerfil: ImageView
     private val PICK_IMAGE_REQUEST = 1
     private var imagenUri: Uri? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
