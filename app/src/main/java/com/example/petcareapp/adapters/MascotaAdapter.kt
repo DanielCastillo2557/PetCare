@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 //import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.petcareapp.R
+import com.example.petcareapp.models.Mascota
 
 class MascotaAdapter(
     private val lista: List<Mascota>,

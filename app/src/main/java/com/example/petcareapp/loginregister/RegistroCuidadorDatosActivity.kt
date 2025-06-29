@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.loginregister
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.petcareapp.R
+import com.example.petcareapp.cuidador.InicioCuidadorActivity
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place

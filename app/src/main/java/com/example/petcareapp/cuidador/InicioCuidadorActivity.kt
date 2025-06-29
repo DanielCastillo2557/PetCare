@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.cuidador
 
 import android.os.Bundle
 import android.widget.ImageView
@@ -14,8 +14,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.petcareapp.R
+import com.example.petcareapp.models.Solicitud
+import com.example.petcareapp.adapters.SolicitudAdapter
 
 
 class InicioCuidadorActivity : AppCompatActivity() {

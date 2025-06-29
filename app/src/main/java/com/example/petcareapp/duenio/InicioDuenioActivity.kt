@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.duenio
 
 import android.app.Activity // Para Activity.RESULT_OK
 import android.content.Intent
@@ -18,12 +18,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isEmpty
 
 // import androidx.core.view.isEmpty
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.petcareapp.models.Mascota
+import com.example.petcareapp.adapters.MascotaAdapter
+import com.example.petcareapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

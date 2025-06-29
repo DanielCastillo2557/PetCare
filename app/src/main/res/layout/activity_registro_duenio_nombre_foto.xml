@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:background="#FDFCFB"
     android:padding="24dp"
-    tools:context=".RegistroDuenioNombreFotoActivity">
+    tools:context=".loginregister.RegistroDuenioNombreFotoActivity">
 
     <!-- Título -->
     <TextView

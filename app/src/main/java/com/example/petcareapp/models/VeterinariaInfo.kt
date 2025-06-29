@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.models
 
 import com.google.android.gms.maps.model.LatLng
 

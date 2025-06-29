@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.loginregister
 
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.lifecycle.lifecycleScope
+import com.example.petcareapp.R
+import com.example.petcareapp.duenio.InicioDuenioActivity
 import kotlinx.coroutines.launch
 
 class RegistroDuenioDatosActivity : AppCompatActivity() {

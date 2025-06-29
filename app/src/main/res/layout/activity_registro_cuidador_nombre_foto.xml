@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FDFCFB"
-    tools:context=".RegistroCuidadorNombreFotoActivity">
+    tools:context=".loginregister.RegistroCuidadorNombreFotoActivity">
 
     <!-- Tu Barra Superior -->
 

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp"
-    tools:context=".RegistroTipoPerfilActivity">
+    tools:context=".loginregister.RegistroTipoPerfilActivity">
 
     <!-- Texto "Define tu perfil" -->
     <TextView

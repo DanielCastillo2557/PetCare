@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.cuidador
 
 import android.os.Bundle
 import android.widget.Button
@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.petcareapp.R
 
 
 class DetalleSolicitudActivity : AppCompatActivity() {

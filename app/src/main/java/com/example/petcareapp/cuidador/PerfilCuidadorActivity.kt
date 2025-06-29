@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.cuidador
 
 import android.app.Activity
 import android.content.Intent
@@ -12,9 +12,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.semantics.text
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.petcareapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 // import com.bumptech.glide.Glide

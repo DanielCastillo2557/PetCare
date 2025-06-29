@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.cuidador
 
 import android.app.Activity
 import android.os.Bundle
@@ -9,13 +9,12 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.semantics.error
-import androidx.compose.ui.semantics.text
 // Eliminadas las importaciones de compose no utilizadas
 // import androidx.compose.ui.semantics.error
 // import androidx.compose.ui.semantics.text
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.petcareapp.R
 
 
 import com.google.android.material.textfield.TextInputEditText

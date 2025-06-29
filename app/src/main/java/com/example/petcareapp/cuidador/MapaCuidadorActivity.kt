@@ -1,7 +1,7 @@
-package com.example.petcareapp
+package com.example.petcareapp.cuidador
 
 
-import com.example.petcareapp.VeterinariaInfo
+import com.example.petcareapp.models.VeterinariaInfo
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -23,6 +23,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.petcareapp.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest

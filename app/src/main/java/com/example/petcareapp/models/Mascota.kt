@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.models
 
 import com.google.firebase.firestore.Exclude // Importante para el ID
 

@@ -1,4 +1,4 @@
-package com.example.petcareapp
+package com.example.petcareapp.duenio
 
 import android.content.Intent
 import android.graphics.drawable.Drawable // Asegúrate de que esta importación esté presente
@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource // Importa DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
+import com.example.petcareapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
