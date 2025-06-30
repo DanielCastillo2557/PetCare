@@ -32,7 +32,6 @@ class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
         }
 
         imagePerfil = findViewById(R.id.imagePerfil)
-
         imagePerfil.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -43,10 +42,10 @@ class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
         //Tomamos el nombre y descripcion ingresado por el usuario
         val editNombre = findViewById<EditText>(R.id.editNombreCuidador)
         val editDescripcion = findViewById<EditText>(R.id.editDescripcionCuidador)
-        val buttonSiguiente = findViewById<ImageButton>(R.id.btnSiguienteCuidadorNombreFoto)
+        val buttonSiguienteCuidador = findViewById<ImageButton>(R.id.btnSiguienteCuidadorNombreFoto)
 
         //Boton siguiente
-        buttonSiguiente.setOnClickListener {
+        buttonSiguienteCuidador.setOnClickListener {
             val nombre = editNombre.text.toString().trim() // .trim() para quitar espacios al inicio/final
             val descripcion = editDescripcion.text.toString().trim() // .trim()
 
@@ -55,12 +54,12 @@ class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
                 Toast.makeText(this, "Por favor, ingresa tu nombre y una descripción.", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }else{
-                subirFotoYGuardarDatos(nombre, descripcion)
+                subirFotoYGuardarDatosCuidador(nombre, descripcion)
             }
         }
     }
 
-    private fun subirFotoYGuardarDatos(nombre: String, descripcion: String) {
+    private fun subirFotoYGuardarDatosCuidador(nombre: String, descripcion: String) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val storageRef = FirebaseStorage.getInstance().reference.child("fotos_perfil/$uid.jpg")
 
