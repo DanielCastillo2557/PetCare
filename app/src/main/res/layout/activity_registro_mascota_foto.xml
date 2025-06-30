@@ -31,8 +31,7 @@
             android:id="@+id/imgFotoMascota"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:background="@drawable/ic_circulo_fondo"
+            android:src="@drawable/ic_circulo_fondo"
             android:scaleType="centerCrop"/>
         <!--android:src="@drawable/ic_pet_placeholder"-->
 

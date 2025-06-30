@@ -8,7 +8,7 @@
     android:gravity="center_vertical"
     android:id="@+id/itemMascota">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgMascota"
         android:layout_width="64dp"
         android:layout_height="64dp"

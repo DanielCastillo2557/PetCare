@@ -41,7 +41,7 @@ class RegistroDuenioNombreFotoActivity : AppCompatActivity() {
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
 
-        // --- Encontrar las vistas por su ID (ahora sí existirán después de setContentView)
+        //Boton siguiente
         val btnSiguiente: ImageButton = findViewById(R.id.btnSiguiente)
 
         //Boton siguiente
@@ -84,7 +84,7 @@ class RegistroDuenioNombreFotoActivity : AppCompatActivity() {
                 }
         } ?: run {
             // Si no se seleccionó imagen, guarda solo el nombre y una URL vacía
-            //guardarDatosEnFirestore(nombre, "")
+            guardarDatosEnFirestore(nombre, "")
 
             //Intent para navegar a RegistroDuenioDatosActivity enviando el nombre
             val intent = Intent(this, RegistroDuenioDatosActivity::class.java)
