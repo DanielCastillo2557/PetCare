@@ -17,6 +17,15 @@
         android:theme="@style/Theme.PetCareApp"
         tools:targetApi="31">
         <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cuidador.ListaChatsCuidadorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".duenio.ListaChatsActivity"
+            android:exported="false" />
+        <activity
             android:name=".cuidador.DetalleSolicitudActivity"
             android:exported="false" />
         <activity

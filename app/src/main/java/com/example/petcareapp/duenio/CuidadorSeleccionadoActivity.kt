@@ -2,18 +2,20 @@ package com.example.petcareapp.duenio
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log // Importar Log para depuración
 import android.widget.Button
-import android.widget.ImageButton // Importar ImageButton
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.semantics.text
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.petcareapp.R
 import com.example.petcareapp.models.Solicitud
-import com.google.firebase.Timestamp
+// import com.google.firebase.Timestamp // Ya no se necesita aquí si fecha es @ServerTimestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -33,44 +35,36 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
             insets
         }
 
-        // --- Inicializar el botón de retroceso ---
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
         btnBack.setOnClickListener {
-            // Volver a la actividad anterior
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // Inicializar Firebase y obtener el ID del cuidador seleccionado
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
-        cuidadorId = intent.getStringExtra("cuidadorId") ?: "" // Es mejor asignar un valor por defecto o manejar el error
+        cuidadorId = intent.getStringExtra("cuidadorId") ?: ""
         idMascota = intent.getStringExtra("idMascota") ?: ""
 
-        // Verificar si cuidadorId está vacío y manejarlo, por ejemplo, finalizando la actividad
-        if (cuidadorId.isEmpty()) {
-            Toast.makeText(this, "Error: No se pudo obtener el ID del cuidador.", Toast.LENGTH_LONG).show()
-            finish() // Cierra la actividad si no hay ID
-            return   // Importante salir del onCreate para evitar más ejecuciones
+        if (cuidadorId.isEmpty() || idMascota.isEmpty()) { // Verificar también idMascota
+            Toast.makeText(this, "Error: Datos incompletos para procesar la solicitud.", Toast.LENGTH_LONG).show()
+            finish()
+            return
         }
 
         cargarDatosCuidador(cuidadorId)
 
-        // Configurar el botón para dejar la solicitud
         val btnEnviarSolicitud = findViewById<Button>(R.id.btnEnviarSolicitud)
         btnEnviarSolicitud.setOnClickListener {
             dejarSolicitud()
         }
     }
 
-    // Cargar los datos del cuidador seleccionado
     private fun cargarDatosCuidador(uid: String) {
         db.collection("usuarios").document(uid).get()
             .addOnSuccessListener { doc ->
                 if (doc.exists()) {
-                    // Actualizar la interfaz de usuario con los datos del cuidador
-                    findViewById<TextView>(R.id.txtNombreCuidador).text = doc.getString("nombre") ?: "Nombre no disponible" // Valores por defecto
+                    findViewById<TextView>(R.id.txtNombreCuidador).text = doc.getString("nombre") ?: "Nombre no disponible"
                     findViewById<TextView>(R.id.txtDireccionCuidador).text = doc.getString("direccion") ?: "Dirección no disponible"
-                    // Suponiendo que tienes estos TextViews en tu layout
                     findViewById<TextView>(R.id.txtPuntuacionCuidador).text = doc.getString("puntuacion") ?: "Puntuación no disponible"
                     findViewById<TextView>(R.id.txtDescCuidador).text = doc.getString("descripcion") ?: "Descripción no disponible"
                 } else {
@@ -82,72 +76,86 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
             }
     }
 
-    // Dejar la solicitud al cuidador
     private fun dejarSolicitud() {
         val uidDuenio = auth.currentUser?.uid
         if (uidDuenio == null) {
             Toast.makeText(this, "Debes iniciar sesión para enviar una solicitud.", Toast.LENGTH_SHORT).show()
-            // Podrías redirigir al login aquí
             return
         }
 
+        // Paso 1: Obtener datos de la mascota
         db.collection("usuarios").document(uidDuenio)
             .collection("mascotas").document(idMascota)
             .get()
-            .addOnSuccessListener { doc ->
-                val nombreMascota = doc.getString("nombre") ?: ""
-                val especie = doc.getString("especie") ?: ""
-                val raza = doc.getString("raza") ?: ""
-                val edadStr = doc.getString("edad") ?: "0"
-                val edad = edadStr.toIntOrNull() ?: 0
-                val tamanio = doc.getString("tamanio") ?: ""
-                val descripcion = doc.getString("descripcion") ?: ""
-                val fotoUrl = doc.getString("fotoUrl") ?: ""
+            .addOnSuccessListener { mascotaDoc ->
+                if (!mascotaDoc.exists()) {
+                    Toast.makeText(this, "Error: No se encontraron datos de la mascota.", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
+                }
+                val nombreMascota = mascotaDoc.getString("nombre") ?: ""
+                val especie = mascotaDoc.getString("especie") ?: ""
+                val raza = mascotaDoc.getString("raza") ?: ""
+                val edadStr = mascotaDoc.getString("edad") ?: "0" // Asumiendo que 'edad' en la mascota es String
+                // Si 'edad' en la mascota es Long/Int, conviértelo a String directamente:
+                // val edadMascota = mascotaDoc.getLong("edad")?.toString() ?: "0"
+                val tamanio = mascotaDoc.getString("tamanio") ?: ""
+                val descripcion = mascotaDoc.getString("descripcion") ?: ""
+                val fotoUrl = mascotaDoc.getString("fotoUrl") ?: ""
 
-                val nombreDuenio = doc.getString("nombreDuenio") ?: "Dueño Anónimo"
+                // Paso 2: Obtener el nombre del dueño desde el documento del usuario
+                db.collection("usuarios").document(uidDuenio).get()
+                    .addOnSuccessListener { userDoc ->
+                        val nombreDuenioReal = userDoc.getString("nombre") ?: "Dueño Anónimo"
 
-                val solicitud = Solicitud(
-                    idMascota = idMascota,
-                    idDueno = uidDuenio,
-                    nombreDueno = nombreDuenio,
-                    fecha = Timestamp.now(),
-                    estado = "pendiente",
+                        // Paso 3: Crear el objeto Solicitud
+                        val solicitud = Solicitud(
+                            // id será asignado por Firestore (@DocumentId)
+                            idMascota = idMascota,
+                            // fecha será asignada por Firestore (@ServerTimestamp)
+                            estado = "pendiente", // Valor por defecto en el modelo, pero se puede especificar
+                            idDueno = uidDuenio,
+                            nombreDueno = nombreDuenioReal,
+                            nombreMascota = nombreMascota,
+                            especie = especie,
+                            raza = raza,
+                            edad = edadStr, // Usa el String directamente si así lo tienes en el modelo Solicitud
+                            // Si edad en el modelo Solicitud fuera Int/Long, y edadStr es String:
+                            // edad = edadStr.toLongOrNull() ?: 0L (o toIntOrNull)
+                            tamanio = tamanio,
+                            descripcion = descripcion,
+                            fotoUrl = fotoUrl
+                            // idChat es nullable y tiene valor por defecto, se puede omitir
+                        )
 
-                    // Datos duplicados
-                    nombreMascota = nombreMascota,
-                    especie = especie,
-                    raza = raza,
-                    edad = edad,
-                    tamanio = tamanio,
-                    descripcion = descripcion,
-                    fotoUrl = fotoUrl
-                )
-
-                db.collection("usuarios").document(cuidadorId)
-                    .collection("solicitudes").add(solicitud)
-                    .addOnSuccessListener {
-                        // Mostrar un mensaje de éxito y volver a la pantalla de inicio del dueño
-                        AlertDialog.Builder(this)
-                            .setTitle("Solicitud enviada")
-                            .setMessage("Tu solicitud ha sido enviada correctamente.")
-                            .setPositiveButton("Aceptar") { _, _ ->
-
-                                val intent = Intent(this, InicioDuenioActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                                startActivity(intent)
-                                finish()
+                        // Paso 4: Guardar la solicitud
+                        db.collection("usuarios").document(cuidadorId)
+                            .collection("solicitudes").add(solicitud)
+                            .addOnSuccessListener {
+                                AlertDialog.Builder(this)
+                                    .setTitle("Solicitud enviada")
+                                    .setMessage("Tu solicitud ha sido enviada correctamente.")
+                                    .setPositiveButton("Aceptar") { _, _ ->
+                                        val intent = Intent(this, InicioDuenioActivity::class.java)
+                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                    .setCancelable(false)
+                                    .show()
                             }
-                            .setCancelable(false) // Evitar que se cierre al tocar fuera
-                            .show()
+                            .addOnFailureListener { e ->
+                                Log.e("CuidadorSeleccionado", "Error al enviar solicitud", e)
+                                Toast.makeText(this, "Error al enviar solicitud: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
                     }
-                    .addOnFailureListener {
-                        Toast.makeText(this, "Error al enviar solicitud", Toast.LENGTH_SHORT).show()
+                    .addOnFailureListener { e ->
+                        Log.e("CuidadorSeleccionado", "Error al obtener datos del dueño", e)
+                        Toast.makeText(this, "Error al obtener datos del dueño: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             }
-
-
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al obtener datos del dueño: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e("CuidadorSeleccionado", "Error al obtener datos de la mascota", e)
+                Toast.makeText(this, "Error al obtener datos de la mascota: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }

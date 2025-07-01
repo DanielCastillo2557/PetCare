@@ -18,14 +18,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-
-// import androidx.core.view.isEmpty
+import androidx.core.view.isEmpty
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.petcareapp.models.Mascota
-import com.example.petcareapp.adapters.MascotaAdapter
 import com.example.petcareapp.R
+// MODIFICADO: Importar ListaChatsActivity
+import com.example.petcareapp.duenio.ListaChatsActivity // Asegúrate que la ruta sea correcta
+import com.example.petcareapp.adapters.MascotaAdapter
+import com.example.petcareapp.models.Mascota
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -59,17 +60,15 @@ class InicioDuenioActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerMascotas)
         layoutVacio = findViewById(R.id.layoutVacio)
         val btnAgregarMascota: ImageButton = findViewById(R.id.btnAgregarMascota)
-        fabAgregarMascota = findViewById(R.id.fabAgregarMascota) // Inicializar la variable miembro
+        fabAgregarMascota = findViewById(R.id.fabAgregarMascota)
         btnPerfil = findViewById(R.id.btnPerfil)
 
-        // Inicialización de botones de navegación inferior
         btnNavMisMascotas = findViewById(R.id.btnNavMisMascotas)
         btnNavMisChats = findViewById(R.id.btnNavMisChats)
 
-        // --- Resaltar el botón de la sección actual ---
-        actualizarResaltadoNavegacion(btnNavMisMascotas) // Mascotas es la actual
+        // Resaltar inicialmente Mis Mascotas
+        actualizarResaltadoNavegacion(btnNavMisMascotas)
 
-        // --- Inicializar el Launcher para PerfilMiMascotaActivity ---
         perfilMascotaLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 Log.d("InicioDuenio", "Resultado OK de PerfilMiMascotaActivity, recargando mascotas.")
@@ -82,8 +81,6 @@ class InicioDuenioActivity : AppCompatActivity() {
         listaMascotas = mutableListOf()
         adapter = MascotaAdapter(listaMascotas) { mascota ->
             val intent = Intent(this, PerfilMiMascotaActivity::class.java).apply {
-                // --- AÑADIR EL ID DE LA MASCOTA ---
-
                 putExtra("id_mascota", mascota.id)
                 putExtra("nombre", mascota.nombre)
                 putExtra("raza", mascota.raza)
@@ -91,27 +88,19 @@ class InicioDuenioActivity : AppCompatActivity() {
                 putExtra("especie", mascota.especie)
                 putExtra("tamanio", mascota.tamanio)
                 putExtra("descripcion", mascota.descripcion)
-                putExtra("fotoUrl", mascota.fotoUrl) // Asegúrate que tu clase Mascota tiene fotoUrl
+                putExtra("fotoUrl", mascota.fotoUrl)
             }
-            // --- USAR EL LAUNCHER EN LUGAR DE startActivity ---
             perfilMascotaLauncher.launch(intent)
         }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        // Listener para el botón de agregar mascota (en la UI, no el FAB)
         btnAgregarMascota.setOnClickListener {
-            // Considera usar un launcher también si RegistroMascotaDatos podría necesitar
-            // devolver un resultado para refrescar la lista inmediatamente.
             startActivity(Intent(this, RegistroMascotaDatos::class.java))
-            // Si RegistroMascotaDatos añade una mascota y quieres verla inmediatamente,
-            // deberías usar un launcher y recargar en el resultado.
         }
 
-        // Listener para el FloatingActionButton de agregar mascota
         fabAgregarMascota.setOnClickListener {
             startActivity(Intent(this, RegistroMascotaDatos::class.java))
-            // Misma consideración que arriba sobre el launcher.
         }
 
         btnPerfil.setOnClickListener {
@@ -119,14 +108,19 @@ class InicioDuenioActivity : AppCompatActivity() {
         }
 
         btnNavMisMascotas.setOnClickListener {
-
-            Toast.makeText(this, "Ya estás en Mis Mascotas", Toast.LENGTH_SHORT).show()
+            // Ya estamos aquí, solo actualizar resaltado por si acaso
+            actualizarResaltadoNavegacion(btnNavMisMascotas)
+            // Opcionalmente, mostrar un Toast si ya está en esta sección
+            // Toast.makeText(this, "Ya estás en Mis Mascotas", Toast.LENGTH_SHORT).show()
         }
 
         btnNavMisChats.setOnClickListener {
-
-            Toast.makeText(this, "Ir a Mis Chats (Implementar navegación)", Toast.LENGTH_SHORT).show()
-
+            // MODIFICADO: Actualizar resaltado y navegar a ListaChatsActivity
+            actualizarResaltadoNavegacion(btnNavMisChats)
+            val intent = Intent(this, ListaChatsActivity::class.java)
+            startActivity(intent)
+            // Opcional: si quieres que esta actividad se cierre al ir a los chats, puedes añadir finish()
+            // finish()
         }
 
         cargarMascotas()
@@ -135,8 +129,6 @@ class InicioDuenioActivity : AppCompatActivity() {
     private fun actualizarResaltadoNavegacion(botonActivo: ImageView) {
         val colorResaltado = ContextCompat.getColor(this, R.color.color_nav_icon_resaltado)
         val colorDefault = ContextCompat.getColor(this, R.color.color_nav_icon_default)
-
-        // Lista de todos los botones de navegación para iterar fácilmente
         val botonesNavegacion = listOf(btnNavMisMascotas, btnNavMisChats)
 
         for (boton in botonesNavegacion) {
@@ -148,16 +140,14 @@ class InicioDuenioActivity : AppCompatActivity() {
         }
     }
 
-
     private fun cargarMascotas() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         if (uid == null) {
             Toast.makeText(this, "Usuario no autenticado.", Toast.LENGTH_SHORT).show()
             Log.w("InicioDuenio", "cargarMascotas: UID es nulo.")
-            // Aquí podrías redirigir al login o limpiar la lista y mostrar estado vacío
             listaMascotas.clear()
             adapter.notifyDataSetChanged()
-            actualizarVisibilidadVacio() // Llama a una función para manejar la UI vacía
+            actualizarVisibilidadVacio()
             return
         }
         val db = FirebaseFirestore.getInstance()
@@ -172,18 +162,17 @@ class InicioDuenioActivity : AppCompatActivity() {
                 }
                 for (doc in result) {
                     val mascota = doc.toObject(Mascota::class.java)
-                    // --- ASIGNAR EL ID DEL DOCUMENTO AL OBJETO MASCOTA ---
-                    mascota.id = doc.id // <--- ¡MUY IMPORTANTE!
+                    mascota.id = doc.id
                     listaMascotas.add(mascota)
                     Log.d("InicioDuenio", "Mascota cargada: ${mascota.nombre} con ID: ${mascota.id}")
                 }
-                adapter.notifyDataSetChanged() // Notificar al adaptador después de modificar la lista
-                actualizarVisibilidadVacio() // Actualizar la visibilidad del layout vacío y el RecyclerView/FAB
+                adapter.notifyDataSetChanged()
+                actualizarVisibilidadVacio()
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error al cargar las mascotas: ${e.message}", Toast.LENGTH_SHORT).show()
                 Log.e("InicioDuenio", "Error al cargar mascotas: ", e)
-                actualizarVisibilidadVacio() // Asegurar que la UI refleje el estado de error/vacío
+                actualizarVisibilidadVacio()
             }
     }
 
@@ -191,11 +180,11 @@ class InicioDuenioActivity : AppCompatActivity() {
         if (listaMascotas.isEmpty()) {
             layoutVacio.visibility = View.VISIBLE
             recyclerView.visibility = View.GONE
-            fabAgregarMascota.visibility = View.GONE // FAB también se oculta si no hay mascotas
+            fabAgregarMascota.visibility = View.GONE
         } else {
             layoutVacio.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
-            fabAgregarMascota.visibility = View.VISIBLE // Mostrar FAB si hay mascotas
+            fabAgregarMascota.visibility = View.VISIBLE
         }
     }
 
@@ -203,6 +192,5 @@ class InicioDuenioActivity : AppCompatActivity() {
         super.onResume()
 
         actualizarResaltadoNavegacion(btnNavMisMascotas)
-
     }
 }
