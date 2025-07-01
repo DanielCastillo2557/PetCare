@@ -17,8 +17,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.text
-// import androidx.compose.ui.semantics.error // No usado
-// import androidx.compose.ui.semantics.text // No usado
+
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -29,7 +28,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference // Ya estaba
+import com.google.firebase.storage.StorageReference
 import java.util.UUID
 
 class EditarPerfilCuidadorActivity : AppCompatActivity() {
@@ -56,7 +55,7 @@ class EditarPerfilCuidadorActivity : AppCompatActivity() {
     companion object {
         const val TAG = "EditarPerfilCuidador"
         const val EXTRA_NOMBRE = "com.example.petcareapp.EXTRA_NOMBRE"
-        // const val EXTRA_APELLIDO = "com.example.petcareapp.EXTRA_APELLIDO" // No parece usarse
+
         const val EXTRA_TELEFONO = "com.example.petcareapp.EXTRA_TELEFONO"
         const val EXTRA_DIRECCION = "com.example.petcareapp.EXTRA_DIRECCION"
         const val EXTRA_FOTO_URL = "com.example.petcareapp.EXTRA_FOTO_URL"
