@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Color de fondo para mensajes recibidos -->
+    <!-- Un gris claro es común. Puedes usar #E0E0E0, #F0F0F0,
+         o un color de tu tema como ?attr/colorSurfaceVariant -->
+    <solid android:color="#EAEAEA"/> <!-- Un gris muy claro, puedes ajustarlo -->
+
+    <!-- Bordes redondeados -->
+    <!-- Ajusta el radio como desees.
+         Para los mensajes recibidos, la "cola" o la esquina menos redondeada
+         suele estar en el lado izquierdo. -->
+    <corners
+        android:radius="16dp"
+        android:topLeftRadius="4dp" /> <!-- Ejemplo: esquina superior izquierda menos redondeada -->
+    <!-- O solo android:radius="16dp" para todas las esquinas iguales si prefieres simplicidad -->
+
+</shape>
