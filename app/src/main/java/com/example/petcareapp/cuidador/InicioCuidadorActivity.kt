@@ -46,6 +46,7 @@ class InicioCuidadorActivity : AppCompatActivity() {
             insets
         }
 
+
         // Obtener referencias a los botones (ImageViews)
         val btnPerfilCuidadorSuperior: ImageView = findViewById(R.id.btnPerfilCuidador)
         val btnNavSolicitudes: ImageView = findViewById(R.id.btnNavSolicitudes)

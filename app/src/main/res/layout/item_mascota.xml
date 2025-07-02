@@ -43,4 +43,11 @@
             android:textColor="#666666"/>
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imgMascotaEncargada"
+        android:layout_width="3dp"
+        android:layout_height="73dp"
+        android:layout_weight="1"
+        app:srcCompat="@mipmap/ic_mascota_encargada_foreground" />
+
 </LinearLayout>

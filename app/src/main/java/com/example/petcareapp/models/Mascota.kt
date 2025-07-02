@@ -10,7 +10,8 @@ data class Mascota(
     var especie: String = "",
     var tamanio: String = "",
     var fotoUrl: String = "",
-    var descripcion: String = ""
+    var descripcion: String = "",
+    var encargada: Boolean = false
 ) {
     // Constructor sin argumentos requerido por Firestore para la deserialización
     constructor() : this(null, "", "", "", "", "", "", "")

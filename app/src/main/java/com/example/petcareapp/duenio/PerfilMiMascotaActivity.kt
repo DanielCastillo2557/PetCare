@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -60,7 +59,6 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
         tvTituloMascota = findViewById(R.id.tvTituloMascota)
         imagenMascota = findViewById(R.id.imagenMascota) // Asigna la referencia
-        val editPhotoIcon = findViewById<ImageView>(R.id.editPhotoIcon)
         txtNombreMascota = findViewById(R.id.txtNombreMascota)
         txtRazaMascota = findViewById(R.id.txtRazaMascota)
         txtEdadMascota = findViewById(R.id.txtEdadMascota)
@@ -111,11 +109,6 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
         btnBack.setOnClickListener {
             devolverResultadoAlAnterior()
             // finish() se llama dentro de devolverResultadoAlAnterior()
-        }
-
-        editPhotoIcon.setOnClickListener {
-            // Lógica para editar foto (implementar si es necesario)
-            Toast.makeText(this, "Editar foto (funcionalidad pendiente)", Toast.LENGTH_SHORT).show()
         }
 
         btnEditarPerfilMascota.setOnClickListener {

@@ -153,7 +153,9 @@ class InicioDuenioActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
         Log.d("InicioDuenio", "Cargando mascotas para UID: $uid")
 
-        db.collection("usuarios").document(uid).collection("mascotas")
+        db.collection("usuarios")
+            .document(uid)
+            .collection("mascotas")
             .get()
             .addOnSuccessListener { result ->
                 listaMascotas.clear()

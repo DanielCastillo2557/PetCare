@@ -58,16 +58,6 @@
         app:layout_constraintTop_toBottomOf="@id/topBar" />
 
     <!-- Ícono para editar la foto -->
-    <ImageView
-        android:id="@+id/editPhotoIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/ic_editar"
-        app:layout_constraintBottom_toBottomOf="@id/imagenMascota"
-        app:layout_constraintEnd_toEndOf="@id/imagenMascota"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        android:contentDescription="Editar foto"/>
 
     <TextView
         android:id="@+id/txtNombreMascota"
@@ -151,8 +141,8 @@
 
     <GridLayout
         android:id="@+id/photoGrid"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="304dp"
+        android:layout_height="191dp"
         android:layout_margin="16dp"
         android:columnCount="3"
         android:rowCount="3"
@@ -165,18 +155,34 @@
             android:id="@+id/btnAgregarFotoGrid"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_agregar_foto_24px"
-            android:scaleType="centerInside"
             android:background="?attr/selectableItemBackground"
-            android:contentDescription="Agregar foto al álbum" />
+            android:contentDescription="Agregar foto al álbum"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_agregar_foto_24px" />
 
         <!-- Fotos mock -->
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_user"
+            android:contentDescription="Foto de mascota"
             android:scaleType="centerCrop"
-            android:contentDescription="Foto de mascota" />
+            android:src="@mipmap/nala1" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="Foto de mascota"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/nala2_foreground" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="Foto de mascota"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/nala3" />
         <!-- Repite según se necesite -->
 
     </GridLayout>

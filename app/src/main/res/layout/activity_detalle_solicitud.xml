@@ -138,8 +138,8 @@
 
     <GridLayout
         android:id="@+id/photoGrid"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="304dp"
+        android:layout_height="191dp"
         android:layout_margin="16dp"
         android:columnCount="3"
         android:rowCount="3"
@@ -147,13 +147,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/photoAlbumLabel">
 
+        <!-- Primer botón: agregar foto -->
+
         <!-- Fotos mock -->
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_mis_mascotas"
+            android:contentDescription="Foto de mascota"
             android:scaleType="centerCrop"
-            android:contentDescription="Foto de mascota" />
+            android:src="@mipmap/nala1" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="Foto de mascota"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/nala2_foreground" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="Foto de mascota"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/nala3" />
         <!-- Repite según se necesite -->
 
     </GridLayout>
