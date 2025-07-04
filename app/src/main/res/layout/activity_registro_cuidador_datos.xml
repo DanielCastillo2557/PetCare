@@ -88,11 +88,11 @@
         <ImageButton
             android:id="@+id/btnGuardarRegistroCuidador"
             android:contentDescription="@string/registrar_usuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_gravity="end"
             android:layout_marginTop="100dp"
-            android:background="@null"
+            android:background="@drawable/boton_redondo"
             android:src="@drawable/ic_guardar_registro"
             tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>

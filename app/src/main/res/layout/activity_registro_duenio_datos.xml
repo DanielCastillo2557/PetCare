@@ -93,7 +93,7 @@
             android:layout_height="64dp"
             android:layout_gravity="end"
             android:layout_marginTop="100dp"
-            android:background="@null"
+            android:background="@drawable/boton_redondo"
             android:contentDescription="@string/registrar_usuario"
             android:src="@drawable/ic_guardar_registro" />
     </LinearLayout>

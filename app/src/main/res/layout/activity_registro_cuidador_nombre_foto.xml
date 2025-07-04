@@ -77,10 +77,10 @@
         android:layout_width="61dp"
         android:layout_height="59dp"
         android:layout_gravity="end"
-        android:background="@color/black"
-        android:enabled="true"
+        android:background="@drawable/boton_redondo"
         android:clickable="true"
         android:contentDescription="@string/desc_btn_continuar"
+        android:enabled="true"
         android:focusable="true"
         android:src="@drawable/ic_siguiente" />
 
