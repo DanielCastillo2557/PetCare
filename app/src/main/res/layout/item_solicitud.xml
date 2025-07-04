@@ -13,20 +13,11 @@
         android:padding="12dp">
 
         <!-- Círculo con la inicial -->
-        <TextView
-            android:id="@+id/textoInicial"
+        <ImageView
+            android:id="@+id/imgDuenio"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ic_circulo_fondo"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <!-- Nombre del dueño -->
-
-        <!-- Icono advertencia o mensaje -->
+            card_view:srcCompat="@drawable/ic_user" />
 
         <LinearLayout
             android:layout_width="278dp"
@@ -34,7 +25,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="9dp"
             android:layout_toStartOf="@+id/iconoAdvertencia"
-            android:layout_toEndOf="@+id/textoInicial"
+            android:layout_toEndOf="@+id/imgDuenio"
             android:orientation="vertical">
 
             <TextView

@@ -20,8 +20,8 @@ class SolicitudAdapter (
 
     inner class SolicitudViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textoNombre: TextView = itemView.findViewById(R.id.txtNombreDuenio)
-        val textoNombreMascota: TextView = itemView.findViewById(R.id.txtNombreMascota)
-        val imagenMascota: ImageView = itemView.findViewById(R.id.imagenMascota)
+        //val textoNombreMascota: TextView = itemView.findViewById(R.id.txtNombreMascota)
+        val imagenDuenio: ImageView = itemView.findViewById(R.id.imgDuenio)
         val textoFecha: TextView = itemView.findViewById(R.id.txtFechaSolicitud)
         // Aquí podrías añadir más vistas si tu item_solicitud.xml las tiene, como una ImageView para foto.
     }
@@ -35,7 +35,7 @@ class SolicitudAdapter (
     override fun onBindViewHolder(holder: SolicitudViewHolder, position: Int) {
         val solicitud = solicitudes[position]
         holder.textoNombre.text = solicitud.nombreDueno
-        holder.textoNombreMascota.text = solicitud.nombreMascota
+        //holder.textoNombreMascota.text = solicitud.nombreMascota
 
         val fotoUrl = solicitud.fotoUrl
         if (!fotoUrl.isNullOrBlank()) {
@@ -43,9 +43,9 @@ class SolicitudAdapter (
                 .load(fotoUrl)
                 .placeholder(R.drawable.ic_user) // Imagen temporal mientras carga
                 .error(R.drawable.ic_user) // Imagen si falla la carga
-                .into(holder.imagenMascota)
+                .into(holder.imagenDuenio)
         } else {
-            holder.imagenMascota.setImageResource(R.drawable.ic_user)
+            holder.imagenDuenio.setImageResource(R.drawable.ic_user)
         }
 
         // Configurar la fecha
