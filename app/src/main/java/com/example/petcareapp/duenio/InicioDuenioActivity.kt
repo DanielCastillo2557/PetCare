@@ -122,7 +122,6 @@ class InicioDuenioActivity : AppCompatActivity() {
             // Opcional: si quieres que esta actividad se cierre al ir a los chats, puedes añadir finish()
             // finish()
         }
-
         cargarMascotas()
     }
 

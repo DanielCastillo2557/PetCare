@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -38,14 +41,13 @@ import com.google.android.gms.tasks.Tasks
 
 class ListaChatsActivity : AppCompatActivity() {
 
-    private lateinit var toolbar: Toolbar
+    private lateinit var toolbar: LinearLayout
     private lateinit var recyclerViewListaChats: RecyclerView
     private lateinit var textViewNoChats: TextView
-    // MODIFICADO: Tipo del adapter
+    private lateinit var barraInferior: LinearLayout
+    private lateinit var btnNavMisMascotas: ImageView
     private lateinit var vistaPreviaChatAdapter: VistaPreviaChatAdapter // CAMBIAR SI EL NOMBRE DEL ADAPTER ES OTRO
-    // MODIFICADO: Tipo de la lista
     private val listaDeChats = mutableListOf<VistaPreviaChat>()
-
     private val db = FirebaseFirestore.getInstance()
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
@@ -61,14 +63,16 @@ class ListaChatsActivity : AppCompatActivity() {
             insets
         }
 
-        toolbar = findViewById(R.id.toolbarListaChats)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-
+        toolbar = findViewById(R.id.barraSuperior)
         recyclerViewListaChats = findViewById(R.id.recyclerViewListaChats)
         textViewNoChats = findViewById(R.id.textViewNoChats)
+        barraInferior = findViewById(R.id.barraInferior)
+        btnNavMisMascotas = findViewById(R.id.btnNavMisMascotas)
 
+        btnNavMisMascotas.setOnClickListener {
+            intent = Intent(this, InicioDuenioActivity::class.java)
+            startActivity(intent)
+        }
         setupRecyclerView()
 
         if (currentUser == null) {

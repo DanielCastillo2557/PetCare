@@ -29,7 +29,6 @@ import com.example.petcareapp.adapters.SolicitudAdapter
 class InicioCuidadorActivity : AppCompatActivity() {
 
     // Declaración de variables
-    private lateinit var tvPantallaSeleccionada: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SolicitudAdapter
     private lateinit var listaSolicitudes: MutableList<Solicitud>
@@ -60,7 +59,7 @@ class InicioCuidadorActivity : AppCompatActivity() {
             val intent = Intent(this, DetalleSolicitudActivity::class.java)
             intent.putExtra("idSolicitud", solicitud.id)
             intent.putExtra("nombreDueno", solicitud.nombreDueno)
-            intent.putExtra("fotoUrlDueno", solicitud.fotoUrl ?: "")
+            intent.putExtra("fotoUrl", solicitud.fotoUrl ?: "")
 
             intent.putExtra("idMascota", solicitud.idMascota)
             intent.putExtra("idDueno", solicitud.idDueno)
@@ -109,23 +108,14 @@ class InicioCuidadorActivity : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val db = FirebaseFirestore.getInstance()
 
-        // Podrías añadir un indicador de carga aquí
-        // progressBar.visibility = View.VISIBLE
-        // layoutVacio.visibility = View.GONE
-        // recyclerView.visibility = View.GONE
-
-
         db.collection("usuarios")
             .document(uid)
             .collection("solicitudes")
             .get()
             .addOnSuccessListener { result ->
-                // progressBar.visibility = View.GONE
                 listaSolicitudes.clear()
                 for (doc in result) {
                     val solicitud = doc.toObject(Solicitud::class.java)
-                    // Podrías querer asignar el ID del documento a tu objeto Solicitud si no lo haces ya
-                    // solicitud.id = doc.id
                     listaSolicitudes.add(solicitud)
                 }
 
@@ -139,7 +129,6 @@ class InicioCuidadorActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener {
-                // progressBar.visibility = View.GONE
                 Toast.makeText(this, "Error al cargar solicitudes", Toast.LENGTH_SHORT).show()
                 layoutVacio.visibility = View.VISIBLE // Mostrar mensaje de vacío o error
                 recyclerView.visibility = View.GONE

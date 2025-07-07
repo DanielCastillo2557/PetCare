@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.example.petcareapp.models.Mascota
 import com.example.petcareapp.R
 // import com.bumptech.glide.Glide // Descomenta si usas Glide
@@ -40,8 +41,7 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
     private var especieActual: String? = null
     private var tamanioActual: String? = null
     private var descripcionActual: String? = null
-    private var fotoUrlActual: String? = null // Si manejas fotos
-
+    private var fotoUrlActual: String? = null
     private lateinit var editarPerfilLauncher: ActivityResultLauncher<Intent>
     private var seHicieronCambios = false // Flag para notificar a InicioDuenioActivity
 
@@ -97,7 +97,6 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
 
                 // Recargar datos desde Firestore para asegurar consistencia
                 cargarDatosMascotaDesdeFirestore()
-
 
             } else {
                 // El usuario podría haber cancelado la edición
@@ -169,6 +168,14 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
                         descripcionActual = mascota.descripcion
                         fotoUrlActual = mascota.fotoUrl
 
+                        if (!fotoUrlActual.isNullOrEmpty()) {
+                            Glide.with(this)
+                                .load(fotoUrlActual)
+                                .placeholder(R.drawable.ic_mis_mascotas)
+                                .error(R.drawable.ic_nueva_solicitud)
+                                .into(imagenMascota)
+                        }
+
                         actualizarUI() // Refrescar la UI
                     } else {
                         Log.e("PerfilMascota", "Error al convertir DocumentSnapshot a objeto Mascota.")
@@ -188,13 +195,20 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
     private fun actualizarUI() {
         tvTituloMascota.text = nombreActual ?: "Perfil de Mascota"
         txtNombreMascota.text = nombreActual ?: "No disponible"
-        txtRazaMascota.text = razaActual ?: "No disponible"
-        txtEdadMascota.text = if (edadActual != null && edadActual!!.isNotEmpty()) "$edadActual meses" else "No disponible"
-        txtEspecieMascota.text = especieActual ?: "No disponible"
-        txtTamanioMascota.text = tamanioActual ?: "No disponible"
+        txtEspecieMascota.text = "Especie: ${especieActual ?: "No disponible"}"
+        txtRazaMascota.text = "Raza: ${razaActual ?: "No disponible"}"
+        txtEdadMascota.text = if (!edadActual.isNullOrEmpty()) "Edad: $edadActual meses" else "Edad: No disponible"
+        txtTamanioMascota.text = "Tamaño: ${tamanioActual ?: "No disponible"}"
         txtDescripcionMascota.text = descripcionActual ?: "No disponible"
 
-
+        // Cargar imagen si hay URL
+        if (!fotoUrlActual.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(fotoUrlActual)
+                .placeholder(R.drawable.ic_mis_mascotas)
+                .error(R.drawable.ic_nueva_solicitud)
+                .into(imagenMascota)
+        }
     }
 
     private fun devolverResultadoAlAnterior() {
@@ -206,6 +220,4 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
         }
         finish()
     }
-
-
 }

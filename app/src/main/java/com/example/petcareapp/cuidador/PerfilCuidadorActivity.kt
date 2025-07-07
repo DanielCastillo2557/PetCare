@@ -20,10 +20,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class PerfilCuidadorActivity : AppCompatActivity() {
-
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-
     private lateinit var imgFotoPerfil: ImageView
     private lateinit var tvNombre: TextView
     private lateinit var tvEmail: TextView
@@ -34,6 +32,7 @@ class PerfilCuidadorActivity : AppCompatActivity() {
 
     private lateinit var editarPerfilLauncher: ActivityResultLauncher<Intent>
 
+    // Variables para almacenar los datos actuales del usuario y pasarlos a la edición
     private var currentNombre: String? = null
     private var currentApellido: String? = null
     private var currentTelefono: String? = null
@@ -45,14 +44,12 @@ class PerfilCuidadorActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_perfil_cuidador)
 
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainPerfilCuidador)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             // Aplica padding a todos los lados del contenedor principal
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
 
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
@@ -64,6 +61,7 @@ class PerfilCuidadorActivity : AppCompatActivity() {
         tvTelefono = findViewById(R.id.tvTelefonoCuidador)
         tvDireccion = findViewById(R.id.tvDireccionCuidador)
         btnEditarPerfil = findViewById(R.id.btnEditarPerfilCuidador)
+
         btnVolver = findViewById(R.id.btnVolverDesdePerfilCuidador) // Inicializa el botón de volver
 
         editarPerfilLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -78,9 +76,12 @@ class PerfilCuidadorActivity : AppCompatActivity() {
         cargarDatosUsuario()
 
         btnEditarPerfil.setOnClickListener {
+            // Asegurarse de que los datos se hayan cargado antes de intentar iniciar la edición
+            // Puedes usar cualquier variable que sepas que se carga, como currentNombre
             if (currentNombre != null || currentFotoUrl != null || currentTelefono != null || currentDireccion != null) {
                 val intent = Intent(this, EditarPerfilCuidadorActivity::class.java).apply {
                     putExtra(EditarPerfilCuidadorActivity.EXTRA_NOMBRE, currentNombre)
+
                     putExtra(EditarPerfilCuidadorActivity.EXTRA_TELEFONO, currentTelefono)
                     putExtra(EditarPerfilCuidadorActivity.EXTRA_DIRECCION, currentDireccion)
                     putExtra(EditarPerfilCuidadorActivity.EXTRA_FOTO_URL, currentFotoUrl)
@@ -88,6 +89,8 @@ class PerfilCuidadorActivity : AppCompatActivity() {
                 editarPerfilLauncher.launch(intent)
             } else {
                 Toast.makeText(this, "Cargando datos del perfil, por favor espera.", Toast.LENGTH_SHORT).show()
+                // Opcionalmente, intentar cargar de nuevo si currentNombre es null
+                // cargarDatosUsuario()
             }
         }
 
@@ -110,12 +113,15 @@ class PerfilCuidadorActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
                     Log.d("PerfilCuidador", "Datos del documento: ${document.data}")
+
+                    // Guardar los datos actuales en las variables de la clase
                     currentNombre = document.getString("nombre")
                     currentApellido = document.getString("apellido")
                     currentTelefono = document.getString("telefono")
                     currentDireccion = document.getString("direccion")
                     currentFotoUrl = document.getString("foto_url")
 
+                    // Actualizar UI
                     val nombreCompleto = currentNombre ?: ""
                     val apellido = currentApellido ?: ""
                     tvNombre.text = if (apellido.isNotBlank()) "$nombreCompleto $apellido" else nombreCompleto.ifBlank { "Nombre no disponible" }
@@ -127,16 +133,17 @@ class PerfilCuidadorActivity : AppCompatActivity() {
                     if (!currentFotoUrl.isNullOrEmpty()) {
                         Glide.with(this)
                             .load(currentFotoUrl)
-                            .placeholder(R.drawable.ic_user)
-                            .error(R.drawable.ic_user)
-                            .circleCrop()
+                            .placeholder(R.drawable.ic_user) // Imagen mientras carga
+                            .error(R.drawable.ic_user)       // Imagen si hay error
+                            .circleCrop() // Si quieres la imagen circular (asegúrate que tu ImageView lo soporte o usa CircleImageView)
                             .into(imgFotoPerfil)
                     } else {
-                        imgFotoPerfil.setImageResource(R.drawable.ic_user)
+                        imgFotoPerfil.setImageResource(R.drawable.ic_user) // Imagen por defecto
                     }
                 } else {
                     Log.d("PerfilCuidador", "No se encontró el documento del usuario.")
                     Toast.makeText(this, "No se pudieron cargar los datos del perfil.", Toast.LENGTH_SHORT).show()
+                    // Podrías setear valores por defecto en la UI aquí si lo deseas
                     tvNombre.text = "N/A"
                     tvEmail.text = currentUser.email ?: "N/A"
                     tvTelefono.text = "N/A"
@@ -147,11 +154,12 @@ class PerfilCuidadorActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.e("PerfilCuidador", "Error al obtener datos del usuario", exception)
                 Toast.makeText(this, "Error al cargar el perfil: ${exception.message}", Toast.LENGTH_SHORT).show()
+                // Podrías setear valores de error en la UI aquí
                 tvNombre.text = "Error"
                 tvEmail.text = "Error"
                 tvTelefono.text = "Error"
                 tvDireccion.text = "Error"
-                imgFotoPerfil.setImageResource(R.drawable.ic_user)
+                imgFotoPerfil.setImageResource(R.drawable.ic_user) // Podrías tener un drawable específico para error
             }
     }
 }

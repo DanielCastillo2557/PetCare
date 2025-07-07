@@ -86,12 +86,13 @@
         android:id="@+id/fabAgregarMascota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_agregar_mascota_vacio"
-        android:contentDescription="Agregar nueva mascota"
-        app:layout_constraintBottom_toTopOf="@id/barraInferior"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
-        android:visibility="gone" />
+        android:contentDescription="Agregar nueva mascota"
+        android:src="@drawable/ic_agregar_mascota_vacio"
+        android:visibility="gone"
+        app:backgroundTint="@color/button_color"
+        app:layout_constraintBottom_toTopOf="@id/barraInferior"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Barra inferior -->
     <LinearLayout
@@ -105,12 +106,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <ImageView
             android:id="@+id/btnNavMisMascotas"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:contentDescription="@string/btn_mis_mascotas"
         android:src="@drawable/ic_mis_mascotas" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/btnNavMisChats"
@@ -119,6 +130,11 @@
         android:layout_marginStart="32dp"
         android:contentDescription="@string/btn_mis_chats"
         android:src="@drawable/ic_mis_chats" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

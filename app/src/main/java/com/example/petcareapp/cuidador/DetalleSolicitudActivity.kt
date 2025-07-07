@@ -72,7 +72,7 @@ class DetalleSolicitudActivity : AppCompatActivity() {
         }
 
         inicializarVistas()
-        popularVistasConDatos()
+        poblarVistasConDatos()
 
         btnAceptar.setOnClickListener {
             aceptarSolicitudYCrearChat()
@@ -88,7 +88,6 @@ class DetalleSolicitudActivity : AppCompatActivity() {
         receivedIdDueno = intent.getStringExtra("idDueno") ?: ""
         receivedIdSolicitud = intent.getStringExtra("idSolicitud") ?: "" // CRUCIAL
         receivedNombreDueno = intent.getStringExtra("nombreDueno") ?: "Dueño Desconocido" // CRUCIAL
-        receivedFotoUrlDueno = intent.getStringExtra("fotoUrlDueno") // Opcional, puede ser null
 
         // Datos de la mascota
         receivedNombreMascota = intent.getStringExtra("nombreMascota") ?: "Nombre no disponible"
@@ -115,11 +114,21 @@ class DetalleSolicitudActivity : AppCompatActivity() {
         // progressBar = findViewById(R.id.progressBar) // Si la usas
     }
 
-    private fun popularVistasConDatos() {
+    private fun poblarVistasConDatos() {
+        //receivedFotoMascotaUrl = intent.getStringExtra("fotoUrl")
+
+        // Cargar la foto de la mascota
+        if (!receivedFotoMascotaUrl.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(receivedFotoMascotaUrl)
+                .placeholder(R.drawable.ic_mis_mascotas)
+                .error(R.drawable.ic_nueva_solicitud)
+                .into(imageMascota)
+        }
         textoNombreMascota.text = receivedNombreMascota
         textoEspecieMascota.text = "Especie: ${receivedEspecieMascota}"
         textoRazaMascota.text = "Raza: ${receivedRazaMascota}"
-        textoEdadMascota.text = "Edad: ${receivedEdadMascota}" // Asume que receivedEdadMascota ya es un String
+        textoEdadMascota.text = "Edad: ${receivedEdadMascota} meses" // Asume que receivedEdadMascota ya es un String
         textoTamanoMascota.text = "Tamaño: ${receivedTamanioMascota}"
         textoDescripcionMascota.text = receivedDescripcionMascota
 

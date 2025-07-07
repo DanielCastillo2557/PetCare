@@ -13,7 +13,7 @@
         android:padding="12dp">
 
         <!-- Círculo con la inicial -->
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgDuenio"
             android:layout_width="48dp"
             android:layout_height="48dp"
