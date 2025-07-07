@@ -35,4 +35,5 @@
     <string name="descripcion_mascota">Describe a tu mascota y detalla cuidados especiales</string>
     <string name="nombre_mascota">Nombre mascota</string>
     <string name="instrucciones_datos_mascota">Ingresa los datos requeridos para registrar a tu mascota</string>
+    <string name="titulo_mapa_veterinarias">Mapa Veterinarias</string>
 </resources>

@@ -19,7 +19,7 @@
             android:id="@+id/toolbarListaChats"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/color_nav_icon_resaltado"
             app:title="Mis Chats"
             app:titleTextColor="@android:color/white" />
     </com.google.android.material.appbar.AppBarLayout>

@@ -5,7 +5,7 @@
     <!-- Color de fondo para mensajes enviados -->
     <!-- Puedes usar ?attr/colorPrimary para tomar el color primario de tu tema,
          o un color específico como #007AFF (un azul común para mensajes enviados) -->
-    <solid android:color="?attr/colorPrimary"/>
+    <solid android:color="@color/color_nav_icon_resaltado"/>
     <!-- <solid android:color="#4CAF50"/> Ejemplo: un verde -->
     <!-- Bordes redondeados -->
     <!-- Ajusta el radio como desees. A veces se hacen diferentes radios

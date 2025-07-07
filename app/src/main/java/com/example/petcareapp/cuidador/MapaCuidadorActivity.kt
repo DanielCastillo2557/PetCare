@@ -72,14 +72,10 @@ class MapaCuidadorActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_mapa_cuidador)
-
         val rootView = findViewById<android.view.View>(R.id.mainMapCuidador)
         ViewCompat.setOnApplyWindowInsetsListener(rootView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, 0)
-            val mapFragmentView = supportFragmentManager.findFragmentById(R.id.mapFragmentCuidador)?.view
-            mapFragmentView?.setPadding(0, systemBars.top, 0, 0)
-            v.setPadding(v.paddingLeft, v.paddingTop, v.paddingRight, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
@@ -328,24 +324,32 @@ class MapaCuidadorActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun setupBottomNavigationBar() {
-        val btnNavPerfilEnMapa: ImageView = findViewById(R.id.btnNavPerfilEnMapa)
-        val btnNavMapaEnMapa: ImageView = findViewById(R.id.btnNavMapaEnMapa)
-        val btnNavChatsEnMapa: ImageView = findViewById(R.id.btnNavChatsEnMapa)
+        val btnPerfilCuidadorSuperior: ImageView = findViewById(R.id.btnPerfilCuidador)
+        val btnNavInicioCuidador: ImageView = findViewById(R.id.btnNavInicioCuidador)
+        val btnNavMapa: ImageView = findViewById(R.id.btnNavMapaVets)
+        val btnNavChats: ImageView = findViewById(R.id.btnNavChatsCuidador)
 
-        btnNavPerfilEnMapa.setOnClickListener {
+        btnPerfilCuidadorSuperior.setOnClickListener {
             val intent = Intent(this, PerfilCuidadorActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
             startActivity(intent)
         }
-        btnNavMapaEnMapa.setOnClickListener {
+
+        btnNavInicioCuidador.setOnClickListener {
+            val intent = Intent(this, InicioCuidadorActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnNavMapa.setOnClickListener {
             Toast.makeText(this, "Refrescando mapa...", Toast.LENGTH_SHORT).show()
             if (mapIsReady) {
                 initialLocationUpdateDone = false
                 activarMiUbicacionYBuscar()
             }
         }
-        btnNavChatsEnMapa.setOnClickListener {
-            Toast.makeText(this, "Ir a Chats (funcionalidad pendiente)", Toast.LENGTH_SHORT).show()
+
+        btnNavChats.setOnClickListener {
+            val intent = Intent(this, ListaChatsCuidadorActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -46,14 +46,12 @@ class InicioCuidadorActivity : AppCompatActivity() {
             insets
         }
 
-
         // Obtener referencias a los botones (ImageViews)
         val btnPerfilCuidadorSuperior: ImageView = findViewById(R.id.btnPerfilCuidador)
-        val btnNavSolicitudes: ImageView = findViewById(R.id.btnNavSolicitudes)
-        val btnNavMapaCuidador: ImageView = findViewById(R.id.btnNavMapaCuidador)
+        val btnNavSolicitudes: ImageView = findViewById(R.id.btnNavInicioCuidador)
+        val btnNavMapaCuidador: ImageView = findViewById(R.id.btnNavMapaVets)
         val btnNavChatsCuidador: ImageView = findViewById(R.id.btnNavChatsCuidador)
 
-        tvPantallaSeleccionada = findViewById(R.id.tvTituloBarraCuidador)
         recyclerView = findViewById(R.id.recyclerSolicitudes)
         layoutVacio = findViewById(R.id.layoutSolicitudesVacio)
 
@@ -79,9 +77,6 @@ class InicioCuidadorActivity : AppCompatActivity() {
 
         // Cargar solicitudes inicialmente si esa es la pantalla por defecto
         cargarSolicitudes()
-        tvPantallaSeleccionada.text = "Solicitudes" // Establecer título inicial
-
-
 
         // Configurar OnClickListeners para los botones
         btnPerfilCuidadorSuperior.setOnClickListener {
@@ -93,7 +88,6 @@ class InicioCuidadorActivity : AppCompatActivity() {
             recyclerView.visibility = View.VISIBLE // Asegurarse que el RecyclerView de solicitudes sea visible
             // Podrías tener otros elementos UI que ocultar/mostrar si cambias de "sección"
             cargarSolicitudes()
-            tvPantallaSeleccionada.text = "Solicitudes"
         }
 
         btnNavMapaCuidador.setOnClickListener {
@@ -101,7 +95,6 @@ class InicioCuidadorActivity : AppCompatActivity() {
             // recyclerView.visibility = View.GONE
             val intent = Intent(this, MapaCuidadorActivity::class.java)
             startActivity(intent)
-            tvPantallaSeleccionada.text = "Mapa"
         }
 
         btnNavChatsCuidador.setOnClickListener {

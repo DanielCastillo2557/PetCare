@@ -10,19 +10,19 @@
     android:paddingBottom="4dp"
     android:clipToPadding="false">
 
-<TextView
-android:id="@+id/textViewMessageContent"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_gravity="end"
-android:background="@drawable/bg_burbuja_de_mensaje_enviado"
-    android:paddingStart="12dp"
-    android:paddingEnd="12dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:textColor="@android:color/white"
-    android:textSize="16sp"
-    tools:text="Este es un mensaje enviado de prueba un poco más largo para ver cómo se ajusta el texto dentro de la burbuja." />
+    <TextView
+        android:id="@+id/textViewMessageContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@drawable/bg_burbuja_de_mensaje_enviado"
+        android:paddingStart="12dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="8dp"
+        android:textColor="#212121"
+        android:textSize="16sp"
+        tools:text="Este es un mensaje enviado de prueba un poco más largo para ver cómo se ajusta el texto dentro de la burbuja." />
 
 <TextView
 android:id="@+id/textViewMessageTimestamp"

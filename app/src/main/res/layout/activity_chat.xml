@@ -20,7 +20,7 @@
             android:id="@+id/toolbarChat"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/color_nav_icon_resaltado"
             app:titleTextColor="@android:color/white" />
         <!-- Puedes añadir una CircleImageView aquí para la foto del receptor si quieres -->
     </com.google.android.material.appbar.AppBarLayout>

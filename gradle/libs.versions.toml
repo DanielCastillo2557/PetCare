@@ -21,6 +21,7 @@ maps = "19.2.0"
 googlePlaces = "4.3.1"
 firebaseStorage = "21.0.2"
 firebaseStorageKtx = "21.0.2"
+fragment = "1.8.8"
 
 [libraries]
 androidx-appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
@@ -47,6 +48,7 @@ google-maps = { module = "com.google.android.gms:play-services-maps", version.re
 google-places = { module = "com.google.android.libraries.places:places", version.ref = "googlePlaces" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
 
 
 [plugins]

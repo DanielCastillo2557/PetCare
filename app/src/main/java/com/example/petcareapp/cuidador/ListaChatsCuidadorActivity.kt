@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -49,16 +50,29 @@ class ListaChatsCuidadorActivity : AppCompatActivity() {
             insets
         }
 
+        // Obtener referencias a los botones (ImageViews)
+        val btnPerfilCuidadorSuperior: ImageView = findViewById(R.id.btnPerfilCuidador)
+        val btnNavSolicitudes: ImageView = findViewById(R.id.btnNavInicioCuidador)
+        val btnNavMapaCuidador: ImageView = findViewById(R.id.btnNavMapaVets)
+
+        // Configurar OnClickListeners para los botones
+        btnPerfilCuidadorSuperior.setOnClickListener {
+            val intent = Intent(this, PerfilCuidadorActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnNavSolicitudes.setOnClickListener {
+            val intent = Intent(this, InicioCuidadorActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnNavMapaCuidador.setOnClickListener {
+            val intent = Intent(this, MapaCuidadorActivity::class.java)
+            startActivity(intent)
+        }
+
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
-
-        tvTituloBarra = findViewById(R.id.tvTituloBarra)
-        tvTituloBarra.text = "Mis Chats"
-
-        val btnBack: ImageButton = findViewById(R.id.btnBack)
-        btnBack.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
 
         recyclerViewChats = findViewById(R.id.recyclerViewChats)
         layoutChatsVacio = findViewById(R.id.layoutChatsVacio)
