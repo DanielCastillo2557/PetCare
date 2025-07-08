@@ -78,5 +78,6 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.16.0") // <--- AÑADE ESTA LÍNEA (procesador de anotaciones de Glide)
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.cloudinary:cloudinary-android:2.2.0")
 
 }

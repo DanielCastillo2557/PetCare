@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FDFCFB"
+    tools:context=".loginregister.RegistroDuenioNombreFotoActivity">
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -30,7 +38,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="24dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imagePerfil"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -74,3 +82,4 @@
         android:contentDescription="@string/desc_btn_continuar"
         android:src="@drawable/ic_siguiente" />
 </LinearLayout>
+</ScrollView>
