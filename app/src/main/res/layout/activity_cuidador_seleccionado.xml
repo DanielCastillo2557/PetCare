@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/desc_btn_atras"
             android:src="@drawable/ic_atras"
             tools:ignore="TouchTargetSizeCheck" />
 
@@ -68,12 +69,12 @@
         android:id="@+id/txtDescCuidador"
         android:layout_width="323dp"
         android:layout_height="74dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="80dp"
         android:text="Descripcion"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPuntuacionCuidador" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDireccionCuidador" />
 
     <TextView
         android:id="@+id/txtDireccionCuidador"
@@ -87,17 +88,6 @@
         app:layout_constraintTop_toBottomOf="@+id/txtNombreCuidador" />
 
     <TextView
-        android:id="@+id/txtPuntuacionCuidador"
-        android:layout_width="147dp"
-        android:layout_height="wrap_content"
-        android:text="Puntuacion"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toEndOf="@+id/cuidadorImage"
-        app:layout_constraintTop_toBottomOf="@+id/txtDireccionCuidador" />
-
-    <TextView
         android:id="@+id/photoAlbumLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,25 +99,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDescCuidador" />
 
-    <GridLayout
-        android:id="@+id/photoGrid"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginTop="116dp"
-        android:columnCount="3"
-        android:rowCount="3"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/btnEnviarSolicitud"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/photoAlbumLabel">
+        app:layout_constraintTop_toBottomOf="@+id/photoAlbumLabel"
+        app:layout_constraintVertical_bias="0.051">
 
-        <!-- Primer botón: agregar foto -->
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
-        <!-- Fotos mock -->
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@mipmap/cuidar1" />
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/imageView1"
@@ -135,30 +131,34 @@
             android:layout_height="100dp"
             android:src="@mipmap/cuidar2" />
 
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@mipmap/cuidar3" />
 
-        <!-- Repite según se necesite -->
-
-    </GridLayout>
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnEnviarSolicitud"
         android:layout_width="265dp"
         android:layout_height="48dp"
         android:layout_margin="16dp"
-        android:layout_marginTop="148dp"
         android:backgroundTint="#D97B5D"
         android:text="Enviar solicitud"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photoGrid"
-        app:layout_constraintVertical_bias="0.682" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Barra inferior -->
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log // Importar Log para depuración
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.semantics.text
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.example.petcareapp.R
 import com.example.petcareapp.models.Solicitud
 // import com.google.firebase.Timestamp // Ya no se necesita aquí si fecha es @ServerTimestamp
@@ -65,8 +67,18 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
                 if (doc.exists()) {
                     findViewById<TextView>(R.id.txtNombreCuidador).text = doc.getString("nombre") ?: "Nombre no disponible"
                     findViewById<TextView>(R.id.txtDireccionCuidador).text = doc.getString("direccion") ?: "Dirección no disponible"
-                    findViewById<TextView>(R.id.txtPuntuacionCuidador).text = doc.getString("puntuacion") ?: "Puntuación no disponible"
+                    //findViewById<TextView>(R.id.txtPuntuacionCuidador).text = doc.getString("puntuacion") ?: "Puntuación no disponible"
                     findViewById<TextView>(R.id.txtDescCuidador).text = doc.getString("descripcion") ?: "Descripción no disponible"
+
+                    val fotoUrl = doc.getString("foto_url") ?: ""
+                    if (fotoUrl.isNotBlank()){
+                        val imagenPerfil = findViewById<ImageView>(R.id.cuidadorImage)
+                        Glide.with(this)
+                            .load(fotoUrl)
+                            .placeholder(R.drawable.ic_user) // Imagen por defecto mientras carga
+                            .error(R.drawable.ic_error) // Si hay error en la URL
+                            .into(imagenPerfil)
+                    }
                 } else {
                     Toast.makeText(this, "No se encontraron datos para este cuidador.", Toast.LENGTH_SHORT).show()
                 }

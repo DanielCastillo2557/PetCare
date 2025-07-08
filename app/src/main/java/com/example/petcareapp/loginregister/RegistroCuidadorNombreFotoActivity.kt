@@ -15,6 +15,13 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.petcareapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
+import android.content.Context
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import java.io.IOException
+
 
 class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
     private lateinit var imagePerfil: ImageView
@@ -46,13 +53,12 @@ class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
 
         //Boton siguiente
         buttonSiguienteCuidador.setOnClickListener {
-            val nombre = editNombre.text.toString().trim() // .trim() para quitar espacios al inicio/final
-            val descripcion = editDescripcion.text.toString().trim() // .trim()
+            val nombre = editNombre.text.toString() // .trim() para quitar espacios al inicio/final
+            val descripcion = editDescripcion.text.toString() // .trim()
 
             if (nombre.isBlank() || descripcion.isBlank()){
                 // Mensaje un poco más específico y considerando ambos campos
                 Toast.makeText(this, "Por favor, ingresa tu nombre y una descripción.", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
             }else{
                 subirFotoYGuardarDatosCuidador(nombre, descripcion)
             }
@@ -60,33 +66,76 @@ class RegistroCuidadorNombreFotoActivity : AppCompatActivity() {
     }
 
     private fun subirFotoYGuardarDatosCuidador(nombre: String, descripcion: String) {
-        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        val storageRef = FirebaseStorage.getInstance().reference.child("fotos_perfil/$uid.jpg")
-
         imagenUri?.let { uri ->
-            Log.d("Registro", "URI seleccionada: ${uri}")
-            storageRef.putFile(uri)
-                .addOnSuccessListener {
-                    storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                        val intent = Intent(this, RegistroCuidadorDatosActivity::class.java)
-                        intent.putExtra("nombre", nombre)
-                        intent.putExtra("descripcion", descripcion)
-                        intent.putExtra("fotoUrl", downloadUri.toString())
-                        startActivity(intent)
+            subirImagenACloudinary(
+                context = this,
+                imagenUri = uri,
+                onSuccess = { url ->
+                    val intent = Intent(this, RegistroCuidadorDatosActivity::class.java)
+                    intent.putExtra("nombre", nombre)
+                    intent.putExtra("descripcion", descripcion)
+                    intent.putExtra("fotoUrl", url)
+                    startActivity(intent)
+                },
+                onError = { error ->
+                    runOnUiThread {
+                        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
                     }
                 }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error al subir la imagen", Toast.LENGTH_SHORT).show()
-                }
+            )
         } ?: run {
-            // Si imagenUri es null, no se subió una imagen, así que se guarda sin foto
-            val intent = Intent(this, RegistroDuenioDatosActivity::class.java)
+            // Si no se seleccionó imagen, continuar sin foto
+            val intent = Intent(this, RegistroCuidadorDatosActivity::class.java)
             intent.putExtra("nombre", nombre)
             intent.putExtra("descripcion", descripcion)
             intent.putExtra("fotoUrl", "")
             startActivity(intent)
         }
     }
+
+    fun subirImagenACloudinary(
+        context: Context,
+        imagenUri: Uri,
+        onSuccess: (String) -> Unit,
+        onError: (String) -> Unit
+    ) {
+        val inputStream = context.contentResolver.openInputStream(imagenUri)
+        val requestBody = inputStream?.readBytes()?.toRequestBody("image/*".toMediaType())
+        if (requestBody == null) {
+            onError("No se pudo leer la imagen")
+            return
+        }
+
+        val request = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("file", "mi_foto.jpg", requestBody)
+            .addFormDataPart("upload_preset", "petcare_preset") // Reemplaza con tu preset
+            .build()
+
+        val client = OkHttpClient()
+        val requestFinal = Request.Builder()
+            .url("https://api.cloudinary.com/v1_1/dt25xxciq/image/upload") // Reemplaza <tu_cloud_name>
+            .post(request)
+            .build()
+
+        client.newCall(requestFinal).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                onError("Error al subir: ${e.message}")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (!response.isSuccessful) {
+                    onError("Error en respuesta: ${response.message}")
+                    return
+                }
+
+                val json = JSONObject(response.body?.string() ?: "")
+                val url = json.getString("secure_url")
+                onSuccess(url)
+            }
+        })
+    }
+
 
     //Manejo de la seleccion de la imagen
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

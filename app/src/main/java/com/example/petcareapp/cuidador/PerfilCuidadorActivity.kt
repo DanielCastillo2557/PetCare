@@ -29,8 +29,8 @@ class PerfilCuidadorActivity : AppCompatActivity() {
     private lateinit var tvDireccion: TextView
     private lateinit var btnEditarPerfil: Button
     private lateinit var btnVolver: ImageView // Declara el botón de volver
-
     private lateinit var editarPerfilLauncher: ActivityResultLauncher<Intent>
+    private lateinit var switchDisponibilidad: androidx.appcompat.widget.SwitchCompat
 
     // Variables para almacenar los datos actuales del usuario y pasarlos a la edición
     private var currentNombre: String? = null
@@ -61,6 +61,32 @@ class PerfilCuidadorActivity : AppCompatActivity() {
         tvTelefono = findViewById(R.id.tvTelefonoCuidador)
         tvDireccion = findViewById(R.id.tvDireccionCuidador)
         btnEditarPerfil = findViewById(R.id.btnEditarPerfilCuidador)
+        switchDisponibilidad = findViewById(R.id.switchDisponibilidad)
+
+        val uid = auth.currentUser?.uid
+        // Leer el estado actual
+        if (uid != null) {
+            db.collection("usuarios").document(uid)
+                .get()
+                .addOnSuccessListener { doc ->
+                    val disponible = doc.getBoolean("disponible") ?: false
+                    switchDisponibilidad.isChecked = disponible
+                }
+        }
+
+        // Guardar cuando se cambie el switch
+        switchDisponibilidad.setOnCheckedChangeListener { _, isChecked ->
+            if (uid != null) {
+                db.collection("usuarios").document(uid)
+                    .update("disponible", isChecked)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, if (isChecked) "Ahora estás disponible" else "No disponible", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Error al actualizar disponibilidad", Toast.LENGTH_SHORT).show()
+                    }
+            }
+        }
 
         btnVolver = findViewById(R.id.btnVolverDesdePerfilCuidador) // Inicializa el botón de volver
 

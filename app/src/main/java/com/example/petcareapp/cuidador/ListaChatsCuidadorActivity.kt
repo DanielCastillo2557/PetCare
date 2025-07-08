@@ -154,7 +154,7 @@ class ListaChatsCuidadorActivity : AppCompatActivity() {
                                             idChat = chatId,
                                             idOtroUsuario = idOtroUsuario,
                                             nombreOtroUsuario = nombreOtro,
-                                            fotoUrlOtroUsuario = fotoUrlOtro,
+                                            fotoUrlOtroUsuario = fotoUrlOtro ?: "",
                                             ultimoMensaje = ultimoMensajeTexto,
                                             timestampUltimoMensaje = ultimoMensajeTimestampFirestore?.toDate()
                                         )

@@ -36,4 +36,12 @@
     <string name="nombre_mascota">Nombre mascota</string>
     <string name="instrucciones_datos_mascota">Ingresa los datos requeridos para registrar a tu mascota</string>
     <string name="titulo_mapa_veterinarias">Mapa Veterinarias</string>
+    <string name="desc_btn_volver">Volver</string>
+    <string name="txt_nav_mi_perfil">Mi Perfil</string>
+    <string name="txt_nombre_perfil">Nombre:</string>
+    <string name="txt_email_perfil">Email:</string>
+    <string name="txt_telefono_perfil">Teléfono:</string>
+    <string name="txt_direccion_perfil">Dirección:</string>
+    <string name="btn_editar_perfil">Editar Perfil</string>
+    <string name="switch_disponibilidad">¿Disponible?</string>
 </resources>

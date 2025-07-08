@@ -46,8 +46,6 @@ class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
         btnBack.setOnClickListener {
 
             onBackPressedDispatcher.onBackPressed()
-
-
         }
 
         // Obtener el ID de la mascota de los extras del intent
@@ -59,7 +57,6 @@ class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mapFragment.getMapAsync(this)
     }
-
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
@@ -97,6 +94,7 @@ class MapaActivity : AppCompatActivity(), OnMapReadyCallback {
         val db = FirebaseFirestore.getInstance()
         db.collection("usuarios")
             .whereArrayContains("tipo", "cuidador") // Solo usuarios cuidadores
+            .whereEqualTo("disponible", true)
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {

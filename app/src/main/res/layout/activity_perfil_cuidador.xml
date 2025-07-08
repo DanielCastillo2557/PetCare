@@ -10,30 +10,30 @@
 
     <!-- Barra Superior -->
 <LinearLayout
-android:id="@+id/barraSuperiorPerfilCuidador"
-android:layout_width="0dp"
-android:layout_height="56dp"
-android:background="#D97756"
-android:orientation="horizontal"
-android:gravity="center_vertical"
-android:paddingStart="16dp"
-android:paddingEnd="16dp"
-app:layout_constraintTop_toTopOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent">
+    android:id="@+id/barraSuperiorPerfilCuidador"
+    android:layout_width="0dp"
+    android:layout_height="56dp"
+    android:background="#D97756"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
 
 <ImageView
     android:id="@+id/btnVolverDesdePerfilCuidador"
     android:layout_width="32dp"
     android:layout_height="32dp"
     android:src="@drawable/ic_atras"
-    android:contentDescription="Volver" />
+    android:contentDescription="@string/desc_btn_volver" />
 
 <TextView
     android:layout_width="0dp"
     android:layout_height="wrap_content"
     android:layout_weight="1"
-    android:text="Mi Perfil"
+    android:text="@string/txt_nav_mi_perfil"
     android:textColor="#FFFFFF"
     android:textSize="20sp"
     android:layout_marginStart="16dp"
@@ -42,60 +42,88 @@ app:layout_constraintEnd_toEndOf="parent">
 
     <!-- Contenedor para el contenido del perfil que se puede desplazar si es necesario -->
 <androidx.core.widget.NestedScrollView
-android:id="@+id/scrollViewPerfilCuidador"
-android:layout_width="0dp"
-android:layout_height="0dp"
-android:paddingBottom="16dp"
-app:layout_constraintTop_toBottomOf="@id/barraSuperiorPerfilCuidador"
+    android:id="@+id/scrollViewPerfilCuidador"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:paddingBottom="16dp"
+    app:layout_constraintTop_toBottomOf="@id/barraSuperiorPerfilCuidador"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     android:layout_marginTop="8dp">
 
 <androidx.constraintlayout.widget.ConstraintLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:padding="16dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
 
 <ImageView
     android:id="@+id/imgFotoPerfilCuidador"
     android:layout_width="120dp"
     android:layout_height="120dp"
     android:layout_marginTop="16dp"
-    android:contentDescription="Foto de perfil"
+    android:contentDescription="@string/desc_foto_usuario"
     android:src="@drawable/ic_user"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
-<TextView
-    android:id="@+id/tvNombreCuidadorLabel"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="24dp"
-    android:text="Nombre:"
-    android:textSize="18sp"
-    android:textStyle="bold"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/imgFotoPerfilCuidador" />
 
-<TextView
-    android:id="@+id/tvNombreCuidador"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="8dp"
-    android:textSize="18sp"
-    app:layout_constraintBaseline_toBaselineOf="@id/tvNombreCuidadorLabel"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toEndOf="@id/tvNombreCuidadorLabel"
-    tools:text="Nombre Apellido" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgFotoPerfilCuidador">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/switch_disponibilidad"
+            android:fontFamily="@font/abeezee_regular"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchDisponibilidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvNombreCuidadorLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/txt_nombre_perfil"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/tvNombreCuidador"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvNombreCuidadorLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvNombreCuidadorLabel"
+        tools:text="Nombre Apellido" />
 
 <TextView
     android:id="@+id/tvEmailCuidadorLabel"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
-    android:text="Email:"
+    android:text="@string/txt_email_perfil"
     android:textSize="18sp"
     android:textStyle="bold"
     app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +145,7 @@ android:padding="16dp">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
-    android:text="Teléfono:"
+    android:text="@string/txt_telefono_perfil"
     android:textSize="18sp"
     android:textStyle="bold"
     app:layout_constraintStart_toStartOf="parent"
@@ -139,7 +167,7 @@ android:padding="16dp">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="16dp"
-    android:text="Dirección:"
+    android:text="@string/txt_direccion_perfil"
     android:textSize="18sp"
     android:textStyle="bold"
     app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +191,7 @@ android:padding="16dp">
     android:layout_marginTop="32dp"
     android:layout_marginBottom="16dp"
     android:backgroundTint="@color/button_color"
-    android:text="Editar Perfil"
+    android:text="@string/btn_editar_perfil"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"

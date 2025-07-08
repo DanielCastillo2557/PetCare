@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.petcareapp.R
 import com.example.petcareapp.models.VistaPreviaChat // Importa tu modelo VistaPreviaChat
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -38,11 +39,28 @@ class VistaPreviaChatAdapter(
                 textViewTimestamp.text = ""
             }
 
-            Glide.with(itemView.context)
-                .load(vistaPreviaChat.fotoUrlOtroUsuario)
-                .placeholder(R.drawable.ic_user) // Asegúrate de tener este drawable
-                .error(R.drawable.ic_user)       // O usa R.mipmap.ic_launcher si prefieres
-                .into(imageViewReceptorFoto)
+            if (!vistaPreviaChat.fotoUrlOtroUsuario.isNullOrEmpty()) {
+                Glide.with(itemView.context)
+                    .load(vistaPreviaChat.fotoUrlOtroUsuario)
+                    .placeholder(R.drawable.ic_user)
+                    .error(R.drawable.ic_error)
+                    .into(imageViewReceptorFoto)
+            } else {
+                // Cargar desde Firestore si es necesario
+                FirebaseFirestore.getInstance().collection("usuarios")
+                    .document(vistaPreviaChat.idOtroUsuario)
+                    .get()
+                    .addOnSuccessListener { doc ->
+                        val url = doc.getString("foto_url")
+                        if (!url.isNullOrEmpty()) {
+                            Glide.with(itemView.context)
+                                .load(url)
+                                .placeholder(R.drawable.ic_user)
+                                .error(R.drawable.ic_error)
+                                .into(imageViewReceptorFoto)
+                        }
+                    }
+            }
 
             itemView.setOnClickListener {
                 onItemClicked(vistaPreviaChat)
