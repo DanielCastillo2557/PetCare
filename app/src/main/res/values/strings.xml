@@ -30,7 +30,7 @@
     <string name="desc_btn_nav_perfil_cuidador">Boton para acceder al perfil desde la pantalla del cuidador</string>
     <string name="desc_btn_nav_chats_cuidador">Boton para acceder a los chats desde la pantalla del cuidador</string>
     <string name="txt_registro_cuidador">Registro Cuidador</string>
-    <string name="txt_sin_solicitudes">De momento no tienes solicitudes</string>
+    <string name="txt_sin_solicitudes">De momento no tienes solicitudes, ingresa a tu perfil para activar tu ubicacion y que las usuarios puedan verla</string>
     <string name="edad_mascota">Edad (en meses)</string>
     <string name="descripcion_mascota">Describe a tu mascota y detalla cuidados especiales</string>
     <string name="nombre_mascota">Nombre mascota</string>

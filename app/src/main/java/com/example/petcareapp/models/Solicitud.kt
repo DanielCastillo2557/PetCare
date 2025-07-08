@@ -30,7 +30,7 @@ data class Solicitud(
     val tamanio: String = "",
     val descripcion: String = "",
     val fotoUrl: String? = null, // CAMBIO: Hecho nullable (String?)
-
+    val albumFotos: List<String> = emptyList(),
     // Campo para el ID del chat cuando se acepte
     var idChat: String? = null  // <--- NUEVO
 ) {
@@ -50,6 +50,7 @@ data class Solicitud(
         tamanio = "",
         descripcion = "",
         fotoUrl = null,
+        albumFotos = emptyList(),
         idChat = null
     )
 }

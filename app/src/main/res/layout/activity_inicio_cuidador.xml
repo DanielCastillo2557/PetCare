@@ -49,17 +49,17 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/barraSuperiorCuidador">
 
         <!-- Texto cuando no hay solicitudes -->
         <TextView
             android:id="@+id/textSinSolicitudes"
-            android:layout_width="wrap_content"
+            android:layout_width="338dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/txt_sin_solicitudes"
             android:textColor="#333333"
+            android:fontFamily="@font/abeezee_regular"
             android:textSize="16sp" />
     </LinearLayout>
 

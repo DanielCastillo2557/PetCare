@@ -68,7 +68,7 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
                     findViewById<TextView>(R.id.txtNombreCuidador).text = doc.getString("nombre") ?: "Nombre no disponible"
                     findViewById<TextView>(R.id.txtDireccionCuidador).text = doc.getString("direccion") ?: "Dirección no disponible"
                     //findViewById<TextView>(R.id.txtPuntuacionCuidador).text = doc.getString("puntuacion") ?: "Puntuación no disponible"
-                    findViewById<TextView>(R.id.txtDescCuidador).text = doc.getString("descripcion") ?: "Descripción no disponible"
+                    //findViewById<TextView>(R.id.txtDescCuidador).text = doc.getString("descripcion") ?: "Descripción no disponible"
 
                     val fotoUrl = doc.getString("foto_url") ?: ""
                     if (fotoUrl.isNotBlank()){
@@ -113,6 +113,8 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
                 val tamanio = mascotaDoc.getString("tamanio") ?: ""
                 val descripcion = mascotaDoc.getString("descripcion") ?: ""
                 val fotoUrl = mascotaDoc.getString("fotoUrl") ?: ""
+                val albumFotos = mascotaDoc.get("albumFotos") as? List<String> ?: emptyList()
+
 
                 // Paso 2: Obtener el nombre del dueño desde el documento del usuario
                 db.collection("usuarios").document(uidDuenio).get()
@@ -131,12 +133,10 @@ class CuidadorSeleccionadoActivity : AppCompatActivity() {
                             especie = especie,
                             raza = raza,
                             edad = edadStr, // Usa el String directamente si así lo tienes en el modelo Solicitud
-                            // Si edad en el modelo Solicitud fuera Int/Long, y edadStr es String:
-                            // edad = edadStr.toLongOrNull() ?: 0L (o toIntOrNull)
                             tamanio = tamanio,
                             descripcion = descripcion,
-                            fotoUrl = fotoUrl
-                            // idChat es nullable y tiene valor por defecto, se puede omitir
+                            fotoUrl = fotoUrl,
+                            albumFotos = albumFotos
                         )
 
                         // Paso 4: Guardar la solicitud

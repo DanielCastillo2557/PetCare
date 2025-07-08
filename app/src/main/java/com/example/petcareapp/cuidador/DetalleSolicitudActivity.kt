@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.GridView
 import android.widget.ImageView
 // import android.widget.ProgressBar // Descomenta si usas ProgressBar y lo tienes en tu XML
 import android.widget.TextView
@@ -17,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 
 import com.bumptech.glide.Glide
 import com.example.petcareapp.R
+import com.example.petcareapp.adapters.FotoAdapter
 // import com.example.petcareapp.chat.ChatActivity // Descomenta cuando tengas tu ChatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -48,9 +50,10 @@ class DetalleSolicitudActivity : AppCompatActivity() {
     private lateinit var receivedTamanioMascota: String
     private lateinit var receivedDescripcionMascota: String
     private var receivedFotoMascotaUrl: String? = null
-
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var gridViewFotosMascota: GridView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,12 +114,10 @@ class DetalleSolicitudActivity : AppCompatActivity() {
         textoTamanoMascota = findViewById(R.id.txtTamanioMascota)
         textoDescripcionMascota = findViewById(R.id.txtDescripcionMascota)
         btnAceptar = findViewById(R.id.btnAceptarSolicitud)
-        // progressBar = findViewById(R.id.progressBar) // Si la usas
+        gridViewFotosMascota = findViewById(R.id.gridViewFotosMascota)
     }
 
     private fun poblarVistasConDatos() {
-        //receivedFotoMascotaUrl = intent.getStringExtra("fotoUrl")
-
         // Cargar la foto de la mascota
         if (!receivedFotoMascotaUrl.isNullOrEmpty()) {
             Glide.with(this)
@@ -132,18 +133,24 @@ class DetalleSolicitudActivity : AppCompatActivity() {
         textoTamanoMascota.text = "Tamaño: ${receivedTamanioMascota}"
         textoDescripcionMascota.text = receivedDescripcionMascota
 
-        if (!receivedFotoMascotaUrl.isNullOrEmpty()) {
-            Glide.with(this)
-                .load(receivedFotoMascotaUrl)
-                .placeholder(R.drawable.ic_circulo_fondo) // Cambia a tu placeholder
-                .into(imageMascota)
-        } else {
-            imageMascota.setImageResource(R.drawable.ic_mis_mascotas) // Placeholder si no hay URL
-        }
+        // Cargar fotos del album
+        val db = FirebaseFirestore.getInstance()
+        val solicitudRef = db
+            .collection("usuarios")
+            .document(FirebaseAuth.getInstance().currentUser!!.uid)
+            .collection("solicitudes")
+            .document(receivedIdSolicitud)
 
-        // Opcional: Mostrar nombre del dueño si tienes un TextView para ello
-        // val tvNombreDuenoSolicitante: TextView = findViewById(R.id.tvNombreDuenoSolicitante)
-        // tvNombreDuenoSolicitante.text = "Solicitud de: $receivedNombreDueno"
+        solicitudRef.get().addOnSuccessListener { doc ->
+            if (doc.exists()) {
+                val album = doc.get("albumFotos") as? List<String> ?: emptyList()
+                Log.d("DetalleSolicitud", "albumFotos recibidas: $album")
+
+                gridViewFotosMascota.adapter = FotoAdapter(this, album) {
+                    // No hacer nada, el cuidador no puede agregar
+                }
+            }
+        }
     }
 
     private fun aceptarSolicitudYCrearChat() {
@@ -210,7 +217,6 @@ class DetalleSolicitudActivity : AppCompatActivity() {
             batch.set(primerMensajeRef, mensajeSistema)
 
         }.addOnSuccessListener {
-            // progressBar?.visibility = View.GONE // Si usas ProgressBar
             Toast.makeText(this, "Solicitud aceptada. Chat iniciado.", Toast.LENGTH_LONG).show()
 
             val resultIntent = Intent()
@@ -218,17 +224,6 @@ class DetalleSolicitudActivity : AppCompatActivity() {
             resultIntent.putExtra("chatCreadoId", nuevoChatId) // Podría ser útil para la actividad anterior
             setResult(Activity.RESULT_OK, resultIntent)
 
-            // NAVEGAR A LA ACTIVIDAD DE CHAT (CUANDO LA TENGAS)
-            /*
-            val intentChat = Intent(this, ChatActivity::class.java).apply {
-                putExtra("idChat", nuevoChatId)
-                putExtra("nombreChat", "Chat con ${receivedNombreDueno}") // O el nombre de la mascota
-                putExtra("idReceptor", receivedIdDueno)
-                putExtra("nombreReceptor", receivedNombreDueno)
-                putExtra("fotoReceptorUrl", receivedFotoUrlDueno)
-            }
-            startActivity(intentChat)
-            */
             finish() // Cierra DetalleSolicitudActivity
 
         }.addOnFailureListener { e ->

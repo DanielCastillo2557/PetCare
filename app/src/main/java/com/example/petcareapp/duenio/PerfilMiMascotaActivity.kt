@@ -2,10 +2,16 @@ package com.example.petcareapp.duenio
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.GridView
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -17,10 +23,22 @@ import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.petcareapp.models.Mascota
 import com.example.petcareapp.R
+import com.example.petcareapp.adapters.FotoAdapter
 // import com.bumptech.glide.Glide // Descomenta si usas Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore // Para recargar desde Firestore
 import de.hdodenhof.circleimageview.CircleImageView
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
+import okio.IOException
+import org.json.JSONObject
 
 class PerfilMiMascotaActivity : AppCompatActivity() {
 
@@ -45,6 +63,15 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
     private lateinit var editarPerfilLauncher: ActivityResultLauncher<Intent>
     private var seHicieronCambios = false // Flag para notificar a InicioDuenioActivity
 
+    private val seleccionImagen = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            subirImagenACloudinary(it)
+        }
+    }
+    private val listaFotos = mutableListOf("boton")
+    private lateinit var gridView: GridView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -68,6 +95,11 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
         val btnEditarPerfilMascota = findViewById<Button>(R.id.btnEditarPerfilMascota)
         val botonEncargar = findViewById<Button>(R.id.btnEnviarSolicitud) // Asumo que es para otra funcionalidad
 
+        gridView = findViewById(R.id.gridViewFotos)
+        gridView.adapter = FotoAdapter(this, listaFotos){
+            seleccionImagen.launch("image/*")
+        }
+
         // --- Recuperar datos del Intent ---
         mascotaIdActual = intent.getStringExtra("id_mascota") // <--- RECUPERAR ID
         nombreActual = intent.getStringExtra("nombre")
@@ -86,6 +118,23 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
             return
         }
 
+        // --- Cargar fotos desde Firestore ---
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        FirebaseFirestore.getInstance()
+            .collection("usuarios").document(uid)
+            .collection("mascotas").document(mascotaIdActual!!)
+            .get()
+            .addOnSuccessListener { doc ->
+                val album = doc.get("albumFotos") as? List<String> ?: emptyList()
+                listaFotos.clear()
+                listaFotos.add("boton")
+                listaFotos.addAll(album)
+                gridView.adapter = FotoAdapter(this, listaFotos) {
+                    seleccionImagen.launch("image/*")
+                }
+            }
+
         actualizarUI() // Poblar UI con datos iniciales
 
         // --- Configurar el launcher para el resultado de la edición ---
@@ -97,17 +146,12 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
 
                 // Recargar datos desde Firestore para asegurar consistencia
                 cargarDatosMascotaDesdeFirestore()
-
-            } else {
-                // El usuario podría haber cancelado la edición
-                // Toast.makeText(this, "Edición cancelada", Toast.LENGTH_SHORT).show()
             }
         }
 
         // --- Configurar Listeners ---
         btnBack.setOnClickListener {
             devolverResultadoAlAnterior()
-            // finish() se llama dentro de devolverResultadoAlAnterior()
         }
 
         btnEditarPerfilMascota.setOnClickListener {
@@ -135,6 +179,59 @@ class PerfilMiMascotaActivity : AppCompatActivity() {
             startActivity(intentMapa)
         }
     }
+
+    private fun subirImagenACloudinary(uri: Uri) {
+        val inputStream = contentResolver.openInputStream(uri)
+        val bytes = inputStream?.readBytes() ?: return
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("file", "foto.jpg",
+                RequestBody.create("image/*".toMediaTypeOrNull(), bytes))
+            .addFormDataPart("upload_preset", "petcare_preset")
+            .build()
+
+        val request = Request.Builder()
+            .url("https://api.cloudinary.com/v1_1/dt25xxciq/image/upload")
+            .post(requestBody)
+            .build()
+
+        OkHttpClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(this@PerfilMiMascotaActivity, "Error al subir foto", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val json = JSONObject(response.body?.string() ?: "")
+                val url = json.getString("secure_url")
+
+                runOnUiThread {
+                    listaFotos.add(url)
+                    gridView.adapter = FotoAdapter(this@PerfilMiMascotaActivity, listaFotos) {
+                        seleccionImagen.launch("image/*")
+                    }
+                    guardarUrlEnFirestore(mascotaIdActual ?: return@runOnUiThread, url)
+                }
+            }
+        })
+    }
+
+    private fun guardarUrlEnFirestore(idMascota: String, url: String) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val mascotaRef = FirebaseFirestore.getInstance()
+            .collection("usuarios").document(uid)
+            .collection("mascotas").document(idMascota)
+
+        mascotaRef.update("albumFotos", FieldValue.arrayUnion(url))
+            .addOnSuccessListener {
+                Log.d("Firestore", "URL agregada al álbum")
+            }
+            .addOnFailureListener {
+                Log.e("Firestore", "Error al guardar URL en Firestore", it)
+            }
+    }
+
 
     private fun cargarDatosMascotaDesdeFirestore() {
         if (mascotaIdActual == null) {
