@@ -36,26 +36,22 @@ class EditarPerfilCuidadorActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
-
     private lateinit var imgEditarFotoPerfil: ImageView
     private lateinit var etNombreCompleto: TextInputEditText
     private lateinit var etTelefono: TextInputEditText
     private lateinit var etDireccion: TextInputEditText
     private lateinit var btnGuardarCambios: Button
     private lateinit var progressBar: ProgressBar
-
     private var currentNombre: String? = null
     private var currentTelefono: String? = null
     private var currentDireccion: String? = null
     private var currentFotoUrl: String? = null // URL de la foto actual para posible borrado
-
     private var nuevaFotoUri: Uri? = null
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
     companion object {
         const val TAG = "EditarPerfilCuidador"
         const val EXTRA_NOMBRE = "com.example.petcareapp.EXTRA_NOMBRE"
-
         const val EXTRA_TELEFONO = "com.example.petcareapp.EXTRA_TELEFONO"
         const val EXTRA_DIRECCION = "com.example.petcareapp.EXTRA_DIRECCION"
         const val EXTRA_FOTO_URL = "com.example.petcareapp.EXTRA_FOTO_URL"
